@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_aplicaciones.Implementaciones
 {
-    public class DistribuidoresAplicacion : IDistribuidoresAplicacion
+    public class DistribuidoresAplicacion : IEmpleados_ServiciosExtrasAplicacion
     {
         private IConexion? IConexion = null;
 

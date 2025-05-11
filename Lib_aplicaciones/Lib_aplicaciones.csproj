@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Interfaces\ISedes_ServiciosExtrasAplicacion.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\lib_dominio\lib_dominio.csproj" />
     <ProjectReference Include="..\lib_repositorios\lib_repositorios.csproj" />
   </ItemGroup>
