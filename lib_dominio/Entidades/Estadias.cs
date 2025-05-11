@@ -10,15 +10,17 @@ namespace lib_dominio.Entidades
 {
     public class Estadias
     {
-        [Key] 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Estadia { get; set; }
-        public DateTime FechaEntrada { get; set; }
-        public DateTime FechaSalida { get; set; }
 
+        public DateTime Fecha_Entrada { get; set; }
+
+        public DateTime Fecha_Salida { get; set; }
         public int Id_Reserva { get; set; }
-        public Reservas? _Reserva { get; set; }
+        [ForeignKey("Id_Reserva")]
+        public Reservas? Reservas { get; set; }
 
-        public Facturas? _Factura { get; set; }
+        public Facturas? Facturas { get; set; }
     }
 }

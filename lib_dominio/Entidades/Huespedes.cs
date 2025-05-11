@@ -10,20 +10,20 @@ namespace lib_dominio.Entidades
 {
     public class Huespedes
     {
-        [Key]  
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Huesped { get; set; }
-        public string? Codigo { get; set; }
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }
-       
+
+        [NotMapped]
         public int Edad
         {
             get
             {
                 DateTime hoy = DateTime.Today;
-                int edad = hoy.Year - FechaNaci.Year;
-                if (FechaNaci.Date > hoy.AddYears(-edad))
+                int edad = hoy.Year - Fecha_Naci.Year;
+                if (Fecha_Naci.Date > hoy.AddYears(-edad))
                 {
                     edad--;
                 }
@@ -31,15 +31,17 @@ namespace lib_dominio.Entidades
             }
 
         }
-        public DateTime FechaNaci { get; set; }
+        public DateTime Fecha_Naci { get; set; }
         public string? Sexo { get; set; }
 
         public string? Telefono { get; set; }
         public string? Correo { get; set; }
         public string? Historial_Reserva { get; set; }
 
+
         public int Id_Hotel { get; set; }
-        public Hoteles? _Hotel { get; set; }
+        [ForeignKey("Id_Hotel")]
+        public Hoteles? Hotel { get; set; }
 
         public List<Reservas>? Reservas { get; set; }
 

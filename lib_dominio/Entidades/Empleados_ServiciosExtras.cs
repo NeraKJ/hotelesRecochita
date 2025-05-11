@@ -11,18 +11,20 @@ namespace lib_dominio.Entidades
 
     public class Empleados_ServiciosExtras
     {
-        [Key]  
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
-        public int Id_Empleado_ServiciosExtra { get; set; }
-        public int Id_Empleado { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id_Empleado_ServicioExtra { get; set; }
+        public int Id_empleado { get; set; }
         public int Id_ServicioExtra { get; set; }
 
-        public double Pago_servicio { get; set; }
-        public double Precio_servicio { get; set; }
+        public decimal Pago_Servicio { get; set; }
+        public decimal Precio_Servicio { get; set; }
 
+        [ForeignKey("Id_empleado")]
+        public Empleados? Empleados { get; set; }
 
-        public Empleados? _Empleado { get; set; }
-        public ServiciosExtras? _ServicioExtra { get; set; }
+        [ForeignKey("Id_ServicioExtra")]
+        public ServiciosExtras? ServiciosExtras { get; set; }
 
 
     }

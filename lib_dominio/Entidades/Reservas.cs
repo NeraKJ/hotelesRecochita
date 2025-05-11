@@ -10,21 +10,24 @@ namespace lib_dominio.Entidades
 {
     public class Reservas
     {
-        [Key]  
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Reserva { get; set; }
         public int Id_Sede { get; set; }
-        public Sedes? _Sede { get; set; }
+        [ForeignKey("Id_Sede")]
+        public Sedes? Sedes { get; set; }
 
-        public int Huesped { get; set; }
-        public Huespedes? _Huesped { get; set; }
+        public int Id_Huesped { get; set; }
+        [ForeignKey("Id_Huesped")]
+        public Huespedes? Huespedes { get; set; }
 
-        public string? Estado { get; set; }
-        public DateTime FechaReserva { get; set; }
-        public int NumeroHuespedes { get; set; }
+        public string? Estado_Actual { get; set; }
+        public string? Numero_Huespedes { get; set; }
+        public DateTime Fecha_Reserva { get; set; }
+        public Estadias? Estadias { get; set; }
 
-        public Estadias? _Estadia { get; set; }
-        public Facturas? _Factura { get; set; }
+
+        public Facturas? Factura { get; set; }
 
         public List<Reservas_Habitaciones>? ReservasHabitaciones { get; set; }
     }

@@ -10,18 +10,25 @@ namespace lib_dominio.Entidades
 {
     public class Facturas
     {
-        [Key]  
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Factura { get; set; }
         public int Id_ServicioExtra { get; set; }
-        public int Total { get; set; }
-        public string? MetodoPago { get; set; }
-        public string? CargosExtra { get; set; }
+
+        [ForeignKey("Id_ServicioExtra")]
+        public ServiciosExtras? ServiciosExtras { get; set; }
+        public int Id_Reserva { get; set; }
+        public int Id_Estadia { get; set; }
+        public decimal Total { get; set; }
+        public string? Metodo_Pago { get; set; }
+        public string? Cargos_Extra { get; set; }
         public string? Reseña { get; set; }
 
-        public int Id_Estadia { get; set; }
-        public Estadias? _Estadia { get; set; }
 
-        public List<ServiciosExtras>? ServiciosExtras { get; set; }
+        [ForeignKey("Id_Estadia")]
+        public Estadias? Estadias { get; set; }
+        [ForeignKey("Id_Reserva")]
+        public Reservas? Reserva { get; set; }
+
     }
 }

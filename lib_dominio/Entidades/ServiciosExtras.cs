@@ -10,20 +10,22 @@ namespace lib_dominio.Entidades
 {
     public class ServiciosExtras
     {
-        [Key] 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_ServicioExtra { get; set; }
 
         public int Id_Sede { get; set; }
-        public bool Piscina { get; set; }
-        public bool Restaurante { get; set; }
-        public bool Limpieza { get; set; }
-        public bool Mantenimiento { get; set; }
-        public bool Gimnasio { get; set; }
-        public bool Jacuzzi { get; set; }
-        public int Id_Factura { get; set; }
-        public Facturas? _Factura { get; set; }
+        [ForeignKey("Id_Sede")]
+        public Sedes? Sedes { get; set; }
+        public string? Piscina { get; set; }
+        public string? Restaurante { get; set; }
+        public string? Limpieza { get; set; }
+        public string? Mantenimiento { get; set; }
+        public string? Gimnasio { get; set; }
+        public string? Jacuzzi { get; set; }
 
+        public Facturas? Factura { get; set; }
+        //public List<Facturas>? Facturas { get; set; }
         public List<Empleados_ServiciosExtras>? Empleados_ServiciosExtras { get; set; }
         public List<Sedes_ServiciosExtras>? Sedes_ServiciosExtras { get; set; }
 
