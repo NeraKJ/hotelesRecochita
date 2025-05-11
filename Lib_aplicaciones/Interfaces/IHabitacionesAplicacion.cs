@@ -5,7 +5,7 @@ namespace lib_aplicaciones.Interfaces
     public interface IHabitacionesAplicacion
     {
         void Configurar(string StringConexion);
-        List<Habitaciones> PorCodigo(Habitaciones? entidad);
+        List<Habitaciones> PorId(Habitaciones? entidad);
         List<Habitaciones> Listar();
         Habitaciones? Guardar(Habitaciones? entidad);
         Habitaciones? Modificar(Habitaciones? entidad);

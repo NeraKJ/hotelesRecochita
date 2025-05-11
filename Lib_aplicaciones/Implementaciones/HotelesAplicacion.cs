@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_aplicaciones.Implementaciones
 {
-    public class DistribuidoresAplicacion : IEmpleados_ServiciosExtrasAplicacion
+    public class HotelesAplicacion : IHotelesAplicacion
     {
         private IConexion? IConexion = null;
 
-        public DistribuidoresAplicacion(IConexion iConexion)
+        public HotelesAplicacion(IConexion iConexion)
         {
             this.IConexion = iConexion;
         }
@@ -19,59 +19,59 @@ namespace lib_aplicaciones.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public Distribuidores? Borrar(Distribuidores? entidad)
+        public Hoteles? Borrar(Hoteles? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id == 0)
+            if (entidad!.Id_Hotel == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Distribuidores!.Remove(entidad);
+            this.IConexion!.Hoteles!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public Distribuidores? Guardar(Distribuidores? entidad)
+        public Hoteles? Guardar(Hoteles? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id != 0)
+            if (entidad.Id_Hotel != 0)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Distribuidores!.Add(entidad);
+            this.IConexion!.Hoteles!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<Distribuidores> Listar()
+        public List<Hoteles> Listar()
         {
-            return this.IConexion!.Distribuidores!.Take(20).ToList();
+            return this.IConexion!.Hoteles!.Take(20).ToList();
         }
 
-        public List<Distribuidores> PorCodigo(Distribuidores? entidad)
+        public List<Hoteles> PorId(Hoteles? entidad)
         {
-            return this.IConexion!.Distribuidores!
-                .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
+            return this.IConexion!.Hoteles!
+                .Where(x => x.Id_Hotel!.Contains(entidad!.Id_Hotel!))
                 .ToList();
         }
 
-        public Distribuidores? Modificar(Distribuidores? entidad)
+        public Hoteles? Modificar(Hoteles? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id == 0)
+            if (entidad!.Id_Hotel == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            var entry = this.IConexion!.Entry<Distribuidores>(entidad);
+            var entry = this.IConexion!.Entry<Hoteles>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

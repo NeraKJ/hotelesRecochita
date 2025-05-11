@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace lib_aplicaciones.Implementaciones
 {
-    public class ProductosAplicacion : IEmpleadosAplicacion
+    public class FacturasAplicacion : IFacturasAplicacion
     {
         private IConexion? IConexion = null;
 
-        public ProductosAplicacion(IConexion iConexion)
+        public FacturasAplicacion(IConexion iConexion)
         {
             this.IConexion = iConexion;
         }
@@ -19,59 +19,59 @@ namespace lib_aplicaciones.Implementaciones
             this.IConexion!.StringConexion = StringConexion;
         }
 
-        public Productos? Borrar(Productos? entidad)
+        public Facturas? Borrar(Facturas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id == 0)
+            if (entidad!.Id_Factura == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Productos!.Remove(entidad);
+            this.IConexion!.Facturas!.Remove(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public Productos? Guardar(Productos? entidad)
+        public Facturas? Guardar(Facturas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id != 0)
+            if (entidad.Id_Factura != 0)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Productos!.Add(entidad);
+            this.IConexion!.Facturas!.Add(entidad);
             this.IConexion.SaveChanges();
             return entidad;
         }
 
-        public List<Productos> Listar()
+        public List<Facturas> Listar()
         {
-            return this.IConexion!.Productos!.Take(20).ToList();
+            return this.IConexion!.Facturas!.Take(20).ToList();
         }
 
-        public List<Productos> PorCodigo(Productos? entidad)
+        public List<Facturas> PorId(Facturas? entidad)
         {
-            return this.IConexion!.Productos!
-                .Where(x => x.Codigo!.Contains(entidad!.Codigo!))
+            return this.IConexion!.Facturas!
+                .Where(x => x.Id_Factura!.Contains(entidad!.Id_Factura!))
                 .ToList();
         }
 
-        public Productos? Modificar(Productos? entidad)
+        public Facturas? Modificar(Facturas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id == 0)
+            if (entidad!.Id_Factura == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            var entry = this.IConexion!.Entry<Productos>(entidad);
+            var entry = this.IConexion!.Entry<Facturas>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
             return entidad;

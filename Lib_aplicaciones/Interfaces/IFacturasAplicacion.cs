@@ -5,7 +5,7 @@ namespace lib_aplicaciones.Interfaces
     public interface IFacturasAplicacion
     {
         void Configurar(string StringConexion);
-        List<Facturas> PorCodigo(Facturas? entidad);
+        List<Facturas> PorId(Facturas? entidad);
         List<Facturas> Listar();
         Facturas? Guardar(Facturas? entidad);
         Facturas? Modificar(Facturas? entidad);
