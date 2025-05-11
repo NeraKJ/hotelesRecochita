@@ -4,50 +4,50 @@ using lib_presentaciones.Interfaces;
 
 namespace lib_presentaciones.Implementaciones
 {
-    public class DistribuidoresPresentacion : IDistribuidoresPresentacion
+    public class Reservas_HabitacionesPresentacion : IReservas_HabitacionesPresentacion
     {
         private Comunicaciones? comunicaciones = null;
 
-        public async Task<List<Distribuidores>> Listar()
+        public async Task<List<Reservas_Habitaciones>> Listar()
         {
-            var lista = new List<Distribuidores>();
+            var lista = new List<Reservas_Habitaciones>();
             var datos = new Dictionary<string, object>();
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Distribuidores/Listar");
+            datos = comunicaciones.ConstruirUrl(datos, "Reservas_Habitaciones/Listar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            lista = JsonConversor.ConvertirAObjeto<List<Distribuidores>>(
+            lista = JsonConversor.ConvertirAObjeto<List<Reservas_Habitaciones>>(
                 JsonConversor.ConvertirAString(respuesta["Entidades"]));
             return lista;
         }
 
-        public async Task<List<Distribuidores>> PorCodigo(Distribuidores? entidad)
+        public async Task<List<Reservas_Habitaciones>> PorCodigo(Reservas_Habitaciones? entidad)
         {
-            var lista = new List<Distribuidores>();
+            var lista = new List<Reservas_Habitaciones>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Distribuidores/PorCodigo");
+            datos = comunicaciones.ConstruirUrl(datos, "Reservas_Habitaciones/PorCodigo");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            lista = JsonConversor.ConvertirAObjeto<List<Distribuidores>>(
+            lista = JsonConversor.ConvertirAObjeto<List<Reservas_Habitaciones>>(
                 JsonConversor.ConvertirAString(respuesta["Entidades"]));
             return lista;
         }
 
-        public async Task<Distribuidores?> Guardar(Distribuidores? entidad)
+        public async Task<Reservas_Habitaciones?> Guardar(Reservas_Habitaciones? entidad)
         {
-            if (entidad!.Id != 0)
+            if (entidad!.Id_Reserva_Habitacion != 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -56,21 +56,21 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Distribuidores/Guardar");
+            datos = comunicaciones.ConstruirUrl(datos, "Reservas_Habitaciones/Guardar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<Distribuidores>(
+            entidad = JsonConversor.ConvertirAObjeto<Reservas_Habitaciones>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
 
-        public async Task<Distribuidores?> Modificar(Distribuidores? entidad)
+        public async Task<Reservas_Habitaciones?> Modificar(Reservas_Habitaciones? entidad)
         {
-            if (entidad!.Id == 0)
+            if (entidad!.Id_Reserva_Habitacion == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -79,21 +79,21 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Distribuidores/Modificar");
+            datos = comunicaciones.ConstruirUrl(datos, "Reservas_Habitaciones/Modificar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<Distribuidores>(
+            entidad = JsonConversor.ConvertirAObjeto<Reservas_Habitaciones>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
 
-        public async Task<Distribuidores?> Borrar(Distribuidores? entidad)
+        public async Task<Reservas_Habitaciones?> Borrar(Reservas_Habitaciones? entidad)
         {
-            if (entidad!.Id == 0)
+            if (entidad!.Id_Reserva_Habitacion == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -102,14 +102,14 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Distribuidores/Borrar");
+            datos = comunicaciones.ConstruirUrl(datos, "Reservas_Habitaciones/Borrar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<Distribuidores>(
+            entidad = JsonConversor.ConvertirAObjeto<Reservas_Habitaciones>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
