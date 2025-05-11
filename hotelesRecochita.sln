@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cns_presentacion", "hotelesRecochita\cns_presentacion.csproj", "{A2DF5268-2A0D-4329-ACDF-9B593A0B6BA9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.presentaciones", "1.presentaciones", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.servicios", "2.servicios", "{7FBC641B-5D94-4154-A43D-64A64CDB9864}"
@@ -32,10 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A2DF5268-2A0D-4329-ACDF-9B593A0B6BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2DF5268-2A0D-4329-ACDF-9B593A0B6BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2DF5268-2A0D-4329-ACDF-9B593A0B6BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2DF5268-2A0D-4329-ACDF-9B593A0B6BA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A78800B-DDAD-48F2-A3B4-C0B468B4EE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A78800B-DDAD-48F2-A3B4-C0B468B4EE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A78800B-DDAD-48F2-A3B4-C0B468B4EE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,7 +51,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A2DF5268-2A0D-4329-ACDF-9B593A0B6BA9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{5A78800B-DDAD-48F2-A3B4-C0B468B4EE7E} = {7FBC641B-5D94-4154-A43D-64A64CDB9864}
 		{64658147-F574-4CD4-891B-300C9705DD4B} = {93E524CB-3F3D-436F-8720-898507D909A4}
 		{136E9B9C-B22C-4F74-87BA-96B134C9C894} = {B60AA421-DC4F-4A5E-AFE3-ED81245062D1}
