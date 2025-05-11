@@ -2,39 +2,33 @@
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace lib_repositorios.implementaciones
+namespace lib_repositorios.Implementaciones
 {
     public partial class Conexion : DbContext, IConexion
     {
-        public string StringConnection { get; set; }
+        public string? StringConexion { get; set; }
 
-        public Conexion(string stringConnection)
-        {
-            this.StringConnection = stringConnection;
-        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(this.StringConnection);
-                optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-            }
+            optionsBuilder.UseSqlServer(this.StringConexion!, p => { });
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Estadias>()
-                .HasOne(e => e._Factura)    // Una estadía tiene una factura
-                .WithOne(f => f._Estadia)   // Una factura pertenece a una estadía
+                .HasOne(e => e.Facturas)    // Una estadía tiene una factura
+                .WithOne(f => f.Estadias)   // Una factura pertenece a una estadía
                 .HasForeignKey<Facturas>(f => f.Id_Estadia) // Factura depende de Estadía
                 .OnDelete(DeleteBehavior.Cascade); // Elimina la factura si se borra la estadía
 
             modelBuilder.Entity<Estadias>()
-                .HasOne(e => e._Reserva)
-                .WithOne(r => r._Estadia)
+                .HasOne(e => e.Reservas)
+                .WithOne(r => r.Estadias)
                 .HasForeignKey<Estadias>(e => e.Id_Reserva)
-                .OnDelete(DeleteBehavior.Cascade); 
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
