@@ -2,7 +2,7 @@
 
 namespace lib_aplicaciones.Interfaces
 {
-    public interface IEsatadiasAplicacion
+    public interface IEstadiasAplicacion
     {
         void Configurar(string StringConexion);
         List<Estadias> PorId(Estadias? entidad);
