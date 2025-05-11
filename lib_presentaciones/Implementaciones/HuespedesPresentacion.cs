@@ -26,7 +26,7 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<Huespedes>> PorCodigo(Huespedes? entidad)
+        public async Task<List<Huespedes>> PorId (Huespedes? entidad)
         {
             var lista = new List<Huespedes>();
             var datos = new Dictionary<string, object>();
