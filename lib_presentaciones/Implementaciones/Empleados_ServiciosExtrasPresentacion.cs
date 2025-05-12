@@ -1,7 +1,6 @@
 ﻿using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
-
 namespace lib_presentaciones.Implementaciones
 {
     public class Empleados_ServiciosExtrasPresentacion : IEmpleados_ServiciosExtrasPresentacion
