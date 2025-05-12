@@ -1,5 +1,5 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DistribuidoresModel
+@model asp_presentacion.Pages.Ventanas.EmpleadosModel
 @{
     ViewData["Titulo"] = "";
 }
@@ -10,7 +10,7 @@
             @Html.AntiForgeryToken()
 
             <div align="left">
-                <h3>Distribuidores</h3>
+                <h3>Empleados</h3>
             </div>
             <div align="left"
                  class="bt_panel_buttons">
@@ -40,18 +40,30 @@
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                    asp-for="@Model.Actual!.Id" />
+                       asp-for="@Model.Actual!.Id_Empleado" />
             }
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Codigo" />
+                       asp-for="@Model.Actual!.Id_Empleado" />
+                <input type="hidden"
+                   asp-for="@Model.Actual!.Id_Hotel" />
+                <input type="hidden"
+                   asp-for="@Model.Actual!.Id_Sede" />
                 <input type="hidden"
                    asp-for="@Model.Actual!.Nombre" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Dirreccion" />
+                       asp-for="@Model.Actual!.Apellido" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Telefono" />
+                       asp-for="@Model.Actual!.Edad" />
+                <input type="hidden"
+                       asp-for="@Model.Actual!.Fecha_Naci" />
+                <input type="hidden"
+                       asp-for="@Model.Actual!.Sexo" />
+                <input type="hidden"
+                       asp-for="@Model.Actual!.Fecha_Contratacion" />
+                <input type="hidden"
+                       asp-for="@Model.Actual!.Rol" />
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -67,7 +79,7 @@
                             <div class="col-lg-6">
                                 <input id="nmEstudiante"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Codigo" />
+                                       asp-for="@Model.Actual!.Id_Empleado" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -77,7 +89,7 @@
                             <div class="col-lg-6">
                                 <input id="nmMateria"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Nombre" />
+                                       asp-for="@Model.Actual!.Id_Hotel" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,7 +99,47 @@
                             <div class="col-lg-6">
                                 <input id="nmNota1"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Telefono" />
+                                       asp-for="@Model.Actual!.Id_Sede" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Telefono
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota1"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Nombre" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Telefono
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota1"
+                                   class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Apellido" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Telefono
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota1"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Edad" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Telefono
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota1"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Fecha_Naci" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -97,7 +149,27 @@
                             <div class="col-lg-6">
                                 <input id="nmNota2"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Dirreccion" />
+                                       asp-for="@Model.Actual!.Sexo" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Dirreccion
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota2"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Fecha_Contratacion" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Dirreccion
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota2"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Rol" />
                             </div>
                         </div>
                     </div>
@@ -124,8 +196,17 @@
                                 Desea borrar la entidad?
                             </h4>
                             <h6 align="left">
-                                @Model.Actual!.Codigo, 
-                                @Model.Actual!.Nombre
+                                @Model.Actual!.Id_Empleado,
+                                @Model.Actual!.Id_Hotel,
+                                @Model.Actual!.Id_Sede,
+                                @Model.Actual!.Nombre,
+                                @Model.Actual!.Apellido,
+                                @Model.Actual!.Edad,
+                                @Model.Actual!.Fecha_Naci,
+                                @Model.Actual!.Sexo,
+                                @Model.Actual!.Fecha_Contratacion,
+                                @Model.Actual!.Rol,
+                               
                             </h6>
                             <br />
                             <br />
@@ -147,7 +228,7 @@
             {
                 <input id="flNombre"
                    class="cts_forms form-control"
-                   asp-for="@Model.Filtro!.Codigo"
+                       asp-for="@Model.Filtro!.Id_Empleado"
                    placeholder="Nombre" />
                 <br />
 
@@ -155,16 +236,34 @@
                     <table class="tb_data table table-striped table-bordered table-hover">
                         <tr>
                             <th>
-                                Codigo
+                                Id_Empleado
                             </th>
                             <th>
-                                Nombre
+                                Id_Hotel
                             </th>
                             <th class="cl_hidden">
-                                Telefono
+                                Id_Sede
                             </th>
                             <th class="cl_actions">
-                                Dirreccion
+                                Nombre
+                            </th>
+                            <th class="cl_actions">
+                                Apellido
+                            </th>
+                            <th class="cl_actions">
+                                Edad
+                            </th>
+                            <th class="cl_actions">
+                                Fecha_Naci
+                            </th>
+                            <th class="cl_actions">
+                                Sexo
+                            </th>
+                            <th class="cl_actions">
+                                Fecha_Contratacion
+                            </th>
+                            <th class="cl_actions">
+                                Rol
                             </th>
                             <th class="cl_actions">
                                 Accion
@@ -176,28 +275,46 @@
                             {
                                 <tr>
                                     <td>
-                                        @elemento.Codigo
+                                        @elemento.Id_Empleado
                                     </td>
                                     <td>
+                                        @elemento.Id_Hotel
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Id_Sede
+                                    </td>
+                                    <td class="cl_hidden">
                                         @elemento.Nombre
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Telefono
+                                        @elemento.Apellido
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Dirreccion
+                                        @elemento.Edad
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Fecha_Naci
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Sexo
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Fecha_Contratacion
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Rol
                                     </td>
                                     <td>
                                         <input type="submit"
                                            value="Modicar"
                                            asp-page-handler="BtModificar"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                               asp-route-data="@elemento.Id_Empleado" />
                                         <input type="submit"
                                            value="Borrar"
                                            asp-page-handler="BtBorrarVal"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                               asp-route-data="@elemento.Id_Empleado" />
                                     </td>
                                 </tr>
                             }

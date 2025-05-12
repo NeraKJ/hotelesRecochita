@@ -1,5 +1,5 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DistribuidoresModel
+@model asp_presentacion.Pages.Ventanas.HabitacionesModel
 @{
     ViewData["Titulo"] = "";
 }
@@ -10,7 +10,7 @@
             @Html.AntiForgeryToken()
 
             <div align="left">
-                <h3>Distribuidores</h3>
+                <h3>Habitaciones</h3>
             </div>
             <div align="left"
                  class="bt_panel_buttons">
@@ -40,18 +40,26 @@
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                    asp-for="@Model.Actual!.Id" />
+                    asp-for="@Model.Actual!.Id_Habitacion" />
             }
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Codigo" />
+                   asp-for="@Model.Actual!.Id_Habitacion" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Nombre" />
+                   asp-for="@Model.Actual!.Id_Sede" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Dirreccion" />
+                   asp-for="@Model.Actual!.Numero_Habitacion" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Telefono" />
+                   asp-for="@Model.Actual!.Precio_Habitacion" />
+                <input type="hidden"
+                    asp-for="@Model.Actual!.Camas" />
+                <input type="hidden"
+                     asp-for="@Model.Actual!.Estado" />
+                <input type="hidden"
+                     asp-for="@Model.Actual!.Capacidad" />
+                <input type="hidden"
+                       asp-for="@Model.Actual!.Id_Hotel" />
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -62,32 +70,52 @@
                     <div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Codigo
+                                Id_Habitacion
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmEstudiante"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Codigo" />
+                                   asp-for="@Model.Actual!.Id_Habitacion" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Nombre
+                                Id_Sede
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmMateria"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Nombre" />
+                                       asp-for="@Model.Actual!.Id_Sede" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Numero_Habitacion
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Telefono" />
+                                       asp-for="@Model.Actual!.Numero_Habitacion" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Precio_Habitacion
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota2"
+                                   class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Precio_Habitacion" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Camas
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota2"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Camas" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -96,10 +124,31 @@
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
-                                   class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Dirreccion" />
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Estado" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Capacidad
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota2"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Capacidad" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Id_Hotel
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmNota2"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Id_Hotel" />
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             }
@@ -124,8 +173,15 @@
                                 Desea borrar la entidad?
                             </h4>
                             <h6 align="left">
-                                @Model.Actual!.Codigo, 
-                                @Model.Actual!.Nombre
+                                @Model.Actual!.Id_Habitacion,
+                                @Model.Actual!.Id_Sede,
+                                @Model.Actual!.Numero_Habitacion,
+                                @Model.Actual!.Precio_Habitacion,
+                                @Model.Actual!.Camas,
+                                @Model.Actual!.Estado,
+                                @Model.Actual!.Capacidad,
+                                @Model.Actual!.Id_Hotel
+                             
                             </h6>
                             <br />
                             <br />
@@ -147,7 +203,7 @@
             {
                 <input id="flNombre"
                    class="cts_forms form-control"
-                   asp-for="@Model.Filtro!.Codigo"
+                   asp-for="@Model.Filtro!.Id_Habitacion"
                    placeholder="Nombre" />
                 <br />
 
@@ -155,16 +211,28 @@
                     <table class="tb_data table table-striped table-bordered table-hover">
                         <tr>
                             <th>
-                                Codigo
+                                Id_Habitacion
                             </th>
                             <th>
-                                Nombre
+                                Id_Sede
                             </th>
                             <th class="cl_hidden">
-                                Telefono
+                                Numero_Habitacion
                             </th>
                             <th class="cl_actions">
-                                Dirreccion
+                                Precio_Habitacion
+                            </th>
+                            <th class="cl_actions">
+                                Camas
+                            </th>
+                            <th class="cl_actions">
+                                Estado
+                            </th>
+                            <th class="cl_actions">
+                                Capacidad
+                            </th>
+                            <th class="cl_actions">
+                                Id_Hotel
                             </th>
                             <th class="cl_actions">
                                 Accion
@@ -176,28 +244,40 @@
                             {
                                 <tr>
                                     <td>
-                                        @elemento.Codigo
+                                        @elemento.Id_Habitacion
                                     </td>
                                     <td>
-                                        @elemento.Nombre
+                                        @elemento.Id_Sede
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Telefono
+                                        @elemento.Numero_Habitacion
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Dirreccion
+                                        @elemento.Precio_Habitacion
+                                    </td>
+                                    <td>
+                                        @elemento.Camas
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Estado
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Capacidad
+                                    </td>
+                                    <td class="cl_hidden">
+                                        @elemento.Id_Hotel
                                     </td>
                                     <td>
                                         <input type="submit"
                                            value="Modicar"
                                            asp-page-handler="BtModificar"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                           asp-route-data="@elemento.Id_Habitacion" />
                                         <input type="submit"
                                            value="Borrar"
                                            asp-page-handler="BtBorrarVal"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                           asp-route-data="@elemento.Id_Habitacion" />
                                     </td>
                                 </tr>
                             }

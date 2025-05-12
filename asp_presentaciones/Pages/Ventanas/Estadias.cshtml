@@ -1,5 +1,5 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DistribuidoresModel
+@model asp_presentacion.Pages.Ventanas.EstadiasModel
 @{
     ViewData["Titulo"] = "";
 }
@@ -10,7 +10,7 @@
             @Html.AntiForgeryToken()
 
             <div align="left">
-                <h3>Distribuidores</h3>
+                <h3>Estadias</h3>
             </div>
             <div align="left"
                  class="bt_panel_buttons">
@@ -40,18 +40,18 @@
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                    asp-for="@Model.Actual!.Id" />
+                    asp-for="@Model.Actual!.Id_Estadia" />
             }
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Codigo" />
+                   asp-for="@Model.Actual!.Id_Estadia" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Nombre" />
+                   asp-for="@Model.Actual!.Fecha_Entrada" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Dirreccion" />
+                   asp-for="@Model.Actual!.Fecha_Salida" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Telefono" />
+                   asp-for="@Model.Actual!.Id_Reserva" />
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -62,42 +62,42 @@
                     <div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Codigo
+                                Id_Estadia
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmEstudiante"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Codigo" />
+                                   asp-for="@Model.Actual!.Id_Estadia" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Nombre
+                                Fecha_Entrada
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmMateria"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Nombre" />
+                                   asp-for="@Model.Actual!.Fecha_Entrada" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Id_Reserva
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Telefono" />
+                                   asp-for="@Model.Actual!.Id_Reserva" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Dirreccion
+                                Fecha_Salida
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Dirreccion" />
+                                   asp-for="@Model.Actual!.Fecha_Salida" />
                             </div>
                         </div>
                     </div>
@@ -124,8 +124,8 @@
                                 Desea borrar la entidad?
                             </h4>
                             <h6 align="left">
-                                @Model.Actual!.Codigo, 
-                                @Model.Actual!.Nombre
+                                @Model.Actual!.Id_Estadia, 
+                                @Model.Actual!.Fecha_Entrada
                             </h6>
                             <br />
                             <br />
@@ -145,26 +145,26 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input id="flNombre"
+                <input id="flFecha_Entrada"
                    class="cts_forms form-control"
-                   asp-for="@Model.Filtro!.Codigo"
-                   placeholder="Nombre" />
+                   asp-for="@Model.Filtro!.Id_Estadia"
+                   placeholder="Fecha_Entrada" />
                 <br />
 
                 <div class="containers_vn panel panel-default">
                     <table class="tb_data table table-striped table-bordered table-hover">
                         <tr>
                             <th>
-                                Codigo
+                                Id_Estadia
                             </th>
                             <th>
-                                Nombre
+                                Fecha_Entrada
                             </th>
                             <th class="cl_hidden">
-                                Telefono
+                                Id_Reserva
                             </th>
                             <th class="cl_actions">
-                                Dirreccion
+                                Fecha_Salida
                             </th>
                             <th class="cl_actions">
                                 Accion
@@ -176,28 +176,28 @@
                             {
                                 <tr>
                                     <td>
-                                        @elemento.Codigo
+                                        @elemento.Id_Estadia
                                     </td>
                                     <td>
-                                        @elemento.Nombre
+                                        @elemento.Fecha_Entrada
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Telefono
+                                        @elemento.Id_Reserva
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Dirreccion
+                                        @elemento.Fecha_Salida
                                     </td>
                                     <td>
                                         <input type="submit"
                                            value="Modicar"
                                            asp-page-handler="BtModificar"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                           asp-route-data="@elemento.Id_Estadia" />
                                         <input type="submit"
                                            value="Borrar"
                                            asp-page-handler="BtBorrarVal"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                           asp-route-data="@elemento.Id_Estadia" />
                                     </td>
                                 </tr>
                             }

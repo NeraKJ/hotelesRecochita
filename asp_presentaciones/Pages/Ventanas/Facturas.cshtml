@@ -1,0 +1,163 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.FacturasModel
+@{
+    ViewData["Titulo"] = "";
+}
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Facturas</h3>
+            </div>
+
+            <div class="bt_panel_buttons" align="left">
+                <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                <input type="submit" value="Guardar" asp-page-handler="BtGuardar"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+            </div>
+
+            @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+            {
+                <input type="hidden" asp-for="Actual.Id_Factura" />
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input type="hidden" asp-for="Actual.Id_ServicioExtra" />
+                <input type="hidden" asp-for="Actual.Id_Estadia" />
+                <input type="hidden" asp-for="Actual.Id_Reserva" />
+                <input type="hidden" asp-for="Actual.Total" />
+                <input type="hidden" asp-for="Actual.Metodo_Pago" />
+                <input type="hidden" asp-for="Actual.Cargos_Extra" />
+                <input type="hidden" asp-for="Actual.Reseña" />
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+            {
+                <div class="containers_vn panel panel-default">
+                    <h3>Editar Factura</h3>
+                    <div class="form-group">
+                        <label>Id_Factura</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Id_Factura" />
+                    </div>
+                    <div class="form-group">
+                        <label>Id_ServicioExtra</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Id_ServicioExtra" />
+                    </div>
+                    <div class="form-group">
+                        <label>Id_Estadia</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Id_Estadia" />
+                    </div>
+                    <div class="form-group">
+                        <label>Id_Reserva</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Id_Reserva" />
+                    </div>
+                    <div class="form-group">
+                        <label>Total</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Total" />
+                    </div>
+                    <div class="form-group">
+                        <label>Metodo_Pago</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Metodo_Pago" />
+                    </div>
+                    <div class="form-group">
+                        <label>Cargos_Extra</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Cargos_Extra" />
+                    </div>
+                    <div class="form-group">
+                        <label>Reseña</label>
+                        <input class="cts_forms form-control" asp-for="Actual.Reseña" />
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <input type="hidden" asp-for="Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <div class='popup'>
+                    <div class='pp_del_inner'>
+                        <div style='width:95%'>
+                            <h2>Mensaje</h2>
+                            <h4>Desea borrar la entidad?</h4>
+                            <h6>
+                                @Model.Actual.Id_Factura,
+                                @Model.Actual.Id_ServicioExtra,
+                                @Model.Actual.Id_Estadia,
+                                @Model.Actual.Id_Reserva,
+                                @Model.Actual.Total,
+                                @Model.Actual.Metodo_Pago,
+                                @Model.Actual.Cargos_Extra,
+                                @Model.Actual.Reseña
+                            </h6>
+                            <br />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-secondary" />
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
+            Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input class="cts_forms form-control" asp-for="Filtro.Id_Factura" placeholder="Buscar por Id_Factura" />
+                <br />
+
+                <div class="containers_vn panel panel-default">
+                    <table class="tb_data table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id_Factura</th>
+                                <th>Id_ServicioExtra</th>
+                                <th>Id_Estadia</th>
+                                <th>Id_Reserva</th>
+                                <th>Total</th>
+                                <th>Metodo_Pago</th>
+                                <th>Cargos_Extra</th>
+                                <th>Reseña</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var elemento in Model.Lista ?? Enumerable.Empty<dynamic>())
+                            {
+                                <tr>
+                                    <td>@elemento.Id_Factura</td>
+                                    <td>@elemento.Id_ServicioExtra</td>
+                                    <td>@elemento.Id_Estadia</td>
+                                    <td>@elemento.Id_Reserva</td>
+                                    <td>@elemento.Total</td>
+                                    <td>@elemento.Metodo_Pago</td>
+                                    <td>@elemento.Cargos_Extra</td>
+                                    <td>@elemento.Reseña</td>
+                                    <td>
+                                        <input type="submit" value="Modificar" asp-page-handler="BtModificar"
+                                               class="btn btn-secondary" asp-route-data="@elemento.Id_Factura" />
+                                        <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal"
+                                               class="btn btn-secondary" asp-route-data="@elemento.Id_Factura" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </form>
+    </div>
+</center>

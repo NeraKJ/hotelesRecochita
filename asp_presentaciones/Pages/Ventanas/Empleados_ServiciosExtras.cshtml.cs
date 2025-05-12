@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
-    public class DistribuidoresModel : PageModel
+    public class Empleados_ServiciosExtrasModel : PageModel
     {
-        private IDistribuidoresPresentacion? iPresentacion = null;
+        private IEmpleados_ServiciosExtrasPresentacion? iPresentacion = null;
 
-        public DistribuidoresModel(IDistribuidoresPresentacion iPresentacion)
+        public Empleados_ServiciosExtrasModel(IEmpleados_ServiciosExtrasPresentacion iPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
-                Filtro = new Distribuidores();
+                Filtro = new Empleados_ServiciosExtras();
             }
             catch (Exception ex)
             {
@@ -25,9 +25,9 @@ namespace asp_presentacion.Pages.Ventanas
 
         public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
-        [BindProperty] public Distribuidores? Actual { get; set; }
-        [BindProperty] public Distribuidores? Filtro { get; set; }
-        [BindProperty] public List<Distribuidores>? Lista { get; set; }
+        [BindProperty] public Empleados_ServiciosExtras? Actual { get; set; }
+        [BindProperty] public Empleados_ServiciosExtras? Filtro { get; set; }
+        [BindProperty] public List<Empleados_ServiciosExtras>? Lista { get; set; }
 
         public virtual void OnGet() { OnPostBtRefrescar(); }
 
@@ -42,10 +42,10 @@ namespace asp_presentacion.Pages.Ventanas
                 //    return;
                 //}
 
-                Filtro!.Codigo = Filtro!.Codigo ?? "";
+                Filtro!.Id_Empleado_ServicioExtra = Filtro!.Id_Empleado_ServicioExtra;
 
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.PorCodigo(Filtro!);
+                var task = this.iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
@@ -61,7 +61,7 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = new Distribuidores();
+                Actual = new Empleados_ServiciosExtras();
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = Lista!.FirstOrDefault(x => x.Id.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id_Empleado_ServicioExtra.ToString() == data);
             }
             catch (Exception ex)
             {
@@ -89,8 +89,8 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Distribuidores>? task = null;
-                if (Actual!.Id == 0)
+                Task<Empleados_ServiciosExtras>? task = null;
+                if (Actual!.Id_Empleado_ServicioExtra == 0)
                     task = this.iPresentacion!.Guardar(Actual!)!;
                 else
                     task = this.iPresentacion!.Modificar(Actual!)!;
@@ -111,7 +111,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Borrar;
-                Actual = Lista!.FirstOrDefault(x => x.Id.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id_Empleado_ServicioExtra.ToString() == data);
             }
             catch (Exception ex)
             {
