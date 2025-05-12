@@ -57,7 +57,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Empleados> PorId(Empleados? entidad)
         {
             return this.IConexion!.Empleados!
-                .Where(x => x.Id_Empleado!.Contains(entidad!.Id_Empleado!))
+                .Where(x => x.Id_Empleado == entidad!.Id_Empleado)
                 .ToList();
         }
 

@@ -57,7 +57,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Reservas> PorId(Reservas? entidad)
         {
             return this.IConexion!.Reservas!
-                .Where(x => x.Id_Reserva!.Contains(entidad!.Id_Reserva!))
+                .Where(x => x.Id_Reserva == entidad!.Id_Reserva)
                 .ToList();
         }
 

@@ -57,7 +57,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Sedes> PorId(Sedes? entidad)
         {
             return this.IConexion!.Sedes!
-                .Where(x => x.Id_Sede!.Contains(entidad!.Id_Sede!))
+                .Where(x => x.Id_Sede == entidad!.Id_Sede)
                 .ToList();
         }
 

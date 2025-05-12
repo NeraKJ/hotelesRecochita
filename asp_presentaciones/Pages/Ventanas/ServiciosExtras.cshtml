@@ -1,0 +1,202 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.ServiciosExtrasModel
+@{
+    ViewData["Titulo"] = "";
+}
+
+<center>
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>ServiciosExtras</h3>
+            </div>
+
+            <div align="left" class="bt_panel_buttons">
+                <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                <input type="submit" value="Guardar" asp-page-handler="BtGuardar"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar"
+                       class="btn btn-secondary"
+                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+            </div>
+
+            @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
+            Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input type="hidden" asp-for="Actual!.Id_ServicioExtra" />
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input type="hidden" asp-for="Actual!.Id_Sede" />
+                <input type="hidden" asp-for="Actual!.Piscina" />
+                <input type="hidden" asp-for="Actual!.Restaurante" />
+                <input type="hidden" asp-for="Actual!.Limpieza" />
+                <input type="hidden" asp-for="Actual!.Mantenimiento" />
+                <input type="hidden" asp-for="Actual!.Gimnasio" />
+                <input type="hidden" asp-for="Actual!.Jacuzzi" />
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+            {
+                <div class="containers_vn panel panel-default">
+                    <h3>Casa</h3>
+
+                    @* Campos del formulario *@
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Id_ServicioExtra</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Id_ServicioExtra" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Id_Sede</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Id_Sede" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Piscina</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Piscina" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Restaurante</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Restaurante" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Limpieza</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Limpieza" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Mantenimiento</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Mantenimiento" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Gimnasio</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Gimnasio" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Jacuzzi</label>
+                        <div class="col-lg-6">
+                            <input class="cts_forms form-control" asp-for="Actual!.Jacuzzi" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <input type="hidden" asp-for="Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <div class="popup">
+                    <div class="pp_del_inner">
+                        <div style="width:95%">
+                            <h2 align="left">Mensaje</h2>
+                            <h4 align="left">¿Desea borrar la entidad?</h4>
+                            <h6 align="left">
+                                @Model.Actual!.Id_ServicioExtra,
+                                @Model.Actual!.Id_Sede,
+                                @Model.Actual!.Piscina,
+                                @Model.Actual!.Restaurante,
+                                @Model.Actual!.Limpieza,
+                                @Model.Actual!.Mantenimiento,
+                                @Model.Actual!.Gimnasio,
+                                @Model.Actual!.Jacuzzi
+                            </h6>
+                            <br /><br />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-secondary" />
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
+            Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input id="flNombre" class="cts_forms form-control"
+                       asp-for="Filtro!.Id_ServicioExtra"
+                       placeholder="Nombre" />
+                <br />
+
+                <div class="containers_vn panel panel-default">
+                    <table class="tb_data table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id_ServicioExtra</th>
+                                <th>Id_Sede</th>
+                                <th class="cl_hidden">Piscina</th>
+                                <th>Restaurante</th>
+                                <th>Limpieza</th>
+                                <th>Mantenimiento</th>
+                                <th class="cl_hidden">Gimnasio</th>
+                                <th>Jacuzzi</th>
+                                <th class="cl_actions">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model?.Lista != null)
+                            {
+                                foreach (var elemento in Model.Lista)
+                                {
+                                    <tr>
+                                        <td>@elemento.Id_ServicioExtra</td>
+                                        <td>@elemento.Id_Sede</td>
+                                        <td class="cl_hidden">@elemento.Piscina</td>
+                                        <td>@elemento.Restaurante</td>
+                                        <td>@elemento.Limpieza</td>
+                                        <td>@elemento.Mantenimiento</td>
+                                        <td class="cl_hidden">@elemento.Gimnasio</td>
+                                        <td>@elemento.Jacuzzi</td>
+                                        <td>
+                                            <input type="submit" value="Modificar"
+                                                   asp-page-handler="BtModificar"
+                                                   class="btn btn-secondary"
+                                                   asp-route-data="@elemento.Id_ServicioExtra" />
+                                            <input type="submit" value="Borrar"
+                                                   asp-page-handler="BtBorrarVal"
+                                                   class="btn btn-secondary"
+                                                   asp-route-data="@elemento.Id_ServicioExtra" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </form>
+    </div>
+</center>

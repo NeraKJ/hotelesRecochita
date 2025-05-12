@@ -54,10 +54,10 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.ServiciosExtras!.Take(20).ToList();
         }
 
-        public List<ServiciosExtras> PorId(ServiciosExtras? entidad)
+        public List<Empleados_ServiciosExtras> PorId(Empleados_ServiciosExtras? entidad)
         {
-            return this.IConexion!.ServiciosExtras!
-                .Where(x => x.Id_ServicioExtra!.Contains(entidad!.Id_ServicioExtra!))
+            return this.IConexion!.Empleados_ServiciosExtras!
+                .Where(x => x.Id_Empleado_ServicioExtra == entidad!.Id_Empleado_ServicioExtra)
                 .ToList();
         }
 

@@ -1,5 +1,5 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DistribuidoresModel
+@model asp_presentacion.Pages.Ventanas.Reservas_HabitacionesModel
 @{
     ViewData["Titulo"] = "";
 }
@@ -10,7 +10,7 @@
             @Html.AntiForgeryToken()
 
             <div align="left">
-                <h3>Distribuidores</h3>
+                <h3>Reservas_Habitaciones</h3>
             </div>
             <div align="left"
                  class="bt_panel_buttons">
@@ -40,18 +40,18 @@
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                    asp-for="@Model.Actual!.Id" />
+                       asp-for="@Model.Actual!.Id_Reserva_Habitacion" />
             }
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Codigo" />
+                       asp-for="@Model.Actual!.Id_Reserva_Habitacion" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Nombre" />
+                       asp-for="@Model.Actual!.Id_Reserva" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Dirreccion" />
+                       asp-for="@Model.Actual!.Id_Habitacion" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Telefono" />
+                   asp-for="@Model.Actual!.Precio_Dia" />
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -62,42 +62,42 @@
                     <div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Codigo
+                                Id_Reserva_Habitacion
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmEstudiante"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Codigo" />
+                                       asp-for="@Model.Actual!.Id_Reserva_Habitacion" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Nombre
+                                Id_Reserva
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmMateria"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Nombre" />
+                                       asp-for="@Model.Actual!.Id_Reserva" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Id_Habitacion
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Telefono" />
+                                       asp-for="@Model.Actual!.Id_Habitacion" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Dirreccion
+                                Precio_Dia
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
                                    class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Dirreccion" />
+                                       asp-for="@Model.Actual!.Precio_Dia" />
                             </div>
                         </div>
                     </div>
@@ -124,8 +124,10 @@
                                 Desea borrar la entidad?
                             </h4>
                             <h6 align="left">
-                                @Model.Actual!.Codigo, 
-                                @Model.Actual!.Nombre
+                                @Model.Actual!.Id_Reserva_Habitacion,
+                                @Model.Actual!.Id_Reserva,
+                                @Model.Actual!.Id_Habitacion,
+                                @Model.Actual!.Precio_Dia
                             </h6>
                             <br />
                             <br />
@@ -145,9 +147,9 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input id="flNombre"
+                <input Id="flNombre"
                    class="cts_forms form-control"
-                   asp-for="@Model.Filtro!.Codigo"
+                       asp-for="@Model.Filtro!.Id_Reserva_Habitacion"
                    placeholder="Nombre" />
                 <br />
 
@@ -155,20 +157,18 @@
                     <table class="tb_data table table-striped table-bordered table-hover">
                         <tr>
                             <th>
-                                Codigo
+                                Id_Reserva_Habitacion
                             </th>
                             <th>
-                                Nombre
+                                Id_Reserva
                             </th>
                             <th class="cl_hidden">
-                                Telefono
+                                Id_Habitacion
                             </th>
                             <th class="cl_actions">
-                                Dirreccion
+                                Precio_Dia
                             </th>
-                            <th class="cl_actions">
-                                Accion
-                            </th>
+                          
                         </tr>
                         @if (Model != null && Model.Lista != null)
                         {
@@ -176,28 +176,31 @@
                             {
                                 <tr>
                                     <td>
-                                        @elemento.Codigo
+                                        @elemento.Id_Reserva_Habitacion
+
                                     </td>
                                     <td>
-                                        @elemento.Nombre
+                                        @elemento.Id_Reserva
+
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Telefono
+                                        @elemento.Id_Habitacion
+
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Dirreccion
+                                        @elemento.Precio_Dia
                                     </td>
                                     <td>
                                         <input type="submit"
                                            value="Modicar"
                                            asp-page-handler="BtModificar"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                               asp-route-data="@elemento.Id_Reserva_Habitacion" />
                                         <input type="submit"
                                            value="Borrar"
                                            asp-page-handler="BtBorrarVal"
                                            class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                               asp-route-data="@elemento.Id_Reserva_Habitacion" />
                                     </td>
                                 </tr>
                             }

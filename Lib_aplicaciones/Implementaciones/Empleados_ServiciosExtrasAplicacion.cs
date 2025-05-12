@@ -57,7 +57,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Empleados_ServiciosExtras> PorId(Empleados_ServiciosExtras? entidad)
         {
             return this.IConexion!.Empleados_ServiciosExtras!
-                .Where(x => x.Id_Empleado_ServicioExtra!.Contains(entidad!.Id_Empleado_ServicioExtra!))
+                .Where(x => x.Id_Empleado_ServicioExtra == entidad!.Id_Empleado_ServicioExtra)
                 .ToList();
         }
 

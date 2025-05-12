@@ -57,7 +57,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Facturas> PorId(Facturas? entidad)
         {
             return this.IConexion!.Facturas!
-                .Where(x => x.Id_Factura!.Contains(entidad!.Id_Factura!))
+                .Where(x => x.Id_Factura == entidad!.Id_Factura)
                 .ToList();
         }
 

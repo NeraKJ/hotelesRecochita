@@ -1,16 +1,16 @@
 ﻿@page
-@model asp_presentacion.Pages.Ventanas.DistribuidoresModel
+@model asp_presentacion.Pages.Ventanas.Sedes_ServiciosExtrasModel
 @{
     ViewData["Titulo"] = "";
 }
 <center>
     <div>
         <form method="POST"
-            enctype="multipart/form-data">
+              enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
             <div align="left">
-                <h3>Distribuidores</h3>
+                <h3>Sedes_ServiciosExtras</h3>
             </div>
             <div align="left"
                  class="bt_panel_buttons">
@@ -40,18 +40,18 @@
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                    asp-for="@Model.Actual!.Id" />
+                       asp-for="@Model.Actual!.Id_Sedes_ServiciosExtras" />
             }
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Codigo" />
+                       asp-for="@Model.Actual!.Id_Sedes_ServiciosExtras" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Nombre" />
+                       asp-for="@Model.Actual!.Id_Sede" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Dirreccion" />
+                       asp-for="@Model.Actual!.Id_ServicioExtra" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Telefono" />
+                       asp-for="@Model.Actual!.Descuento_Sede" />
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -62,42 +62,42 @@
                     <div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Codigo
+                                Id_Sedes_ServiciosExtras
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmEstudiante"
-                                   class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Codigo" />
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Id_Sedes_ServiciosExtras" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Nombre
+                                Id_Sede
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmMateria"
-                                   class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Nombre" />
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Id_Sede" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Id_ServicioExtra
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
-                                   class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Telefono" />
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Id_ServicioExtra" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Dirreccion
+                                Descuento_Sede
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
-                                   class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Dirreccion" />
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Descuento_Sede" />
                             </div>
                         </div>
                     </div>
@@ -107,8 +107,9 @@
             @if (ViewData.ContainsKey("Mensaje"))
             {
                 <input type="hidden"
-                   asp-for="@Model.Accion" />
-                    @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
+                ;
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
@@ -124,19 +125,21 @@
                                 Desea borrar la entidad?
                             </h4>
                             <h6 align="left">
-                                @Model.Actual!.Codigo, 
-                                @Model.Actual!.Nombre
+                                @Model.Actual!.Id_Sedes_ServiciosExtras,
+                                @Model.Actual!.Id_Sede,
+                                @Model.Actual!.Id_ServicioExtra,
+                                @Model.Actual!.Descuento_Sede
                             </h6>
                             <br />
                             <br />
                             <input type="submit"
-                               value="Borrar"
-                               asp-page-handler="BtBorrar"
-                               class="btn btn-secondary" />
+                                   value="Borrar"
+                                   asp-page-handler="BtBorrar"
+                                   class="btn btn-secondary" />
                             <input type="submit"
-                               value="Cerrar"
-                               asp-page-handler="BtCancelar"
-                               class="btn btn-secondary" />
+                                   value="Cerrar"
+                                   asp-page-handler="BtCancelar"
+                                   class="btn btn-secondary" />
                         </div>
                     </div>
                 </div>
@@ -145,30 +148,28 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input id="flNombre"
-                   class="cts_forms form-control"
-                   asp-for="@Model.Filtro!.Codigo"
-                   placeholder="Nombre" />
+                <input Id="flNombre"
+                       class="cts_forms form-control"
+                       asp-for="@Model.Filtro!.Id_Sedes_ServiciosExtras"
+                       placeholder="Nombre" />
                 <br />
 
                 <div class="containers_vn panel panel-default">
                     <table class="tb_data table table-striped table-bordered table-hover">
                         <tr>
                             <th>
-                                Codigo
+                                Id_Sedes_ServiciosExtras
                             </th>
                             <th>
-                                Nombre
+                                Id_Sede
                             </th>
                             <th class="cl_hidden">
-                                Telefono
+                                Id_ServicioExtra
                             </th>
                             <th class="cl_actions">
-                                Dirreccion
+                                Descuento_Sede
                             </th>
-                            <th class="cl_actions">
-                                Accion
-                            </th>
+
                         </tr>
                         @if (Model != null && Model.Lista != null)
                         {
@@ -176,28 +177,31 @@
                             {
                                 <tr>
                                     <td>
-                                        @elemento.Codigo
+                                        @elemento.Id_Sedes_ServiciosExtras
+
                                     </td>
                                     <td>
-                                        @elemento.Nombre
+                                        @elemento.Id_Sede
+
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Telefono
+                                        @elemento.Id_ServicioExtra
+
                                     </td>
                                     <td class="cl_hidden">
-                                        @elemento.Dirreccion
+                                        @elemento.Descuento_Sede
                                     </td>
                                     <td>
                                         <input type="submit"
-                                           value="Modicar"
-                                           asp-page-handler="BtModificar"
-                                           class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                               value="Modicar"
+                                               asp-page-handler="BtModificar"
+                                               class="btn btn-secondary"
+                                               asp-route-data="@elemento.Id_Sedes_ServiciosExtras" />
                                         <input type="submit"
-                                           value="Borrar"
-                                           asp-page-handler="BtBorrarVal"
-                                           class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id" />
+                                               value="Borrar"
+                                               asp-page-handler="BtBorrarVal"
+                                               class="btn btn-secondary"
+                                               asp-route-data="@elemento.Id_Sedes_ServiciosExtras" />
                                     </td>
                                 </tr>
                             }
