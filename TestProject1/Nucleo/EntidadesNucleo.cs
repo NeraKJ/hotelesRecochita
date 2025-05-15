@@ -79,7 +79,7 @@ namespace pruebas_unitarias.Nucleo
         {
             var entidad = new Reservas();
             entidad.Id_Sede = 1;
-            entidad.Id_Huesped= 1023888288;
+            entidad.Id_Huesped = 1023888288;
             entidad.Estado_Actual = "Confirmado";
             entidad.Fecha_Reserva = DateTime.Now;
             entidad.Numero_Huespedes = "30";
@@ -105,7 +105,7 @@ namespace pruebas_unitarias.Nucleo
             entidad.Mantenimiento = "Si";
             entidad.Gimnasio = "Si";
             entidad.Jacuzzi = "Si";
-          
+
             return entidad;
         }
 
@@ -138,7 +138,7 @@ namespace pruebas_unitarias.Nucleo
         }
 
         public static Facturas? Facturas()
-        { 
+        {
             var entidad = new Facturas();
             entidad.Id_Estadia = 1;
             entidad.Id_Reserva = 1;
@@ -150,6 +150,17 @@ namespace pruebas_unitarias.Nucleo
 
 
             return entidad;
+        }
+
+        public static Auditorias? Auditorias()
+        {
+            var entidad = new Auditorias();
+            entidad.Id_Auditoria = 1;
+            entidad.Usuario = "Prueba";
+            entidad.Accion = "Prueba";
+            entidad.Fecha = DateTime.Now;
+            return entidad;
+
         }
     }
 }

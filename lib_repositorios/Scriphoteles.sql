@@ -234,7 +234,7 @@ VALUES ( 1, 'Si', 'No', 'No', 'No', 'Si', 'Si'), ( 2, 'No', 'Si', 'No', 'No', 'N
 ( 1, 'No', 'No', 'No', 'Si', 'No', 'Si'), ( 2, 'Si', 'Si', 'Si', 'No', 'Si', 'No'), ( 3, 'No', 'No', 'No', 'No', 'No', 'Si')
 
 
-CREATE TABLE Empleados_ServiciosExtras(
+CREATE TABLE Auditoria(
 
 Id_Empleado_ServicioExtra INT IDENTITY,
 Id_empleado INT NOT NULL,
@@ -243,10 +243,10 @@ Precio_Servicio DECIMAL(10,3)NOT NULL,
 Pago_Servicio DECIMAL(10,3)NOT NULL
 );
 
-ALTER TABLE Empleados_ServiciosExtras
+ALTER TABLE Auditoria
 ADD CONSTRAINT PK_Id_Empleado_ServicioExtra PRIMARY KEY (Id_Empleado_ServicioExtra)
 
-INSERT INTO Empleados_ServiciosExtras( Id_empleado, Id_ServicioExtra, Precio_Servicio, Pago_Servicio)
+INSERT INTO Auditoria( Id_empleado, Id_ServicioExtra, Precio_Servicio, Pago_Servicio)
 VALUES 
 (4001, 1, 55.000, 22.000),
 (4003, 3, 55.000, 22.000),
@@ -381,11 +381,11 @@ ADD CONSTRAINT FK_Reservas_Habitaciones_Reserva FOREIGN KEY (Id_Reserva) REFEREN
 ALTER TABLE Reservas_Habitaciones
 ADD CONSTRAINT FK_Reservas_Habitaciones_Habitacion FOREIGN KEY (Id_Habitacion) REFERENCES Habitaciones (Id_Habitacion);
 
-ALTER TABLE Empleados_ServiciosExtras
-ADD CONSTRAINT FK_Empleados_ServiciosExtras_Empleado FOREIGN KEY (Id_Empleado) REFERENCES Empleados (Id_Empleado);
+ALTER TABLE Auditoria
+ADD CONSTRAINT FK_Auditoria_Empleado FOREIGN KEY (Id_Empleado) REFERENCES Empleados (Id_Empleado);
 
-ALTER TABLE Empleados_ServiciosExtras
-ADD CONSTRAINT FK_Empleados_ServiciosExtras_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras (Id_ServicioExtra);
+ALTER TABLE Auditoria
+ADD CONSTRAINT FK_Auditoria_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras (Id_ServicioExtra);
 
 ALTER TABLE Sedes_ServiciosExtras
 ADD CONSTRAINT FK_Sedes_ServiciosExtras_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras (Id_ServicioExtra);
@@ -402,7 +402,7 @@ SELECT * FROM Habitaciones
 SELECT * FROM Reservas
 SELECT * FROM Reservas_Habitaciones
 SELECT * FROM ServiciosExtras
-SELECT * FROM Empleados_ServiciosExtras
+SELECT * FROM Auditoria
 SELECT * FROM Sedes_ServiciosExtras
 SELECT * FROM Estadias
 SELECT * FROM Facturas

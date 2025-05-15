@@ -2,7 +2,7 @@
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-namespace asp_presentaciones
+namespace asp_presentacion
 {
     public class Startup
     {
@@ -28,6 +28,7 @@ namespace asp_presentaciones
             services.AddScoped<IEstadiasPresentacion, EstadiasPresentacion>();
             services.AddScoped<IHabitacionesPresentacion, HabitacionesPresentacion>();
             services.AddScoped<IReservas_HabitacionesPresentacion, Reservas_HabitacionesPresentacion>();
+            services.AddScoped<IAuditoriasPresentacion, AuditoriasPresentacion>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();

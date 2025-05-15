@@ -3,50 +3,50 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 namespace lib_presentaciones.Implementaciones
 {
-    public class Empleados_ServiciosExtrasPresentacion : IEmpleados_ServiciosExtrasPresentacion
+    public class AuditoriasPresentacion : IAuditoriasPresentacion
     {
         private Comunicaciones? comunicaciones = null;
 
-        public async Task<List<Empleados_ServiciosExtras>> Listar()
+        public async Task<List<Auditorias>> Listar()
         {
-            var lista = new List<Empleados_ServiciosExtras>();
+            var lista = new List<Auditorias>();
             var datos = new Dictionary<string, object>();
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Empleados_ServiciosExtras/Listar");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/Listar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            lista = JsonConversor.ConvertirAObjeto<List<Empleados_ServiciosExtras>>(
+            lista = JsonConversor.ConvertirAObjeto<List<Auditorias>>(
                 JsonConversor.ConvertirAString(respuesta["Entidades"]));
             return lista;
         }
 
-        public async Task<List<Empleados_ServiciosExtras>> PorId(Empleados_ServiciosExtras? entidad)
+        public async Task<List<Auditorias>> PorId(Auditorias? entidad)
         {
-            var lista = new List<Empleados_ServiciosExtras>();
+            var lista = new List<Auditorias>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Empleados_ServiciosExtras/PorId");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/PorCodigo");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            lista = JsonConversor.ConvertirAObjeto<List<Empleados_ServiciosExtras>>(
+            lista = JsonConversor.ConvertirAObjeto<List<Auditorias>>(
                 JsonConversor.ConvertirAString(respuesta["Entidades"]));
             return lista;
         }
 
-        public async Task<Empleados_ServiciosExtras?> Guardar(Empleados_ServiciosExtras? entidad)
+        public async Task<Auditorias?> Guardar(Auditorias? entidad)
         {
-            if (entidad!.Id_Empleado_ServicioExtra != 0)
+            if (entidad!.Id_Auditoria != 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -55,21 +55,21 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Empleados_ServiciosExtras/Guardar");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/Guardar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+            entidad = JsonConversor.ConvertirAObjeto<Auditorias>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
 
-        public async Task<Empleados_ServiciosExtras?> Modificar(Empleados_ServiciosExtras? entidad)
+        public async Task<Auditorias?> Modificar(Auditorias? entidad)
         {
-            if (entidad!.Id_Empleado_ServicioExtra == 0)
+            if (entidad!.Id_Auditoria == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -78,21 +78,21 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Empleados_ServiciosExtras/Modificar");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/Modificar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+            entidad = JsonConversor.ConvertirAObjeto<Auditorias>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
 
-        public async Task<Empleados_ServiciosExtras?> Borrar(Empleados_ServiciosExtras? entidad)
+        public async Task<Auditorias?> Borrar(Auditorias? entidad)
         {
-            if (entidad!.Id_Empleado_ServicioExtra == 0)
+            if (entidad!.Id_Auditoria == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -101,14 +101,14 @@ namespace lib_presentaciones.Implementaciones
             datos["Entidad"] = entidad;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Empleados_ServiciosExtras/Borrar");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/Borrar");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
-            entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+            entidad = JsonConversor.ConvertirAObjeto<Auditorias>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }

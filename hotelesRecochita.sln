@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asp_servicios", "asp_servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib_presentaciones", "lib_presentaciones\lib_presentaciones.csproj", "{A277E753-8B8F-49A9-BB0B-13760DE7E4C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asp_presentaciones", "asp_presentaciones\asp_presentaciones.csproj", "{2A1C2B70-DC7F-46F7-9ADB-7DD2AA5EE8E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asp_presentacion", "asp_presentaciones\asp_presentacion.csproj", "{2A1C2B70-DC7F-46F7-9ADB-7DD2AA5EE8E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

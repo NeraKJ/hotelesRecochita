@@ -7,13 +7,13 @@ using pruebas_unitarias.Nucleo;
 namespace TestProject1.Repositorios
 {
     [TestClass]
-    public class Empleados_ServiciosExtrasPrueba
+    public class AuditoriaPrueba
     {
         private readonly IConexion? iConexion;
-        private List<Empleados_ServiciosExtras>? lista;
-        private Empleados_ServiciosExtras? entidad;
+        private List<Auditoria>? lista;
+        private Auditoria? entidad;
 
-        public Empleados_ServiciosExtrasPrueba()
+        public AuditoriaPrueba()
         {
             iConexion = new Conexion();//CREAMOS UNA INSTANCIA 
             iConexion.StringConexion = Configuracion.ObtenerValor("StringConexion");
@@ -30,14 +30,14 @@ namespace TestProject1.Repositorios
 
         public bool Listar()
         {
-            this.lista = this.iConexion!.Empleados_ServiciosExtras!.ToList();
+            this.lista = this.iConexion!.Auditoria!.ToList();
             return lista.Count > 0;
         }
 
         public bool Guardar()
         {
-            this.entidad = EntidadesNucleo.Empleados_ServiciosExtras()!;
-            this.iConexion!.Empleados_ServiciosExtras!.Add(this.entidad);
+            this.entidad = EntidadesNucleo.Auditoria()!;
+            this.iConexion!.Auditoria!.Add(this.entidad);
             this.iConexion!.SaveChanges();
             return true;
         }
@@ -46,7 +46,7 @@ namespace TestProject1.Repositorios
         {
             this.entidad!.Precio_Servicio = 20000;
 
-            var entry = this.iConexion!.Entry<Empleados_ServiciosExtras>(this.entidad);
+            var entry = this.iConexion!.Entry<Auditoria>(this.entidad);
             entry.State = EntityState.Modified;
             this.iConexion!.SaveChanges();
             return true;
@@ -54,7 +54,7 @@ namespace TestProject1.Repositorios
 
         public bool Borrar()
         {
-            this.iConexion!.Empleados_ServiciosExtras!.Remove(this.entidad!);
+            this.iConexion!.Auditoria!.Remove(this.entidad!);
             this.iConexion!.SaveChanges();
             return true;
         }

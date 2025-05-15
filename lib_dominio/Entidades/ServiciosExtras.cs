@@ -26,7 +26,7 @@ namespace lib_dominio.Entidades
 
         public Facturas? Factura { get; set; }
         //public List<Facturas>? Facturas { get; set; }
-        public List<Empleados_ServiciosExtras>? Empleados_ServiciosExtras { get; set; }
+        public List<Auditoria>? Auditoria { get; set; }
         public List<Sedes_ServiciosExtras>? Sedes_ServiciosExtras { get; set; }
 
 
