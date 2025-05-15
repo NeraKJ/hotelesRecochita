@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
-    public class AuditoriaModel : PageModel
+    public class Empleados_ServicosExtrasModel : PageModel
     {
-        private IAuditoriaPresentacion? iPresentacion = null;
+        private IEmpleados_ServicosExtrasPresentacion? iPresentacion = null;
 
-        public AuditoriaModel(IAuditoriaPresentacion iPresentacion)
+        public Empleados_ServicosExtrasModel(IEmpleados_ServicosExtrasPresentacion iPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
-                Filtro = new Auditoria();
+                Filtro = new Empleados_ServicosExtras();
             }
             catch (Exception ex)
             {
@@ -25,9 +25,9 @@ namespace asp_presentacion.Pages.Ventanas
 
         public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
-        [BindProperty] public Auditoria? Actual { get; set; }
-        [BindProperty] public Auditoria? Filtro { get; set; }
-        [BindProperty] public List<Auditoria>? Lista { get; set; }
+        [BindProperty] public Empleados_ServicosExtras? Actual { get; set; }
+        [BindProperty] public Empleados_ServicosExtras? Filtro { get; set; }
+        [BindProperty] public List<Empleados_ServicosExtras>? Lista { get; set; }
 
         public virtual void OnGet() { OnPostBtRefrescar(); }
 
@@ -61,7 +61,7 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = new Auditoria();
+                Actual = new Empleados_ServicosExtras();
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Auditoria>? task = null;
+                Task<Empleados_ServicosExtras>? task = null;
                 if (Actual!.Id_Empleado_ServicioExtra == 0)
                     task = this.iPresentacion!.Guardar(Actual!)!;
                 else
