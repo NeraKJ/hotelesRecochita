@@ -1,6 +1,7 @@
 ﻿using asp_servicios.Controllers;
 using lib_aplicaciones.Implementaciones;
 using lib_aplicaciones.Interfaces;
+using lib_dominio.Entidades;
 using lib_repositorios.Implementaciones;
 using lib_repositorios.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -27,7 +28,7 @@ namespace asp_servicios
             services.AddScoped<IConexion, Conexion>();
             // Aplicaciones
             services.AddScoped<IEmpleadosAplicacion, EmpleadosAplicacion>();
-            services.AddScoped<IAuditoriaAplicacion, AuditoriaAplicacion>();
+            services.AddScoped<IEmpleados_ServiciosExtrasAplicacion, Empleados_ServiciosExtrasAplicacion>();
             services.AddScoped<IHotelesAplicacion, HotelesAplicacion>();
             services.AddScoped<IHuespedesAplicacion, HuespedesAplicacion>();
             services.AddScoped<IReservasAplicacion, ReservasAplicacion>();
@@ -38,6 +39,8 @@ namespace asp_servicios
             services.AddScoped<IEstadiasAplicacion, EstadiasAplicacion>();
             services.AddScoped<IHabitacionesAplicacion, HabitacionesAplicacion>();
             services.AddScoped<IReservas_HabitacionesAplicacion, Reservas_HabitacionesAplicacion>();
+            services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
+
 
             // Controladores
             services.AddScoped<TokenController, TokenController>();

@@ -1,4 +1,3 @@
-
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
@@ -7,16 +6,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
-    public class Empleados_ServiciosExtrasModel : PageModel
+    public class AuditoriasModel : PageModel
     {
-        private IEmpleados_ServiciosExtrasPresentacion? iPresentacion = null;
+        private IAuditoriasPresentacion? iPresentacion = null;
 
-        public Empleados_ServiciosExtrasModel(IEmpleados_ServiciosExtrasPresentacion iPresentacion)
+        public AuditoriasModel(IAuditoriasPresentacion iPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
-                Filtro = new Empleados_ServiciosExtras();
+                Filtro = new Auditorias();
             }
             catch (Exception ex)
             {
@@ -26,9 +25,9 @@ namespace asp_presentacion.Pages.Ventanas
 
         public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
-        [BindProperty] public Empleados_ServiciosExtras? Actual { get; set; }
-        [BindProperty] public Empleados_ServiciosExtras? Filtro { get; set; }
-        [BindProperty] public List<Empleados_ServiciosExtras>? Lista { get; set; }
+        [BindProperty] public Auditorias? Actual { get; set; }
+        [BindProperty] public Auditorias? Filtro { get; set; }
+        [BindProperty] public List<Auditorias>? Lista { get; set; }
 
         public virtual void OnGet() { OnPostBtRefrescar(); }
 
@@ -43,7 +42,7 @@ namespace asp_presentacion.Pages.Ventanas
                 //    return;
                 //}
 
-                Filtro!.Id_Empleado_ServicioExtra = Filtro!.Id_Empleado_ServicioExtra;
+                Filtro!.Id_Auditoria = Filtro!.Id_Auditoria ;
 
                 Accion = Enumerables.Ventanas.Listas;
                 var task = this.iPresentacion!.PorId(Filtro!);
@@ -62,7 +61,7 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = new Empleados_ServiciosExtras();
+                Actual = new Auditorias();
             }
             catch (Exception ex)
             {
@@ -76,7 +75,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = Lista!.FirstOrDefault(x => x.Id_Empleado_ServicioExtra.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id_Auditoria.ToString() == data);
             }
             catch (Exception ex)
             {
@@ -90,8 +89,8 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Empleados_ServiciosExtras>? task = null;
-                if (Actual!.Id_Empleado_ServicioExtra == 0)
+                Task<Auditorias>? task = null;
+                if (Actual!.Id_Auditoria == 0)
                     task = this.iPresentacion!.Guardar(Actual!)!;
                 else
                     task = this.iPresentacion!.Modificar(Actual!)!;
@@ -112,7 +111,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Borrar;
-                Actual = Lista!.FirstOrDefault(x => x.Id_Empleado_ServicioExtra.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id_Auditoria.ToString() == data);
             }
             catch (Exception ex)
             {
