@@ -24,7 +24,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_ServicioExtra == 0)
+            if (entidad!.Id_Sede == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -39,7 +39,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_ServicioExtra != 0)
+            if (entidad.Id_Sede != 0)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -54,10 +54,10 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.ServiciosExtras!.Take(20).ToList();
         }
 
-        public List<Empleados_ServiciosExtras> PorId(Empleados_ServiciosExtras? entidad)
+        public List<ServiciosExtras> PorId(ServiciosExtras? entidad)
         {
-            return this.IConexion!.Empleados_ServiciosExtras!
-                .Where(x => x.Id_Empleado_ServicioExtra == entidad!.Id_Empleado_ServicioExtra)
+            return this.IConexion!.ServiciosExtras!
+                .Where(x => x.Id_Sede == entidad!.Id_Sede)
                 .ToList();
         }
 
@@ -66,7 +66,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_ServicioExtra == 0)
+            if (entidad!.Id_Sede == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -78,3 +78,4 @@ namespace lib_aplicaciones.Implementaciones
         }
     }
 }
+
