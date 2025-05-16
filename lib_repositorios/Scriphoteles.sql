@@ -234,7 +234,7 @@ VALUES ( 1, 'Si', 'No', 'No', 'No', 'Si', 'Si'), ( 2, 'No', 'Si', 'No', 'No', 'N
 ( 1, 'No', 'No', 'No', 'Si', 'No', 'Si'), ( 2, 'Si', 'Si', 'Si', 'No', 'Si', 'No'), ( 3, 'No', 'No', 'No', 'No', 'No', 'Si')
 
 
-CREATE TABLE Auditoria(
+CREATE TABLE Empleados_ServiciosExtras(
 
 Id_Empleado_ServicioExtra INT IDENTITY,
 Id_empleado INT NOT NULL,
@@ -243,10 +243,10 @@ Precio_Servicio DECIMAL(10,3)NOT NULL,
 Pago_Servicio DECIMAL(10,3)NOT NULL
 );
 
-ALTER TABLE Auditoria
+ALTER TABLE Empleados_ServiciosExtras
 ADD CONSTRAINT PK_Id_Empleado_ServicioExtra PRIMARY KEY (Id_Empleado_ServicioExtra)
 
-INSERT INTO Auditoria( Id_empleado, Id_ServicioExtra, Precio_Servicio, Pago_Servicio)
+INSERT INTO Empleados_ServiciosExtras( Id_empleado, Id_ServicioExtra, Precio_Servicio, Pago_Servicio)
 VALUES 
 (4001, 1, 55.000, 22.000),
 (4003, 3, 55.000, 22.000),
@@ -338,6 +338,31 @@ VALUES
 (6, 12, 4, 50.000*4,'Transferencia', 'Servicio de lavanderia', 'Excelente'),
 (1, 13, 3, 50.000*4,'Tarjeta de credito', 'Ninguno', 'Regular');
 
+CREATE TABLE Auditorias(
+
+Id_Auditoria INT IDENTITY,
+Usuario VARCHAR(10) NOT NULL,
+Accion VARCHAR(20) NOT NULL,
+Fecha DATETIME
+);
+ALTER TABLE Auditorias
+ADD CONSTRAINT PK_Id_Auditoria PRIMARY KEY (Id_Auditoria)
+
+INSERT INTO Auditorias(Usuario, Accion, Fecha)
+VALUES('Karmen', 'Recocho', DATETIME.NOW);
+
+CREATE TABLE Usuarios(
+
+Id_Usuario INT IDENTITY,
+Nombre VARCHAR(10) NOT NULL,
+Contraseña INT NOT NULL
+);
+ALTER TABLE Usuarios
+ADD CONSTRAINT PK_Id_Usuario PRIMARY KEY (Id_Usuario)
+
+INSERT INTO Usuarios(Nombre, Contraseña)
+VALUES('Zamuel', 777);
+
 ---Las FK
 ALTER TABLE Empleados
 ADD CONSTRAINT FK_Empleados_Hotel FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
@@ -381,10 +406,10 @@ ADD CONSTRAINT FK_Reservas_Habitaciones_Reserva FOREIGN KEY (Id_Reserva) REFEREN
 ALTER TABLE Reservas_Habitaciones
 ADD CONSTRAINT FK_Reservas_Habitaciones_Habitacion FOREIGN KEY (Id_Habitacion) REFERENCES Habitaciones (Id_Habitacion);
 
-ALTER TABLE Auditoria
+ALTER TABLE Empleados_ServiciosExtras
 ADD CONSTRAINT FK_Auditoria_Empleado FOREIGN KEY (Id_Empleado) REFERENCES Empleados (Id_Empleado);
 
-ALTER TABLE Auditoria
+ALTER TABLE Empleados_ServiciosExtras
 ADD CONSTRAINT FK_Auditoria_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras (Id_ServicioExtra);
 
 ALTER TABLE Sedes_ServiciosExtras

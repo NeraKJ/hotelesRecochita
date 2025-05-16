@@ -7,7 +7,6 @@ namespace lib_repositorios.Interfaces
     public interface IConexion
     {
         string? StringConexion { get; set; }
-
         DbSet<Hoteles>? Hoteles { get; set; }
         DbSet<Huespedes>? Huespedes { get; set; }
         DbSet<Sedes>? Sedes { get; set; }
@@ -20,8 +19,9 @@ namespace lib_repositorios.Interfaces
         DbSet<Reservas_Habitaciones> Reservas_Habitaciones { get; set; }
         DbSet<Sedes_ServiciosExtras> Sedes_ServiciosExtras { get; set; }
         DbSet<ServiciosExtras> ServiciosExtras { get; set; }
-
         DbSet<Auditorias> Auditorias { get; set; }
+        DbSet<Usuarios> Usuarios { get; set; }
+
 
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();

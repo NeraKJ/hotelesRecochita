@@ -8,12 +8,12 @@ namespace asp_servicios.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class Empleados_ServiciosExtrasController : ControllerBase
+    public class UsuariosController : ControllerBase
     {
-        private IEmpleados_ServiciosExtrasAplicacion? iAplicacion = null;
+        private IUsuariosAplicacion? iAplicacion = null;
         private TokenController? tokenController = null;
 
-        public Empleados_ServiciosExtrasController(IEmpleados_ServiciosExtrasAplicacion? iAplicacion,
+        public UsuariosController(IUsuariosAplicacion? iAplicacion,
             TokenController tokenController)
         {
             this.iAplicacion = iAplicacion;
@@ -68,7 +68,7 @@ namespace asp_servicios.Controllers
                     return JsonConversor.ConvertirAString(respuesta);
                 }
 
-                var entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                     JsonConversor.ConvertirAString(datos["Entidad"]));
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
@@ -98,7 +98,7 @@ namespace asp_servicios.Controllers
                     return JsonConversor.ConvertirAString(respuesta);
                 }
 
-                var entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                     JsonConversor.ConvertirAString(datos["Entidad"]));
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
@@ -129,7 +129,7 @@ namespace asp_servicios.Controllers
                     return JsonConversor.ConvertirAString(respuesta);
                 }
 
-                var entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                     JsonConversor.ConvertirAString(datos["Entidad"]));
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
@@ -160,7 +160,7 @@ namespace asp_servicios.Controllers
                     return JsonConversor.ConvertirAString(respuesta);
                 }
 
-                var entidad = JsonConversor.ConvertirAObjeto<Empleados_ServiciosExtras>(
+                var entidad = JsonConversor.ConvertirAObjeto<Usuarios>(
                     JsonConversor.ConvertirAString(datos["Entidad"]));
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
