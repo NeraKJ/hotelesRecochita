@@ -69,12 +69,12 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
             {
                 <div class="containers_vn panel panel-default">
-                    <h3>Casa</h3>
+                    <h3>Empleado</h3>
 
                     <div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Codigo
+                                Id_Empleado
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmEstudiante"
@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Nombre
+                                Id_Hotel
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmMateria"
@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Id_Sede
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
@@ -104,7 +104,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Nombre
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
@@ -114,7 +114,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Apellido
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
@@ -124,7 +124,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Edad
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
@@ -134,7 +134,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Telefono
+                                Fecha_Naci
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota1"
@@ -144,7 +144,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Dirreccion
+                                Sexo
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
@@ -154,7 +154,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Dirreccion
+                                Fecha_Contratacion
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
@@ -164,7 +164,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label">
-                                Dirreccion
+                                Rol
                             </label>
                             <div class="col-lg-6">
                                 <input id="nmNota2"
@@ -274,10 +274,13 @@
                             @foreach (var elemento in Model.Lista)
                             {
                                 <tr>
-                                    <td>
+                                    <td class="cl_hidden">
+                                        >
+                                       
                                         @elemento.Id_Empleado
                                     </td>
-                                    <td>
+                                    <td class ="cl_hidden">
+                               
                                         @elemento.Id_Hotel
                                     </td>
                                     <td class="cl_hidden">
