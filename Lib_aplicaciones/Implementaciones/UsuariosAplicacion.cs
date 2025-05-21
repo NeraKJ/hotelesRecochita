@@ -1,5 +1,6 @@
 ﻿using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
+using lib_dominio.Nucleo;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,11 @@ namespace lib_aplicaciones.Implementaciones
     public class UsuariosAplicacion : IUsuariosAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public UsuariosAplicacion(IConexion iConexion)
+        public UsuariosAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
+
             this.IConexion = iConexion;
         }
 
@@ -31,6 +34,15 @@ namespace lib_aplicaciones.Implementaciones
 
             this.IConexion!.Usuarios!.Remove(entidad);
             this.IConexion.SaveChanges();
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
+                Lugar = "Usuarios",
+                Accion = "Borrar",
+                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -46,6 +58,15 @@ namespace lib_aplicaciones.Implementaciones
 
             this.IConexion!.Usuarios!.Add(entidad);
             this.IConexion.SaveChanges();
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
+                Lugar = "Usuarios",
+                Accion = "Borrar",
+                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -74,6 +95,15 @@ namespace lib_aplicaciones.Implementaciones
             var entry = this.IConexion!.Entry<Usuarios>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
+                Lugar = "Usuarios",
+                Accion = "Borrar",
+                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
     }

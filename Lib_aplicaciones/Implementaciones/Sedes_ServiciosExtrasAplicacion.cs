@@ -1,5 +1,6 @@
 ﻿using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
+using lib_dominio.Nucleo;
 using lib_repositorios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,11 @@ namespace lib_aplicaciones.Implementaciones
     public class Sedes_ServiciosExtrasAplicacion : ISedes_ServiciosExtrasAplicacion
     {
         private IConexion? IConexion = null;
+        private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
-        public Sedes_ServiciosExtrasAplicacion(IConexion iConexion)
+        public Sedes_ServiciosExtrasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
+
             this.IConexion = iConexion;
         }
 
@@ -31,6 +34,15 @@ namespace lib_aplicaciones.Implementaciones
 
             this.IConexion!.Sedes_ServiciosExtras!.Remove(entidad);
             this.IConexion.SaveChanges();
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
+                Lugar = "Sedes_ServiciosExtras",
+                Accion = "Borrar",
+                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -46,6 +58,15 @@ namespace lib_aplicaciones.Implementaciones
 
             this.IConexion!.Sedes_ServiciosExtras!.Add(entidad);
             this.IConexion.SaveChanges();
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
+                Lugar = "Sedes_ServiciosExtras",
+                Accion = "Borrar",
+                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
 
@@ -74,6 +95,15 @@ namespace lib_aplicaciones.Implementaciones
             var entry = this.IConexion!.Entry<Sedes_ServiciosExtras>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+            this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
+            this.IAuditoriasAplicacion!.Guardar(new Auditorias
+            {
+                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
+                Lugar = "Sedes_ServiciosExtras",
+                Accion = "Borrar",
+                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Fecha = DateTime.Now
+            });
             return entidad;
         }
     }
