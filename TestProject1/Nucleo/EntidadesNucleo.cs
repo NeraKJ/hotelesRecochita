@@ -158,6 +158,7 @@ namespace pruebas_unitarias.Nucleo
             entidad.Id_Auditoria = 1;
             entidad.Usuario = "Prueba";
             entidad.Accion = "Prueba";
+            entidad.Daticos = "Prueba";
             entidad.Fecha = DateTime.Now;
             return entidad;
 

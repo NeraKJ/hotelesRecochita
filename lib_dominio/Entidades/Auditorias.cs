@@ -8,31 +8,20 @@ using System.Threading.Tasks;
 
 namespace lib_dominio.Entidades
 {
-  
-    
-        public class Auditorias
+
+
+
+    public class Auditorias
     {
         [Key]  // Define la clave primaria
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Auditoria { get; set; }
-            public string Usuario { get; set; }
-            public string Accion { get; set; }
-            public DateTime Fecha { get; set; }
+        public string? Lugar { get; set; }
+        public string? Daticos { get; set; }
+        public string? Usuario { get; set; }
+        public string? Accion { get; set; }
+        public DateTime Fecha { get; set; }
 
-            public Auditorias() { }
 
-            public Auditorias(string usuario, string accion)
-            {
-                Usuario = usuario;
-                Accion = accion;
-                Fecha = DateTime.Now;
-            }
-
-            public override string ToString()
-            {
-                return $"[{Fecha}] {Usuario} realizó la acción: {Accion}";
-            }
-        }
-    
-
+    }
 }

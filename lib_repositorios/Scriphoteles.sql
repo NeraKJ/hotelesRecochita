@@ -1,7 +1,7 @@
 ﻿---Samuel Zea🤡y Karen Jimenez🤡
-CREATE DATABASE Recochita
+CREATE DATABASE Recorcholis
 GO
-USE Recochita
+USE Recorcholis
 GO
 
 

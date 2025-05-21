@@ -44,7 +44,7 @@ namespace TestProject1.Repositorios
 
         public bool Modificar()
         {
-            this.entidad!.Accion = 'se parcho';
+            this.entidad!.Accion = "se parcho";
 
             var entry = this.iConexion!.Entry<Auditorias>(this.entidad);
             entry.State = EntityState.Modified;
