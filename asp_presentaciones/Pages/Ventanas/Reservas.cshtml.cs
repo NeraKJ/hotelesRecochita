@@ -45,7 +45,7 @@ namespace asp_presentacion.Pages.Ventanas
                 Filtro!.Id_Reserva = Filtro!.Id_Reserva ;
 
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.Porid(Filtro!);
+                var task = this.iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
