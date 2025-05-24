@@ -18,8 +18,14 @@ namespace lib_dominio.Entidades
 
         public double Precio_Dia { get; set; }
 
-        public Reservas? _Reserva { get; set; }
-        public Habitaciones? _Habitacion { get; set; }
+
+
+        [ForeignKey("Id_Reserva")]
+        public Reservas? Reserva { get; set; }
+
+        [ForeignKey("Id_Habitacion")]
+        public Habitaciones? Habitacion { get; set; }
+        
 
 
     }

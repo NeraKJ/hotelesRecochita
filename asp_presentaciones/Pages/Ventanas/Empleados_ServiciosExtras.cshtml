@@ -170,7 +170,6 @@
                     <table class="tb_data table table-striped table-bordered table-hover">
                         <tr>
                             <th class="cl_hidden">
-                                >
                                 Id_Empleado_ServicioExtra
                             </th>
                             <th class="cl_actions">
@@ -182,10 +181,10 @@
                             <th class="cl_actions">
                                 Pago_Servicio
                             <th class="cl_actions">
-                                Accion
+                                Precio_Servicio
                             </th>
                             <th class="cl_actions">
-                                Precio_Servicio
+                                Accion
                             </th>
                         </tr>
                         @if (Model != null && Model.Lista != null)
@@ -193,9 +192,7 @@
                             @foreach (var elemento in Model.Lista)
                             {
                                 <tr>
-                                    <td>
-                                        @elemento.Id_Empleado_ServicioExtra
-                                    </td>
+                                    
                                     <td class="cl_hidden">
                                         @elemento.Id_empleado
                                     </td>

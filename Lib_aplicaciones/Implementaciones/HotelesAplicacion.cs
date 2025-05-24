@@ -13,9 +13,8 @@ namespace lib_aplicaciones.Implementaciones
 
         public HotelesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-
-
-            this.IConexion = iConexion;
+            this.IConexion = iConexion ?? throw new ArgumentNullException(nameof(iConexion));
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion ?? throw new ArgumentNullException(nameof(iAuditoriasAplicacion));
         }
 
         public void Configurar(string StringConexion)

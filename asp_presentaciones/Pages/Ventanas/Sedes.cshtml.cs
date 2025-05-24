@@ -9,12 +9,15 @@ namespace asp_presentacion.Pages.Ventanas
     public class SedesModel : PageModel
     {
         private ISedesPresentacion? iPresentacion = null;
+        private IHotelesPresentacion? iHotelesPresentacion = null;
 
-        public SedesModel(ISedesPresentacion iPresentacion)
+        public SedesModel(ISedesPresentacion iPresentacion,
+            IHotelesPresentacion iHotelesPresentacion)
         {
             try
             {
                 this.iPresentacion = iPresentacion;
+                this.iHotelesPresentacion = iHotelesPresentacion;
                 Filtro = new Sedes();
             }
             catch (Exception ex)
@@ -28,6 +31,7 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public Sedes? Actual { get; set; }
         [BindProperty] public Sedes? Filtro { get; set; }
         [BindProperty] public List<Sedes>? Lista { get; set; }
+        [BindProperty] public List<Hoteles>? Hoteles { get; set; }
 
         public virtual void OnGet() { OnPostBtRefrescar(); }
 
@@ -35,20 +39,35 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
+                var variable_session = HttpContext.Session.GetString("Usuario");
+                if (String.IsNullOrEmpty(variable_session))
+                {
+                    HttpContext.Response.Redirect("/");
+                    return;
+                }
 
-                Filtro!.Id_Sede = Filtro!.Id_Sede ;
+                Filtro!.Id_Hotel = Filtro!.Id_Hotel ;
 
                 Accion = Enumerables.Ventanas.Listas;
+
                 var task = this.iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        private void CargarCombox()
+        {
+            try
+            {
+                var task = this.iHotelesPresentacion!.Listar();
+                task.Wait();
+                Hoteles = task.Result;
             }
             catch (Exception ex)
             {
@@ -62,6 +81,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Sedes();
+                CargarCombox();
             }
             catch (Exception ex)
             {
@@ -74,6 +94,7 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 OnPostBtRefrescar();
+                CargarCombox();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.Id_Sede.ToString() == data);
             }

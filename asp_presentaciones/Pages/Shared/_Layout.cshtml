@@ -3,133 +3,132 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - asp_presentacion</title>
+    <title>@ViewData["Title"] Sistema Hotelero</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/asp_presentacion.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #f5f1e7;
+            color: #3e342d;
+        }
+
+        .navbar {
+            background-color: #fffdf8;
+            border-color: #d9cbb3 !important;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #8b5e3c !important;
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #a47148 !important;
+        }
+
+        .footer {
+            background-color: #e5d7c0;
+            color: #4e3b2c;
+        }
+
+        .footer a {
+            color: #8b5e3c;
+        }
+
+        .footer a:hover {
+            color: #a47148;
+        }
+
+        .border-top {
+            border-top: 1px solid #d9cbb3 !important;
+        }
+
+        .box-shadow {
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+        }
+
+        /* Navegación responsive */
+        .navbar-nav {
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            white-space: nowrap;
+            margin-right: 10px;
+        }
+
+        /* Contenido principal con imagen a la derecha */
+        .content-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .main-content {
+            flex: 1 1 60%;
+        }
+
+        .image-box {
+            flex: 1 1 35%;
+            max-width: 400px;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">asp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-page="/Index"> asp </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Index">
-                                Home
-                            </a>
-        
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Empleados">
-                                Empleados
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Empleados_ServiciosExtras">
-                                Empleados_ServiciosExtras
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Estadias">
-                                Estadias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Facturas">
-                                Facturas
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Habitaciones">
-                                Habitaciones
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Hoteles">
-                                Hoteles
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Huespedes">
-                               Huespedes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Reservas">
-                                Reservas
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Reservas_Habitaciones">
-                                Reservas_Habitaciones
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Sedes">
-                                Sedes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Sedes_ServiciosExtras">
-                                Sedes_ServiciosExtras
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/ServiciosExtras">
-                                ServiciosExtras
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-page="/Ventanas/Usuarios">
-                               Usuarios
-                            </a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados_ServiciosExtras">Empleados_ServiciosExtras</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas_Habitaciones">Reservas_Habitaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Usuarios">Usuarios</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="container content-container">
+        <div class="main-content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <div class="image-box">
+            <img src="/Imagenes/hotel2.jpeg" alt="Hotel representativo" />
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-5">
         <div class="container">
             &copy; 2025 - asp_presentacion - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>

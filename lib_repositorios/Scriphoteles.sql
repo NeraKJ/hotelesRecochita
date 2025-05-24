@@ -346,8 +346,6 @@ CREATE TABLE [Auditorias] (
 	[Fecha] DATETIME 
 );
 
-INSERT INTO Auditorias(Usuario, Accion, Fecha)
-VALUES('Karmen', 'Recocho', DATETIME.NOW);
 
 CREATE TABLE Usuarios(
 
