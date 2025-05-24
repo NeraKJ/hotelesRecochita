@@ -10,8 +10,8 @@ namespace lib_dominio.Entidades
 {
     public class ServiciosExtras
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]  // Define la clave primaria
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincrementa
         public int Id_ServicioExtra { get; set; }
 
         public int Id_Sede { get; set; }

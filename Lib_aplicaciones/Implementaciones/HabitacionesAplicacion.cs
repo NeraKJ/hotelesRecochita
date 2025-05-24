@@ -13,7 +13,6 @@ namespace lib_aplicaciones.Implementaciones
 
         public HabitacionesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-
             this.IConexion = iConexion;
         }
 
@@ -37,10 +36,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "Habitaciones",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "Habitaciones",
+                Operacion = "Borrar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
@@ -61,10 +60,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "Habitaciones",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "Habitaciones",
+                Operacion = "Borrar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
@@ -98,10 +97,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "Habitaciones",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "Habitaciones",
+                Operacion = "Borrar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;

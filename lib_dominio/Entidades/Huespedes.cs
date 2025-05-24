@@ -10,8 +10,8 @@ namespace lib_dominio.Entidades
 {
     public class Huespedes
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]  // Define la clave primaria
+        
         public int Id_Huesped { get; set; }
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }
@@ -39,9 +39,6 @@ namespace lib_dominio.Entidades
         public string? Historial_Reserva { get; set; }
 
 
-        public int Id_Hotel { get; set; }
-        [ForeignKey("Id_Hotel")]
-        public Hoteles? Hotel { get; set; }
 
         public List<Reservas>? Reservas { get; set; }
 

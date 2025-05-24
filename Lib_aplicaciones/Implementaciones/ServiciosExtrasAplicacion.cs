@@ -14,6 +14,7 @@ namespace lib_aplicaciones.Implementaciones
         public ServiciosExtrasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
 
+
             this.IConexion = iConexion;
         }
 
@@ -27,7 +28,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Sede == 0)
+            if (entidad!.Id_ServicioExtra == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -37,10 +38,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "ServiciosExtras",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "ServiciosExtras",
+                Operacion = "Borrar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
@@ -51,7 +52,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Sede != 0)
+            if (entidad.Id_ServicioExtra != 0)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -61,10 +62,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "ServiciosExtras",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "ServiciosExtras",
+                Operacion = "Guardar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
@@ -78,7 +79,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<ServiciosExtras> PorId(ServiciosExtras? entidad)
         {
             return this.IConexion!.ServiciosExtras!
-                .Where(x => x.Id_Sede == entidad!.Id_Sede)
+                .Where(x => x.Id_ServicioExtra == entidad!.Id_ServicioExtra)
                 .ToList();
         }
 
@@ -87,7 +88,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Sede == 0)
+            if (entidad!.Id_ServicioExtra == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -98,10 +99,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "ServiciosExtras",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "ServiciosExtras",
+                Operacion = "Modificar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;

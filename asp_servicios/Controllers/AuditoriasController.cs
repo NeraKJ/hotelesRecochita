@@ -12,7 +12,6 @@ namespace asp_servicios.Controllers
     {
         private IAuditoriasAplicacion? iAplicacion = null;
         private TokenController? tokenController = null;
-
         public AuditoriasController(IAuditoriasAplicacion? iAplicacion,
             TokenController tokenController)
         {
@@ -27,6 +26,8 @@ namespace asp_servicios.Controllers
                 datos = "{}";
             return JsonConversor.ConvertirAObjeto(datos);
         }
+
+
 
         [HttpPost]
         public string Listar()
@@ -55,8 +56,9 @@ namespace asp_servicios.Controllers
             }
         }
 
+
         [HttpPost]
-        public string PorId()
+        public string PorUsuario()
         {
             var respuesta = new Dictionary<string, object>();
             try
@@ -72,7 +74,7 @@ namespace asp_servicios.Controllers
                     JsonConversor.ConvertirAString(datos["Entidad"]));
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
-                respuesta["Entidades"] = this.iAplicacion!.PorId(entidad);
+                respuesta["Entidades"] = this.iAplicacion!.PorUsuario(entidad);
 
                 respuesta["Respuesta"] = "OK";
                 respuesta["Fecha"] = DateTime.Now.ToString();

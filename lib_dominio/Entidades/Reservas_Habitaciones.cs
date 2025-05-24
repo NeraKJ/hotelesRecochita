@@ -10,8 +10,8 @@ namespace lib_dominio.Entidades
 {
     public class Reservas_Habitaciones
     {
-        [Key]  
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [Key]  // Define la clave primaria
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincrementa
         public int Id_Reserva_Habitacion { get; set; }
         public int Id_Reserva { get; set; }
         public int Id_Habitacion { get; set; }

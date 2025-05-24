@@ -7,12 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Imagen\**" />
+    <Content Remove="wwwroot\Imagen\**" />
+    <EmbeddedResource Remove="wwwroot\Imagen\**" />
+    <None Remove="wwwroot\Imagen\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\lib_dominio\lib_dominio.csproj" />
     <ProjectReference Include="..\lib_presentaciones\lib_presentaciones.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Imagen\" />
+    <None Include="wwwroot\favicon.ico" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 ﻿---Samuel Zea🤡y Karen Jimenez🤡
-CREATE DATABASE Recorcholis
-GO
-USE Recorcholis
+CREATE DATABASE Main
+USE Main
 GO
 
 
@@ -338,17 +337,14 @@ VALUES
 (6, 12, 4, 50.000*4,'Transferencia', 'Servicio de lavanderia', 'Excelente'),
 (1, 13, 3, 50.000*4,'Tarjeta de credito', 'Ninguno', 'Regular');
 
-CREATE TABLE Auditorias(
-
-Id_Auditoria INT IDENTITY,
-Usuario VARCHAR(10) NOT NULL,
-Accion VARCHAR(20) NOT NULL,
-Lugar VARCHAR(20) NOT NULL,
-Daticos VARCHAR (300) NOT NULL,
-Fecha DATETIME
+CREATE TABLE [Auditorias] (
+	[Id] INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
+	[Usuario] NVARCHAR (50),
+	[Entidad] NVARCHAR (50),
+	[Operacion] NVARCHAR (50),
+	[Datos] NVARCHAR (250),
+	[Fecha] DATETIME 
 );
-ALTER TABLE Auditorias
-ADD CONSTRAINT PK_Id_Auditoria PRIMARY KEY (Id_Auditoria)
 
 INSERT INTO Auditorias(Usuario, Accion, Fecha)
 VALUES('Karmen', 'Recocho', DATETIME.NOW);

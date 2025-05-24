@@ -13,24 +13,13 @@ namespace lib_dominio.Entidades
         public class Usuarios
     {
         [Key]  // Define la clave primaria
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincrementa
+
         public int Id_Usuario { get; set; }
-            public string Nombre { get; set; }
+            public string? Nombre { get; set; }
             public int Contraseña { get; set; }
            
 
-            public Usuarios() { }
-
-            public Usuarios(string usuario, string accion)
-            {
-                Nombre = Nombre;
-                Contraseña = Contraseña;
-            }
-
-            public override string ToString()
-            {
-                return $"[{Nombre}]  Accedio con exito :)";
-            }
         }
     
 

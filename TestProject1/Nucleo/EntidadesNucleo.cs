@@ -22,7 +22,7 @@ namespace pruebas_unitarias.Nucleo
 
             var entidad = new Huespedes();
             entidad.Id_Huesped = 1023626115;
-            entidad.Id_Hotel = 1;
+           
             entidad.Nombre = "Pruebas-";
             entidad.Apellido = "Pruebas";
             entidad.Fecha_Naci = DateTime.Now;
@@ -152,17 +152,7 @@ namespace pruebas_unitarias.Nucleo
             return entidad;
         }
 
-        public static Auditorias? Auditorias()
-        {
-            var entidad = new Auditorias();
-            entidad.Id_Auditoria = 1;
-            entidad.Usuario = "Prueba";
-            entidad.Accion = "Prueba";
-            entidad.Daticos = "Prueba";
-            entidad.Fecha = DateTime.Now;
-            return entidad;
-
-        }
+        
         public static Usuarios? Usuarios()
         {
             var entidad = new Usuarios();

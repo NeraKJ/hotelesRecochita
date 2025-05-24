@@ -10,8 +10,8 @@ namespace lib_dominio.Entidades
 {
     public class Estadias
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]  // Define la clave primaria
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincrementa
         public int Id_Estadia { get; set; }
 
         public DateTime Fecha_Entrada { get; set; }

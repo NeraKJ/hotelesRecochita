@@ -11,8 +11,8 @@ namespace lib_dominio.Entidades
 
     public class Empleados_ServiciosExtras
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]  // Define la clave primaria
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincrementa
         public int Id_Empleado_ServicioExtra { get; set; }
         public int Id_empleado { get; set; }
         public int Id_ServicioExtra { get; set; }

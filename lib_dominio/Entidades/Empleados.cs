@@ -11,7 +11,7 @@ namespace lib_dominio.Entidades
     public class Empleados
     {
         [Key]  // Define la clave primaria
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincremental
+        
         public int Id_Empleado { get; set; }
 
         public int Id_Hotel { get; set; }

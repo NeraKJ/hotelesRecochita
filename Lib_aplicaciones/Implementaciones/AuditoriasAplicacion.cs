@@ -24,7 +24,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Auditoria == 0)
+            if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -39,7 +39,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Auditoria != 0)
+            if (entidad.Id != 0)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -54,10 +54,10 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.Auditorias!.Take(20).ToList();
         }
 
-        public List<Auditorias> PorId(Auditorias? entidad)
+        public List<Auditorias> PorUsuario(Auditorias? entidad)
         {
             return this.IConexion!.Auditorias!
-                .Where(x => x.Id_Auditoria == entidad!.Id_Auditoria)
+                .Where(x => x.Usuario!.Contains(entidad!.Usuario!))
                 .ToList();
         }
 
@@ -66,7 +66,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Auditoria == 0)
+            if (entidad!.Id == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos

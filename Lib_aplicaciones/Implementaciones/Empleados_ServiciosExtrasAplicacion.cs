@@ -13,9 +13,11 @@ namespace lib_aplicaciones.Implementaciones
 
         public Empleados_ServiciosExtrasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
+
+
             this.IConexion = iConexion;
-            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
+
         public void Configurar(string StringConexion)
         {
             this.IConexion!.StringConexion = StringConexion;
@@ -36,14 +38,13 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "Empleados_ServiciosExtras",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "Empleados_ServiciosExtras",
+                Operacion = "Borrar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
-
         }
 
         public Empleados_ServiciosExtras? Guardar(Empleados_ServiciosExtras? entidad)
@@ -51,7 +52,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Empleado_ServicioExtra != 0)
+            if (entidad.Id_Empleado_ServicioExtra  != 0)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -61,10 +62,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "Empleados_ServiciosExtras",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "Empleados_ServiciosExtras",
+                Operacion = "Guardar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
@@ -78,7 +79,7 @@ namespace lib_aplicaciones.Implementaciones
         public List<Empleados_ServiciosExtras> PorId(Empleados_ServiciosExtras? entidad)
         {
             return this.IConexion!.Empleados_ServiciosExtras!
-                .Where(x => x.Id_Empleado_ServicioExtra == entidad!.Id_Empleado_ServicioExtra)
+                .Where(x => x.Id_Empleado_ServicioExtra  == entidad!.Id_Empleado_ServicioExtra )
                 .ToList();
         }
 
@@ -87,7 +88,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Empleado_ServicioExtra == 0)
+            if (entidad!.Id_Empleado_ServicioExtra  == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -98,14 +99,13 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "Usuario" + DateTime.Now.ToString("yyyyMMddhhmmss"), // reemplazar con usuario real si puedes
-                Lugar = "Empleados_ServiciosExtras",
-                Accion = "Borrar",
-                Daticos = JsonConversor.ConvertirAString(entidad!),
+                Usuario = "admin",
+                Entidad = "Empleados_ServiciosExtras",
+                Operacion = "Modificar",
+                Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
         }
     }
 }
-

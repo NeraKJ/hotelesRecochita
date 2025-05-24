@@ -44,7 +44,7 @@ namespace asp_presentacion.Pages
                     return;
                 }
 
-                if ("admin.123" != Email + "." + Contrasena)
+                if ("dueños.1234" != Email + "." + Contrasena)
                 {
                     OnPostBtClean();
                     return;

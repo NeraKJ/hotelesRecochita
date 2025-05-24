@@ -1,6 +1,7 @@
 ﻿using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
+
 namespace lib_presentaciones.Implementaciones
 {
     public class AuditoriasPresentacion : IAuditoriasPresentacion
@@ -25,14 +26,14 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<Auditorias>> PorId(Auditorias? entidad)
+        public async Task<List<Auditorias>> PorUsuario(Auditorias? entidad)
         {
             var lista = new List<Auditorias>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/PorId");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/PorUsuario");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
@@ -46,7 +47,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Auditorias?> Guardar(Auditorias? entidad)
         {
-            if (entidad!.Id_Auditoria != 0)
+            if (entidad!.Id != 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -69,7 +70,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Auditorias?> Modificar(Auditorias? entidad)
         {
-            if (entidad!.Id_Auditoria == 0)
+            if (entidad!.Id == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -92,7 +93,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Auditorias?> Borrar(Auditorias? entidad)
         {
-            if (entidad!.Id_Auditoria == 0)
+            if (entidad!.Id == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }

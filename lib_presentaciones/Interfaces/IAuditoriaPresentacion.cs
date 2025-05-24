@@ -5,7 +5,7 @@ namespace lib_presentaciones.Interfaces
     public interface IAuditoriasPresentacion
     {
         Task<List<Auditorias>> Listar();
-        Task<List<Auditorias>> PorId(Auditorias? entidad);
+        Task<List<Auditorias>> PorUsuario(Auditorias? entidad);
         Task<Auditorias?> Guardar(Auditorias? entidad);
         Task<Auditorias?> Modificar(Auditorias? entidad);
         Task<Auditorias?> Borrar(Auditorias? entidad);
