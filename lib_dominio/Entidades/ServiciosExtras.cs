@@ -25,12 +25,9 @@ namespace lib_dominio.Entidades
         public string? Gimnasio { get; set; }
         public string? Jacuzzi { get; set; }
 
-        public Facturas? Factura { get; set; }
-        //public List<Facturas>? Facturas { get; set; }
-        [JsonIgnore]
-        public List<Empleados_ServiciosExtras>? Empleados_ServiciosExtras { get; set; }
-        [JsonIgnore]
-        public List<Sedes_ServiciosExtras>? Sedes_ServiciosExtras { get; set; }
+        
+        
+      
 
 
 

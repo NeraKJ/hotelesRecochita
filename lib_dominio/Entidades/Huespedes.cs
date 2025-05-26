@@ -40,8 +40,8 @@ namespace lib_dominio.Entidades
         public string? Historial_Reserva { get; set; }
 
 
-        [JsonIgnore]
-        public List<Reservas>? Reservas { get; set; }
+        
+        
 
 
 

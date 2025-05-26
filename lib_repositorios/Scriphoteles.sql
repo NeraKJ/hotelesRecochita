@@ -1,6 +1,7 @@
 ﻿---Samuel Zea🤡y Karen Jimenez🤡
-CREATE DATABASE Main
-USE Main
+CREATE DATABASE Hotelardos
+go
+USE Hotelardos
 GO
 
 
@@ -26,7 +27,7 @@ Nombre VARCHAR(20)NOT NULL,
 Apellido VARCHAR(20)NOT NULL,
 Fecha_Naci DATE NOT NULL,
 Edad INT NOT NULL,
-Sexo CHAR(1) CHECK (Sexo = 'F' or Sexo = 'M') NOT NULL,
+Sexo CHAR(1) not null,
 Telefono VARCHAR(15)NOT NULL,
 Correo VARCHAR(30)NOT NULL,
 Historial_Reserva VARCHAR(30)DEFAULT 'No hay historial'
@@ -70,30 +71,30 @@ VALUES
 
 CREATE TABLE Sedes(
 Id_Sede INT IDENTITY,
-Id_Hotel INT DEFAULT '1',
-Direccion VARCHAR(30)NOT NULL,
-Locacion CHAR(15) CHECK (Locacion = 'Bello' or Locacion = 'Anori' or Locacion = 'Medellin') NOT NULL
+Id_Hotel INT ,
+Direccion VARCHAR(30),
+Locacion CHAR(15) 
 );
 
 ALTER TABLE Sedes
 ADD CONSTRAINT PK_Id_Sede PRIMARY KEY (Id_Sede)
 
-INSERT INTO Sedes ( Direccion, Locacion) 
-VALUES ( 'Calle 44', 'Anori'), ( 'Calle 42', 'Bello'),( 'Calle 556', 'Medellin') 
+INSERT INTO Sedes (Id_Hotel, Direccion, Locacion) 
+VALUES ( 1,'Calle 44', 'Anori'), (1, 'Calle 42', 'Bello'),(1, 'Calle 556', 'Medellin') 
 
 
 CREATE TABLE Empleados(
 
 Id_Empleado INT NOT NULL,
 Id_Hotel INT DEFAULT '1',
-Id_Sede INT CHECK(Id_Sede = 1 or Id_Sede = 2 or Id_Sede = 3)NOT NULL,
+Id_Sede INT NOT NULL,
 Nombre VARCHAR(20)NOT NULL,
 Apellido VARCHAR(20)NOT NULL,
 Fecha_Naci DATE NOT NULL,
 Edad INT NOT NULL,
-Sexo CHAR(1) CHECK (Sexo = 'F' or Sexo = 'M') NOT NULL,
+Sexo CHAR(1) NOT NULL,
 Fecha_Contratacion DATE NOT NULL,
-Rol VARCHAR(20) CHECK (Rol = 'Recepcionista' or Rol = 'Gerente' or Rol= 'Seguridad' or Rol= 'Piscinero' or Rol= 'Cocinero' or Rol= 'Aseador' or Rol= 'Mantenimiento' ) NOT NULL,
+Rol VARCHAR(20) NOT NULL,
 );
 
 ALTER TABLE Empleados
@@ -127,12 +128,12 @@ VALUES
 CREATE TABLE Habitaciones(
 
 Id_Habitacion INT IDENTITY,
-Id_Sede INT CHECK(Id_Sede = 1 or Id_Sede = 2 or Id_Sede = 3)NOT NULL,
+Id_Sede INT NOT NULL,
 Id_Hotel INT DEFAULT '1',
 Numero_Habitacion VARCHAR(4)NOT NULL,
 Precio_Habitacion DECIMAL(10,3)NOT NULL,
 Camas INT NOT NULL,
-Estado VARCHAR(15) CHECK (Estado = 'Disponible' or Estado = 'Ocupado' or Estado= 'Reservada') NOT NULL,
+Estado VARCHAR(15)  NOT NULL,
 Capacidad VARCHAR(20) DEFAULT 'Maximo 6 Huespedes'
 );
 
@@ -159,8 +160,8 @@ CREATE TABLE Reservas(
 
 Id_Reserva INT IDENTITY,
 Id_Huesped INT NOT NULL,
-Id_Sede INT CHECK (Id_Sede = '1' or Id_Sede = '2' or Id_Sede = '3') NOT NULL,
-Estado_Actual VARCHAR(15) CHECK (Estado_Actual = 'Pendiente' or Estado_Actual = 'Confirmado' or Estado_Actual= 'Cancelado')NOT NULL,
+Id_Sede INT NOT NULL,
+Estado_Actual VARCHAR(15) NOT NULL,
 Fecha_Reserva DATE NOT NULL,
 Numero_Huespedes VARCHAR(15)NOT NULL
 );
@@ -345,8 +346,6 @@ CREATE TABLE [Auditorias] (
 	[Datos] NVARCHAR (250),
 	[Fecha] DATETIME 
 );
-
-
 CREATE TABLE Usuarios(
 
 Id_Usuario INT IDENTITY,
@@ -356,8 +355,7 @@ Contraseña INT NOT NULL
 ALTER TABLE Usuarios
 ADD CONSTRAINT PK_Id_Usuario PRIMARY KEY (Id_Usuario)
 
-INSERT INTO Usuarios(Nombre, Contraseña)
-VALUES('Zamuel', 777);
+
 
 ---Las FK
 ALTER TABLE Empleados
@@ -423,7 +421,8 @@ SELECT * FROM Habitaciones
 SELECT * FROM Reservas
 SELECT * FROM Reservas_Habitaciones
 SELECT * FROM ServiciosExtras
-SELECT * FROM Auditoria
+SELECT * FROM Auditorias
 SELECT * FROM Sedes_ServiciosExtras
 SELECT * FROM Estadias
-SELECT * FROM Facturas
+SELEct * from facturas
+select*from Usuarios

@@ -17,13 +17,7 @@ namespace lib_dominio.Entidades
         public string? Nombre { get; set; }
         public string? Dueños { get; set; }
 
-        [JsonIgnore]
-
-
-        public List<Habitaciones>? Habitacion { get; set; }
-        public List<Sedes>? Sedes { get; set; }
-        public List<Empleados>? Empleados { get; set; }
-
+      
 
     }
 

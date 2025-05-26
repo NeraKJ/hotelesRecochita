@@ -43,7 +43,7 @@ namespace lib_dominio.Entidades
         public Hoteles? Hoteles { get; set; }
         [ForeignKey("Id_Sede")]
         public Sedes? Sedes { get; set; }
-        [JsonIgnore]
-        public List<Empleados_ServiciosExtras>? Empleados_ServiciosExtras { get; set; }
+        
+        
     }
 }

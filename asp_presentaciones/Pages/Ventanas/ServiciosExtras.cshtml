@@ -6,7 +6,7 @@
 <center>
     <div class="container mt-4">
         <div class="text-center mb-4">
-            <img src="/Imagenes/mantenimiento.jpeg"
+            <img src="/Imagenes/mantenimiento.jpg"
                  alt="Servicios extra"
                  style="max-width: 500px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
             <p style="font-style: italic; font-size: small;">Servicios adicionales ofrecidos en la sede</p>
@@ -39,6 +39,14 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden" asp-for="@Model.Actual!.Id_Sede" />
+				<input type="hidden" asp-for="@Model.Actual!.Piscina" />
+
+                <input type="hidden" asp-for="@Model.Actual!.Restaurante" />
+                <input type="hidden" asp-for="@Model.Actual!.Limpieza" />
+                <input type="hidden" asp-for="@Model.Actual!.Mantenimiento" />
+                <input type="hidden" asp-for="@Model.Actual!.Gimnasio" />
+                <input type="hidden" asp-for="@Model.Actual!.Jacuzzi" />
+
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -46,23 +54,57 @@
                 <div class="card p-4 mb-4 shadow-sm">
                     <h4 class="mb-3">Nuevo Servicio Extra</h4>
 
-                    <div class="form-group">
-                        <label for="Id_Sede">Sede</label>
-                        <select asp-for="Actual.Id_Sede" class="form-control" asp-items="@(new SelectList(Model.Sedes, "Id_Sede", "Locacion"))">
-                            <option value="">Seleccione una sede</option>
-                        </select>
+                    
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Id_Sede</label>
+                        <div class="col-sm-10">
+                            <select asp-for="@Model.Actual!.Id_Sede" class="form-select" asp-items="@(new SelectList(Model.Sedes, "Id_Sede", "Locacion"))">
+                                <option value="">-- Seleccione una Sede --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Piscina</label>
+                        
+                        <div class="col-sm-10">
+                          
+                            <input class="form-control" asp-for="@Model.Actual!.Piscina" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Restaurante</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Restaurante" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Limpieza</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Limpieza" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Mantenimiento</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Mantenimiento" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Gimnasio</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Gimnasio" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Jacuzzi</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Jacuzzi" />
+                        </div>
                     </div>
 
-
-                    @foreach (var campo in new[] { "Piscina", "Restaurante", "Limpieza", "Mantenimiento", "Gimnasio", "Jacuzzi" })
-                    {
-                        <div class="mb-3 row">
-                            <label class="col-sm-2 col-form-label">@campo</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" asp-for="@Model.Actual!.GetType().GetProperty(campo)!.GetValue(Model.Actual)" name="Actual.@campo" />
-                            </div>
-                        </div>
-                    }
+                    
+                    
                 </div>
             }
 
@@ -79,7 +121,13 @@
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
                             <h4>¿Desea borrar este servicio extra?</h4>
-                            <h6>Servicio ID: @Model.Actual?.Id_ServicioExtra</h6>
+                            <h6> @Model.Actual!.Jacuzzi</h6>
+                            <h6> @Model.Actual!.Piscina</h6>
+                            <h6> @Model.Actual!.Restaurante</h6>
+                            <h6> @Model.Actual!.Limpieza</h6>
+                            <h6> @Model.Actual!.Gimnasio</h6>
+                            <h6> @Model.Actual!.Mantenimiento</h6>
+                            
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
                             <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
@@ -95,7 +143,7 @@
                     <input id="flId_ServicioExtra"
                            class="form-control"
                            asp-for="@Model.Filtro!.Id_ServicioExtra"
-                           placeholder="Id Servicio Extra" />
+                           placeholder="Id_ServicioExtra" />
                 </div>
 
                 <div class="card p-3 shadow-sm">
@@ -104,12 +152,37 @@
                             <tr>
                                 <th>Id_ServicioExtra</th>
                                 <th>Id_Sede</th>
-                                <th>Piscina</th>
-                                <th>Restaurante</th>
-                                <th>Limpieza</th>
-                                <th>Mantenimiento</th>
-                                <th>Gimnasio</th>
-                                <th>Jacuzzi</th>
+                                <th>
+                                    Piscina  <img src="/Imagenes/piscinero.jpg"
+                                                  alt="Servicios extra"
+                                                  style="max-width: 70px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                </th>
+
+                                <th>
+                                    Restaurante <img src="/Imagenes/cocinero.jpg"
+                                                     alt="Servicios extra"
+                                                     style="max-width: 90px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                </th>
+                                <th>
+                                    Limpieza <img src="/Imagenes/aseo.jpg"
+                                                  alt="Servicios extra"
+                                                  style="max-width: 90px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                </th>
+                                <th>
+                                    Mantenimiento <img src="/Imagenes/mantenimiento.jpg"
+                                                       alt="Servicios extra"
+                                                       style="max-width: 90px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                </th>
+                                <th>
+                                    Gimnasio <img src="/Imagenes/gimnasio.jpeg"
+                                                  alt="Servicios extra"
+                                                  style="max-width: 90px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                </th>
+                                <th>
+                                    Jacuzzi <img src="/Imagenes/jacuzzii.jpeg"
+                                                 alt="Servicios extra"
+                                                 style="max-width: 90px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                </th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -120,7 +193,7 @@
                                 {
                                     <tr>
                                         <td>@elemento.Id_ServicioExtra</td>
-                                        <td>@elemento.Sedes?.Locacion</td>
+                                        <td>@elemento.Id_Sede</td>
                                         <td>@elemento.Piscina</td>
                                         <td>@elemento.Restaurante</td>
                                         <td>@elemento.Limpieza</td>

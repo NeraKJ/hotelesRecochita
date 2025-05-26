@@ -8,47 +8,45 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class Sedes_ServiciosExtrasModel : PageModel
     {
-        private ISedes_ServiciosExtrasPresentacion? iPresentacion = null;
+        private readonly ISedes_ServiciosExtrasPresentacion? iPresentacion;
+        private readonly ISedesPresentacion? iSedesPresentacion;
+        private readonly IServiciosExtrasPresentacion? iServiciosExtrasPresentacion;
 
-        public Sedes_ServiciosExtrasModel(ISedes_ServiciosExtrasPresentacion iPresentacion)
+        public Sedes_ServiciosExtrasModel(ISedes_ServiciosExtrasPresentacion iPresentacion, ISedesPresentacion iSedesPresentacion, IServiciosExtrasPresentacion? iServiciosExtrasPresentacion)
         {
-            try
-            {
-                this.iPresentacion = iPresentacion;
-                Filtro = new Sedes_ServiciosExtras();
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
+            this.iPresentacion = iPresentacion;
+            this.iSedesPresentacion = iSedesPresentacion;
+            this.iServiciosExtrasPresentacion = iServiciosExtrasPresentacion;
+            Filtro = new Sedes_ServiciosExtras();
+           
         }
 
-        public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
         [BindProperty] public Sedes_ServiciosExtras? Actual { get; set; }
         [BindProperty] public Sedes_ServiciosExtras? Filtro { get; set; }
         [BindProperty] public List<Sedes_ServiciosExtras>? Lista { get; set; }
+        [BindProperty] public List<Sedes>? Sedes { get; set; }
 
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        [BindProperty] public List<ServiciosExtras>? ServiciosExtras { get; set; }
+
+        public void OnGet()
+        {
+            OnPostBtRefrescar();
+        }
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
-
                 Filtro!.Id_Sedes_ServiciosExtras = Filtro!.Id_Sedes_ServiciosExtras;
-
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.PorId(Filtro!);
+
+                var task = iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
+
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -56,12 +54,13 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtNuevo()
+        public void OnPostBtNuevo()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Sedes_ServiciosExtras();
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -69,13 +68,14 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtModificar(string data)
+        public void OnPostBtModificar(string data)
         {
             try
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.Id_Sedes_ServiciosExtras.ToString() == data);
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -83,19 +83,21 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtGuardar()
+        public void OnPostBtGuardar()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Sedes_ServiciosExtras>? task = null;
+                Task<Sedes_ServiciosExtras> task;
                 if (Actual!.Id_Sedes_ServiciosExtras == 0)
-                    task = this.iPresentacion!.Guardar(Actual!)!;
+                    task = iPresentacion!.Guardar(Actual!)!;
                 else
-                    task = this.iPresentacion!.Modificar(Actual!)!;
+                    task = iPresentacion!.Modificar(Actual!)!;
+
                 task.Wait();
                 Actual = task.Result;
+
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostBtRefrescar();
             }
@@ -105,7 +107,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtBorrarVal(string data)
+        public void OnPostBtBorrarVal(string data)
         {
             try
             {
@@ -119,11 +121,12 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtBorrar()
+        public void OnPostBtBorrar()
         {
             try
             {
-                var task = this.iPresentacion!.Borrar(Actual!);
+                var task = iPresentacion!.Borrar(Actual!);
+                task.Wait();
                 Actual = task.Result;
                 OnPostBtRefrescar();
             }
@@ -152,6 +155,24 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 if (Accion == Enumerables.Ventanas.Listas)
                     OnPostBtRefrescar();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        private void CargarCombos()
+        {
+            try
+            {
+                var task = iSedesPresentacion!.Listar();
+                task.Wait();
+                Sedes = task.Result;
+
+                var task2 = iServiciosExtrasPresentacion!.Listar();
+                task2.Wait();
+                ServiciosExtras = task2.Result;
             }
             catch (Exception ex)
             {

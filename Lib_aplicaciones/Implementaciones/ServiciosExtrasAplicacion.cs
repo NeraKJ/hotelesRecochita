@@ -16,6 +16,7 @@ namespace lib_aplicaciones.Implementaciones
 
 
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -52,6 +53,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
+
             if (entidad.Id_ServicioExtra != 0)
                 throw new Exception("lbYaSeGuardo");
 
@@ -73,14 +75,17 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<ServiciosExtras> Listar()
         {
-            return this.IConexion!.ServiciosExtras!.Take(20).ToList();
+            return this.IConexion!.ServiciosExtras!.Take(20)
+                  .Include(x => x.Sedes)
+                  .ToList(); ;
         }
 
         public List<ServiciosExtras> PorId(ServiciosExtras? entidad)
         {
             return this.IConexion!.ServiciosExtras!
                 .Where(x => x.Id_ServicioExtra == entidad!.Id_ServicioExtra)
-                .ToList();
+                  .Include(x => x.Sedes)
+                    .ToList();
         }
 
         public ServiciosExtras? Modificar(ServiciosExtras? entidad)
@@ -109,4 +114,3 @@ namespace lib_aplicaciones.Implementaciones
         }
     }
 }
-

@@ -153,14 +153,6 @@ namespace pruebas_unitarias.Nucleo
         }
 
         
-        public static Usuarios? Usuarios()
-        {
-            var entidad = new Usuarios();
-            entidad.Id_Usuario = 1;
-            entidad.Nombre = "Prueba";
-            entidad.Contraseña = 777;
-           
-            return entidad;
-    }
+        
 }
 }

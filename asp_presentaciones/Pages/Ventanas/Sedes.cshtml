@@ -39,7 +39,9 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden" asp-for="@Model.Actual!.Id_Hotel" />
+
                 <input type="hidden" asp-for="@Model.Actual!.Direccion" />
+
                 <input type="hidden" asp-for="@Model.Actual!.Locacion" />
             }
 
@@ -49,7 +51,7 @@
                     <h4 class="mb-3">Nueva Sede</h4>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Hotel</label>
+                        <label class="col-sm-2 col-form-label">Id_Hotel</label>
                         <div class="col-sm-10">
                             <select asp-for="@Model.Actual!.Id_Hotel" class="form-select" asp-items="@(new SelectList(Model.Hoteles, "Id_Hotel", "Nombre"))">
                                 <option value="">-- Seleccione un hotel --</option>
@@ -58,14 +60,14 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Dirección</label>
+                        <label class="col-sm-2 col-form-label">Direccion</label>
                         <div class="col-sm-10">
                             <input class="form-control" asp-for="@Model.Actual!.Direccion" />
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Locación</label>
+                        <label class="col-sm-2 col-form-label">Locacion</label>
                         <div class="col-sm-10">
                             <input class="form-control" asp-for="@Model.Actual!.Locacion" />
                         </div>
@@ -86,7 +88,10 @@
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
                             <h4>¿Desea borrar la sede?</h4>
-                            <h6>@Model.Actual!.Direccion - @Model.Actual!.Locacion</h6>
+                            <h6>
+                                @Model.Actual!.Direccion
+                                @Model.Actual!.Locacion
+                            </h6>
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
                             <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
@@ -110,9 +115,9 @@
                         <thead>
                             <tr>
                                 <th>Id_Sede</th>
-                                <th>Hotel</th>
-                                <th>Dirección</th>
-                                <th>Locación</th>
+                                <th>Id_Hotel</th>
+                                <th>Direccion</th>
+                                <th>Locacion</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -123,7 +128,7 @@
                                 {
                                     <tr>
                                         <td>@elemento.Id_Sede</td>
-                                        <td>@elemento.Hotel?.Nombre</td>
+                                        <td>@elemento.Id_Hotel</td>
                                         <td>@elemento.Direccion</td>
                                         <td>@elemento.Locacion</td>
                                         <td>

@@ -29,7 +29,6 @@ namespace lib_dominio.Entidades
 
 
         public Facturas? Factura { get; set; }
-        [JsonIgnore]
-        public List<Reservas_Habitaciones>? ReservasHabitaciones { get; set; }
+        
     }
 }

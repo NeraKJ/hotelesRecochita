@@ -27,11 +27,7 @@ namespace lib_dominio.Entidades
         [ForeignKey("Id_Sede")]
         public Sedes? Sedes { get; set; }
 
-        [JsonIgnore]
-        public List<Reservas_Habitaciones>? Reservas_Habitaciones { get; set; }
-
-
-
+       
 
     }
 }

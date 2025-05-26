@@ -16,6 +16,7 @@ namespace lib_aplicaciones.Implementaciones
 
 
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -52,6 +53,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
+
             if (entidad.Id_Sede != 0)
                 throw new Exception("lbYaSeGuardo");
 
@@ -73,14 +75,17 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Sedes> Listar()
         {
-            return this.IConexion!.Sedes!.Take(20).ToList();
+            return this.IConexion!.Sedes!.Take(20)
+                  .Include(x => x.Hotel)
+                  .ToList(); ;
         }
 
         public List<Sedes> PorId(Sedes? entidad)
         {
             return this.IConexion!.Sedes!
                 .Where(x => x.Id_Sede == entidad!.Id_Sede)
-                .ToList();
+                  .Include(x => x.Hotel)
+                     .ToList();
         }
 
         public Sedes? Modificar(Sedes? entidad)

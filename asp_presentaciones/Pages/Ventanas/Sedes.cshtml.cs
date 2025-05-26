@@ -45,7 +45,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -59,7 +59,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -74,7 +74,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -98,7 +98,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -112,7 +112,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -127,7 +127,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -140,7 +140,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -153,7 +153,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
 
@@ -167,7 +167,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData);
+                LogConversor.Log(ex, ViewData!);
             }
         }
     }

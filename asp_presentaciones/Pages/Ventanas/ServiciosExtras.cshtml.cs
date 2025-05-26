@@ -1,5 +1,6 @@
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
+using lib_presentaciones.Implementaciones;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,19 +11,24 @@ namespace asp_presentacion.Pages.Ventanas
     {
         private readonly IServiciosExtrasPresentacion? iPresentacion;
         private readonly ISedesPresentacion? iSedesPresentacion;
+        
 
         public ServiciosExtrasModel(IServiciosExtrasPresentacion iPresentacion, ISedesPresentacion iSedesPresentacion)
         {
+
             this.iPresentacion = iPresentacion;
             this.iSedesPresentacion = iSedesPresentacion;
-            Filtro = new ServiciosExtras();
-        }
+			Filtro = new ServiciosExtras();
+
+		}
 
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
         [BindProperty] public ServiciosExtras? Actual { get; set; }
         [BindProperty] public ServiciosExtras? Filtro { get; set; }
         [BindProperty] public List<ServiciosExtras>? Lista { get; set; }
         [BindProperty] public List<Sedes>? Sedes { get; set; }
+
+        
 
         public void OnGet()
         {
@@ -164,6 +170,8 @@ namespace asp_presentacion.Pages.Ventanas
                 var task = iSedesPresentacion!.Listar();
                 task.Wait();
                 Sedes = task.Result;
+
+               
             }
             catch (Exception ex)
             {
