@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace lib_dominio.Entidades
 {
@@ -42,6 +43,7 @@ namespace lib_dominio.Entidades
         public Hoteles? Hoteles { get; set; }
         [ForeignKey("Id_Sede")]
         public Sedes? Sedes { get; set; }
+        [JsonIgnore]
         public List<Empleados_ServiciosExtras>? Empleados_ServiciosExtras { get; set; }
     }
 }

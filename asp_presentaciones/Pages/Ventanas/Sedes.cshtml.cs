@@ -8,125 +8,101 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class SedesModel : PageModel
     {
-        private ISedesPresentacion? iPresentacion = null;
-        private IHotelesPresentacion? iHotelesPresentacion = null;
+        private readonly ISedesPresentacion? iPresentacion;
+        private readonly IHotelesPresentacion? iHotelesPresentacion;
 
-        public SedesModel(ISedesPresentacion iPresentacion,
-            IHotelesPresentacion iHotelesPresentacion)
+        public SedesModel(ISedesPresentacion iPresentacion, IHotelesPresentacion iHotelesPresentacion)
         {
-            try
-            {
-                this.iPresentacion = iPresentacion;
-                this.iHotelesPresentacion = iHotelesPresentacion;
-                Filtro = new Sedes();
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
+            this.iPresentacion = iPresentacion;
+            this.iHotelesPresentacion = iHotelesPresentacion;
+            Filtro = new Sedes();
         }
 
-        public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
         [BindProperty] public Sedes? Actual { get; set; }
         [BindProperty] public Sedes? Filtro { get; set; }
         [BindProperty] public List<Sedes>? Lista { get; set; }
         [BindProperty] public List<Hoteles>? Hoteles { get; set; }
 
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        public void OnGet()
+        {
+            OnPostBtRefrescar();
+        }
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                var variable_session = HttpContext.Session.GetString("Usuario");
-                if (String.IsNullOrEmpty(variable_session))
-                {
-                    HttpContext.Response.Redirect("/");
-                    return;
-                }
-
-                Filtro!.Id_Hotel = Filtro!.Id_Hotel ;
-
+                Filtro!.Id_Sede = Filtro!.Id_Sede;
                 Accion = Enumerables.Ventanas.Listas;
 
-                var task = this.iPresentacion!.PorId(Filtro!);
+                var task = iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
+
+                CargarCombos();
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
-        private void CargarCombox()
-        {
-            try
-            {
-                var task = this.iHotelesPresentacion!.Listar();
-                task.Wait();
-                Hoteles = task.Result;
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
-        }
-
-        public virtual void OnPostBtNuevo()
+        public void OnPostBtNuevo()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Sedes();
-                CargarCombox();
+                CargarCombos();
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
-        public virtual void OnPostBtModificar(string data)
+        public void OnPostBtModificar(string data)
         {
             try
             {
                 OnPostBtRefrescar();
-                CargarCombox();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.Id_Sede.ToString() == data);
+                CargarCombos();
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
-        public virtual void OnPostBtGuardar()
+        public void OnPostBtGuardar()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Sedes>? task = null;
+                Task<Sedes> task;
                 if (Actual!.Id_Sede == 0)
-                    task = this.iPresentacion!.Guardar(Actual!)!;
+                    task = iPresentacion!.Guardar(Actual!)!;
                 else
-                    task = this.iPresentacion!.Modificar(Actual!)!;
+                    task = iPresentacion!.Modificar(Actual!)!;
+
                 task.Wait();
                 Actual = task.Result;
+
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostBtRefrescar();
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
-        public virtual void OnPostBtBorrarVal(string data)
+        public void OnPostBtBorrarVal(string data)
         {
             try
             {
@@ -136,21 +112,22 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
-        public virtual void OnPostBtBorrar()
+        public void OnPostBtBorrar()
         {
             try
             {
-                var task = this.iPresentacion!.Borrar(Actual!);
+                var task = iPresentacion!.Borrar(Actual!);
+                task.Wait();
                 Actual = task.Result;
                 OnPostBtRefrescar();
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
@@ -163,7 +140,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
             }
         }
 
@@ -176,7 +153,21 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log(ex, ViewData);
+            }
+        }
+
+        private void CargarCombos()
+        {
+            try
+            {
+                var task = iHotelesPresentacion!.Listar();
+                task.Wait();
+                Hoteles = task.Result;
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData);
             }
         }
     }

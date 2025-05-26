@@ -18,10 +18,10 @@ namespace lib_dominio.Entidades
 
         public decimal Descuento_Sede { get; set; }
 
-        [ForeignKey("Id_Sede")]
-        public Sedes? Sedes { get; set; }
-        [ForeignKey("Id_ServicioExtra")]
-        public ServiciosExtras? ServicioExtra { get; set; }
+        [ForeignKey("Id_Sede")] public Sedes? Sedes { get; set; }
+
+        [ForeignKey("Id_ServicioExtra")] public ServiciosExtras? ServicioExtra { get; set; }
+
 
 
     }

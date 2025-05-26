@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace lib_dominio.Entidades
 {
@@ -26,7 +27,7 @@ namespace lib_dominio.Entidades
         [ForeignKey("Id_Sede")]
         public Sedes? Sedes { get; set; }
 
-
+        [JsonIgnore]
         public List<Reservas_Habitaciones>? Reservas_Habitaciones { get; set; }
 
 

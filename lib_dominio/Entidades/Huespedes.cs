@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace lib_dominio.Entidades
 {
@@ -39,7 +40,7 @@ namespace lib_dominio.Entidades
         public string? Historial_Reserva { get; set; }
 
 
-
+        [JsonIgnore]
         public List<Reservas>? Reservas { get; set; }
 
 

@@ -8,47 +8,40 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class ServiciosExtrasModel : PageModel
     {
-        private IServiciosExtrasPresentacion? iPresentacion = null;
+        private readonly IServiciosExtrasPresentacion? iPresentacion;
+        private readonly ISedesPresentacion? iSedesPresentacion;
 
-        public ServiciosExtrasModel(IServiciosExtrasPresentacion iPresentacion)
+        public ServiciosExtrasModel(IServiciosExtrasPresentacion iPresentacion, ISedesPresentacion iSedesPresentacion)
         {
-            try
-            {
-                this.iPresentacion = iPresentacion;
-                Filtro = new ServiciosExtras();
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
+            this.iPresentacion = iPresentacion;
+            this.iSedesPresentacion = iSedesPresentacion;
+            Filtro = new ServiciosExtras();
         }
 
-        public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
         [BindProperty] public ServiciosExtras? Actual { get; set; }
         [BindProperty] public ServiciosExtras? Filtro { get; set; }
         [BindProperty] public List<ServiciosExtras>? Lista { get; set; }
+        [BindProperty] public List<Sedes>? Sedes { get; set; }
 
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        public void OnGet()
+        {
+            OnPostBtRefrescar();
+        }
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
-
                 Filtro!.Id_ServicioExtra = Filtro!.Id_ServicioExtra;
-
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.PorId(Filtro!);
+
+                var task = iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
+
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -56,12 +49,13 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtNuevo()
+        public void OnPostBtNuevo()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new ServiciosExtras();
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -69,13 +63,14 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtModificar(string data)
+        public void OnPostBtModificar(string data)
         {
             try
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.Id_ServicioExtra.ToString() == data);
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -83,19 +78,21 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtGuardar()
+        public void OnPostBtGuardar()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<ServiciosExtras>? task = null;
+                Task<ServiciosExtras> task;
                 if (Actual!.Id_ServicioExtra == 0)
-                    task = this.iPresentacion!.Guardar(Actual!)!;
+                    task = iPresentacion!.Guardar(Actual!)!;
                 else
-                    task = this.iPresentacion!.Modificar(Actual!)!;
+                    task = iPresentacion!.Modificar(Actual!)!;
+
                 task.Wait();
                 Actual = task.Result;
+
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostBtRefrescar();
             }
@@ -105,7 +102,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtBorrarVal(string data)
+        public void OnPostBtBorrarVal(string data)
         {
             try
             {
@@ -119,11 +116,12 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtBorrar()
+        public void OnPostBtBorrar()
         {
             try
             {
-                var task = this.iPresentacion!.Borrar(Actual!);
+                var task = iPresentacion!.Borrar(Actual!);
+                task.Wait();
                 Actual = task.Result;
                 OnPostBtRefrescar();
             }
@@ -152,6 +150,20 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 if (Accion == Enumerables.Ventanas.Listas)
                     OnPostBtRefrescar();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        private void CargarCombos()
+        {
+            try
+            {
+                var task = iSedesPresentacion!.Listar();
+                task.Wait();
+                Sedes = task.Result;
             }
             catch (Exception ex)
             {

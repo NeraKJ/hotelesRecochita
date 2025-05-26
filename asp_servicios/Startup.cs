@@ -26,6 +26,7 @@ namespace asp_servicios
             //services.AddSwaggerGen();
             // Repositorios
             services.AddScoped<IConexion, Conexion>();
+            
             // Aplicaciones
             services.AddScoped<IEmpleadosAplicacion, EmpleadosAplicacion>();
             services.AddScoped<IEmpleados_ServiciosExtrasAplicacion, Empleados_ServiciosExtrasAplicacion>();
@@ -40,7 +41,7 @@ namespace asp_servicios
             services.AddScoped<IHabitacionesAplicacion, HabitacionesAplicacion>();
             services.AddScoped<IReservas_HabitacionesAplicacion, Reservas_HabitacionesAplicacion>();
             services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
-            services.AddScoped<IUsuariosAplicacion, UsuariosAplicacion>();
+           
 
 
             // Controladores

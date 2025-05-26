@@ -2,6 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using static lib_dominio.Entidades.Hoteles;
+using Newtonsoft.Json;
+
+
 
 namespace lib_dominio.Entidades
 {
@@ -14,9 +17,9 @@ namespace lib_dominio.Entidades
         public string? Nombre { get; set; }
         public string? Dueños { get; set; }
 
+        [JsonIgnore]
 
 
-        
         public List<Habitaciones>? Habitacion { get; set; }
         public List<Sedes>? Sedes { get; set; }
         public List<Empleados>? Empleados { get; set; }

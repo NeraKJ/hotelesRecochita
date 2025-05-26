@@ -5,12 +5,11 @@
 }
 <center>
     <div class="container mt-4">
-        <!-- Imagen representativa de las sedes -->
         <div class="text-center mb-4">
-            <img src="/Imagenes/hotel.jpeg"
-                 alt="Hotel representativo"
+            <img src="/Imagenes/sede.jpeg"
+                 alt="Sede representativa"
                  style="max-width: 500px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
-            <p style="font-style: italic; font-size: small;">Hoteles Recochita</p>
+            <p style="font-style: italic; font-size: small;">Sedes Hoteleras</p>
         </div>
 
         <form method="POST" enctype="multipart/form-data">
@@ -40,8 +39,8 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden" asp-for="@Model.Actual!.Id_Hotel" />
-                <input type="hidden" asp-for="@Model.Actual!.Locacion" />
                 <input type="hidden" asp-for="@Model.Actual!.Direccion" />
+                <input type="hidden" asp-for="@Model.Actual!.Locacion" />
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
@@ -49,28 +48,26 @@
                 <div class="card p-4 mb-4 shadow-sm">
                     <h4 class="mb-3">Nueva Sede</h4>
 
-                    
-
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label">Hotel</label>
                         <div class="col-sm-10">
-                            <select id="nmId_Hotel" class="form-control" asp-for="@Model.Actual!.Id_Hotel"
-                                    asp-items="@(new SelectList(Model.Hoteles, "Id_Hotel", "Nombre"))">
+                            <select asp-for="@Model.Actual!.Id_Hotel" class="form-select" asp-items="@(new SelectList(Model.Hoteles, "Id_Hotel", "Nombre"))">
+                                <option value="">-- Seleccione un hotel --</option>
                             </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Locación</label>
-                        <div class="col-sm-10">
-                            <input id="nmLocacion" class="form-control" asp-for="@Model.Actual!.Locacion" />
                         </div>
                     </div>
 
                     <div class="mb-3 row">
                         <label class="col-sm-2 col-form-label">Dirección</label>
                         <div class="col-sm-10">
-                            <input id="nmDireccion" class="form-control" asp-for="@Model.Actual!.Direccion" />
+                            <input class="form-control" asp-for="@Model.Actual!.Direccion" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Locación</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Locacion" />
                         </div>
                     </div>
                 </div>
@@ -88,8 +85,8 @@
                     <div class='pp_del_inner'>
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
-                            <h4>¿Desea borrar la entidad?</h4>
-                            <h6>@Model.Actual!.Id_Sede, @Model.Actual!.Direccion, @Model.Actual!.Locacion</h6>
+                            <h4>¿Desea borrar la sede?</h4>
+                            <h6>@Model.Actual!.Direccion - @Model.Actual!.Locacion</h6>
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
                             <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
@@ -113,9 +110,9 @@
                         <thead>
                             <tr>
                                 <th>Id_Sede</th>
-                                <th>Id_Hotel</th>
-                                <th>Locación</th>
+                                <th>Hotel</th>
                                 <th>Dirección</th>
+                                <th>Locación</th>
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -126,9 +123,9 @@
                                 {
                                     <tr>
                                         <td>@elemento.Id_Sede</td>
-                                        <td>@elemento.Id_Hotel</td>
-                                        <td>@elemento.Locacion</td>
+                                        <td>@elemento.Hotel?.Nombre</td>
                                         <td>@elemento.Direccion</td>
+                                        <td>@elemento.Locacion</td>
                                         <td>
                                             <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                    class="btn btn-warning btn-sm me-1"

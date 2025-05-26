@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace lib_dominio.Entidades
 {
@@ -26,7 +27,9 @@ namespace lib_dominio.Entidades
 
         public Facturas? Factura { get; set; }
         //public List<Facturas>? Facturas { get; set; }
+        [JsonIgnore]
         public List<Empleados_ServiciosExtras>? Empleados_ServiciosExtras { get; set; }
+        [JsonIgnore]
         public List<Sedes_ServiciosExtras>? Sedes_ServiciosExtras { get; set; }
 
 
