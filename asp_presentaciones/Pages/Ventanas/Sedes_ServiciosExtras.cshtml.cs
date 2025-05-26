@@ -12,13 +12,16 @@ namespace asp_presentacion.Pages.Ventanas
         private readonly ISedesPresentacion? iSedesPresentacion;
         private readonly IServiciosExtrasPresentacion? iServiciosExtrasPresentacion;
 
-        public Sedes_ServiciosExtrasModel(ISedes_ServiciosExtrasPresentacion iPresentacion, ISedesPresentacion iSedesPresentacion, IServiciosExtrasPresentacion? iServiciosExtrasPresentacion)
+        public Sedes_ServiciosExtrasModel(
+            ISedes_ServiciosExtrasPresentacion iPresentacion,
+            ISedesPresentacion iSedesPresentacion,
+            IServiciosExtrasPresentacion? iServiciosExtrasPresentacion)
         {
             this.iPresentacion = iPresentacion;
             this.iSedesPresentacion = iSedesPresentacion;
             this.iServiciosExtrasPresentacion = iServiciosExtrasPresentacion;
+
             Filtro = new Sedes_ServiciosExtras();
-           
         }
 
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
@@ -26,7 +29,6 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public Sedes_ServiciosExtras? Filtro { get; set; }
         [BindProperty] public List<Sedes_ServiciosExtras>? Lista { get; set; }
         [BindProperty] public List<Sedes>? Sedes { get; set; }
-
         [BindProperty] public List<ServiciosExtras>? ServiciosExtras { get; set; }
 
         public void OnGet()
@@ -38,7 +40,6 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                Filtro!.Id_Sedes_ServiciosExtras = Filtro!.Id_Sedes_ServiciosExtras;
                 Accion = Enumerables.Ventanas.Listas;
 
                 var task = iPresentacion!.PorId(Filtro!);
@@ -59,7 +60,12 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = new Sedes_ServiciosExtras();
+
+                Actual = new Sedes_ServiciosExtras
+                {
+                    ServicioExtra = new ServiciosExtras()
+                };
+
                 CargarCombos();
             }
             catch (Exception ex)
@@ -74,7 +80,15 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
+
                 Actual = Lista!.FirstOrDefault(x => x.Id_Sedes_ServiciosExtras.ToString() == data);
+
+                // Asegurar que ServicioExtra no sea null
+                if (Actual != null && Actual.ServicioExtra == null)
+                {
+                    Actual.ServicioExtra = new ServiciosExtras();
+                }
+
                 CargarCombos();
             }
             catch (Exception ex)
@@ -88,6 +102,12 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
+
+                // Asegurar que ServicioExtra esté inicializado
+                if (Actual!.ServicioExtra == null)
+                {
+                    Actual.ServicioExtra = new ServiciosExtras();
+                }
 
                 Task<Sedes_ServiciosExtras> task;
                 if (Actual!.Id_Sedes_ServiciosExtras == 0)

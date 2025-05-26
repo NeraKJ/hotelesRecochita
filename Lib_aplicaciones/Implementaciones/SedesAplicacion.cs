@@ -77,7 +77,7 @@ namespace lib_aplicaciones.Implementaciones
         {
             return this.IConexion!.Sedes!.Take(20)
                   .Include(x => x.Hotel)
-                  .ToList(); ;
+                  .ToList(); 
         }
 
         public List<Sedes> PorId(Sedes? entidad)

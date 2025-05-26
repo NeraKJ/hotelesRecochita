@@ -16,6 +16,7 @@ namespace lib_aplicaciones.Implementaciones
 
 
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -73,14 +74,24 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Reservas> Listar()
         {
-            return this.IConexion!.Reservas!.Take(20).ToList();
-        }
+            return this.IConexion!.Reservas!.Take(20)
 
+          .Include(x => x.Huespedes)
+          .Include(x => x.Sedes)
+          .ThenInclude(d => d.Hotel)
+
+
+             .ToList(); ;
+
+        }
         public List<Reservas> PorId(Reservas? entidad)
         {
             return this.IConexion!.Reservas!
                 .Where(x => x.Id_Reserva == entidad!.Id_Reserva)
-                .ToList();
+                 .Include(x => x.Huespedes)
+                 .Include(x => x.Sedes)
+                 .ThenInclude(d => d.Hotel)
+                  .ToList();
         }
 
         public Reservas? Modificar(Reservas? entidad)
