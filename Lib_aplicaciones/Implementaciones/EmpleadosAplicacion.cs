@@ -15,6 +15,7 @@ namespace lib_aplicaciones.Implementaciones
 
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -72,14 +73,23 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Empleados> Listar()
         {
-            return this.IConexion!.Empleados!.Take(20).ToList();
+            return this.IConexion!.Empleados!.Take(20)
+
+              .Include(x => x.Sedes)
+              .ThenInclude(H => H.Hotel)
+              .Include(x => x.Hoteles)
+              .ToList();
         }
 
         public List<Empleados> PorId(Empleados? entidad)
         {
             return this.IConexion!.Empleados!
                 .Where(x => x.Id_Empleado == entidad!.Id_Empleado)
-                .ToList();
+                .Include(x => x.Sedes)
+              .ThenInclude(H => H.Hotel)
+              .Include(x => x.Hoteles)
+              .ToList();
+                
         }
 
         public Empleados? Modificar(Empleados? entidad)

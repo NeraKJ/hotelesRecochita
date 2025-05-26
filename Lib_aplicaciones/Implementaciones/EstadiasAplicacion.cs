@@ -14,11 +14,12 @@ namespace lib_aplicaciones.Implementaciones
         public EstadiasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
-
         public void Configurar(string StringConexion)
         {
             this.IConexion!.StringConexion = StringConexion;
+           
         }
 
         public Estadias? Borrar(Estadias? entidad)
@@ -71,13 +72,17 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Estadias> Listar()
         {
-            return this.IConexion!.Estadias!.Take(20).ToList();
+            return this.IConexion!.Estadias!.Take(20)
+
+                 .Include(x => x.Reservas)
+                .ToList();
         }
 
         public List<Estadias> PorId(Estadias? entidad)
         {
             return this.IConexion!.Estadias!
                 .Where(x => x.Id_Estadia == entidad!.Id_Estadia)
+                .Include(x => x.Reservas)
                 .ToList();
         }
 
