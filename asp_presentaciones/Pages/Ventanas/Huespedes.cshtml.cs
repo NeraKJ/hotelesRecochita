@@ -35,16 +35,17 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
+                var variable_session = HttpContext.Session.GetString("Usuario");
+                if (String.IsNullOrEmpty(variable_session))
+                {
+                    HttpContext.Response.Redirect("/");
+                    return;
+                }
 
-                Filtro!.Id_Huesped = Filtro!.Id_Huesped;
+                Filtro!.Nombre = Filtro!.Nombre ?? "";
 
                 Accion = Enumerables.Ventanas.Listas;
+
                 var task = this.iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;

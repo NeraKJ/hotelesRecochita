@@ -37,7 +37,7 @@ namespace lib_dominio.Entidades
 
         public string? Telefono { get; set; }
         public string? Correo { get; set; }
-        public string? Historial_Reserva { get; set; }
+        
 
 
         
