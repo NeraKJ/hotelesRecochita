@@ -16,6 +16,7 @@ namespace lib_aplicaciones.Implementaciones
 
 
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)

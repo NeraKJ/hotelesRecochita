@@ -17,11 +17,13 @@ namespace lib_aplicaciones.Implementaciones
 
 
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
         {
             this.IConexion!.StringConexion = StringConexion;
+            
         }
 
         public Huespedes? Borrar(Huespedes? entidad)

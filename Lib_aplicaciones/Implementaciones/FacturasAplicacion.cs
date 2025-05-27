@@ -14,6 +14,7 @@ namespace lib_aplicaciones.Implementaciones
         public FacturasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
             this.IConexion = iConexion;
+            this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
 
         public void Configurar(string StringConexion)
@@ -71,13 +72,23 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Facturas> Listar()
         {
-            return this.IConexion!.Facturas!.Take(20).ToList();
+            return this.IConexion!.Facturas!.Take(20)
+
+                .Include(x => x.ServiciosExtras)
+                .Include(x => x.Estadias)
+              .ThenInclude(R => R.Reservas)
+                .Include(x => x.Reserva)
+                .ToList();
         }
 
         public List<Facturas> PorId(Facturas? entidad)
         {
             return this.IConexion!.Facturas!
                 .Where(x => x.Id_Factura == entidad!.Id_Factura)
+                .Include(x => x.ServiciosExtras)
+                .Include(x => x.Estadias)
+              .ThenInclude(R => R.Reservas)
+                .Include(x => x.Reserva)
                 .ToList();
         }
 

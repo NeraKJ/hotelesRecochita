@@ -20,6 +20,7 @@ namespace lib_aplicaciones.Implementaciones
         public void Configurar(string StringConexion)
         {
             this.IConexion!.StringConexion = StringConexion;
+        
         }
 
         public Hoteles? Borrar(Hoteles? entidad)
