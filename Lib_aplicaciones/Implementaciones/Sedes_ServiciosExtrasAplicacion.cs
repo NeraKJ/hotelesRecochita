@@ -78,9 +78,9 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.Sedes_ServiciosExtras!
                 .Take(20)
                   .Include(x => x.ServicioExtra)
-                  .ThenInclude(s => s.Sedes)
+                  .ThenInclude(s => s!.Sedes)
                   .Include(x => x.Sedes)
-                  .ThenInclude(d=> d.Hotel)
+                  .ThenInclude(d=> d!.Hotel)
 
                   .ToList();
         }
@@ -90,9 +90,9 @@ namespace lib_aplicaciones.Implementaciones
             return this.IConexion!.Sedes_ServiciosExtras!
                 .Where(x => x.Id_Sedes_ServiciosExtras == entidad!.Id_Sedes_ServiciosExtras)
                   .Include(x => x.ServicioExtra)
-                  .ThenInclude(s => s.Sedes)
+                  .ThenInclude(s => s!.Sedes)
                   .Include(x => x.Sedes)
-                  .ThenInclude(d=> d.Hotel)
+                  .ThenInclude(d=> d!.Hotel)
                   .ToList();
         }
 
