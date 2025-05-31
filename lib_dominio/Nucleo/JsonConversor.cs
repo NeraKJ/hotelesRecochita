@@ -1,38 +1,49 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace lib_dominio.Nucleo
 {
-    public class JsonConversor
+    public static class JsonConversor
     {
+        
         public static Dictionary<string, object> ConvertirAObjeto(string data)
         {
+            if (string.IsNullOrWhiteSpace(data))
+                return new Dictionary<string, object>();
+
             var values = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
             var values2 = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, object> item in values!)
+
+            foreach (var item in values!)
             {
-                if (item.Value is JObject)
-                    values2.Add(item.Key, ConvertirAObjeto(item.Value.ToString()!));
+                if (item.Value is JObject jObject)
+                    values2.Add(item.Key, ConvertirAObjeto(jObject.ToString()));
                 else
-                    values2.Add(item.Key, item.Value);
+                    values2.Add(item.Key, item.Value!);
             }
+
             return values2;
         }
 
-        public static string ConvertirAString(object data, bool ignore = false)
+       
+        public static string ConvertirAString(object data, bool ignore = true)
         {
-            if (!ignore)
-                return JsonConvert.SerializeObject(data);
-
-            return JsonConvert.SerializeObject(data, Formatting.Indented,
-                new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }
-             );
+            return JsonConvert.SerializeObject(data, Formatting.None, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ignore ? ReferenceLoopHandling.Ignore : ReferenceLoopHandling.Error,
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
-        public static T ConvertirAObjeto<T>(string data, bool check = false)
+        
+        public static T ConvertirAObjeto<T>(string data, bool cleanQuotes = false)
         {
-            if (check && data.Contains("\""))
+            if (string.IsNullOrWhiteSpace(data))
+                throw new ArgumentException("El dato JSON de entrada está vacío o nulo.");
+
+            if (cleanQuotes)
                 data = data.Replace("\"", "");
+
             return JsonConvert.DeserializeObject<T>(data)!;
         }
     }

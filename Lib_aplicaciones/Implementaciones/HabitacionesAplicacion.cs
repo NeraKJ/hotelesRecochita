@@ -27,12 +27,13 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Habitacion == 0)
+            var existente = this.IConexion!.Habitaciones!.FirstOrDefault(x => x.Id_Habitacion == entidad.Id_Habitacion);
+            if (existente == null)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Habitaciones!.Remove(entidad);
+            this.IConexion!.Habitaciones!.Remove(existente);
             this.IConexion.SaveChanges();
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
@@ -51,7 +52,9 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Habitacion != 0)
+
+            var existente = this.IConexion!.Habitaciones!.FirstOrDefault(x => x.Id_Habitacion == entidad.Id_Habitacion);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -63,7 +66,7 @@ namespace lib_aplicaciones.Implementaciones
             {
                 Usuario = "admin",
                 Entidad = "Habitaciones",
-                Operacion = "Borrar",
+                Operacion = "Guardar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
@@ -74,19 +77,23 @@ namespace lib_aplicaciones.Implementaciones
         {
             return this.IConexion!.Habitaciones!.Take(20)
                  .Include(x => x.Sedes)
-              .ThenInclude(H => H.Hotel)
+              .ThenInclude(H => H!.Hotel)
               .Include(x => x.Hoteles)
                   .ToList(); ;
         }
 
         public List<Habitaciones> PorId(Habitaciones? entidad)
         {
+            if (entidad == null || entidad.Id_Habitacion == 0)
+            {
+                return this.IConexion!.Habitaciones!.Take(20).ToList();
+            }
             return this.IConexion!.Habitaciones!
                 .Where(x => x.Id_Habitacion == entidad!.Id_Habitacion)
                 .Include(x => x.Sedes)
-              .ThenInclude(H => H.Hotel)
+              .ThenInclude(H => H!.Hotel)
               .Include(x => x.Hoteles)
-                  .ToList(); ;
+                  .ToList();
                
         }
 
@@ -96,7 +103,7 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
             if (entidad!.Id_Habitacion == 0)
-                throw new Exception("lbNoSeGuardo");
+                throw new Exception("lbNoSe ,KLGuardo");
 
             // Calculos
 
@@ -108,7 +115,7 @@ namespace lib_aplicaciones.Implementaciones
             {
                 Usuario = "admin",
                 Entidad = "Habitaciones",
-                Operacion = "Borrar",
+                Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });

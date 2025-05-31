@@ -13,8 +13,6 @@ namespace lib_aplicaciones.Implementaciones
 
         public SedesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-
-
             this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
@@ -29,12 +27,13 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Sede == 0)
+            var existente = this.IConexion!.Sedes!.FirstOrDefault(x => x.Id_Sede == entidad.Id_Sede);
+            if (existente == null)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Sedes!.Remove(entidad);
+            this.IConexion!.Sedes!.Remove(existente);
             this.IConexion.SaveChanges();
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
@@ -54,7 +53,8 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
 
-            if (entidad.Id_Sede != 0)
+            var existente = this.IConexion!.Sedes!.FirstOrDefault(x => x.Id_Sede == entidad.Id_Sede);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -76,16 +76,23 @@ namespace lib_aplicaciones.Implementaciones
         public List<Sedes> Listar()
         {
             return this.IConexion!.Sedes!.Take(20)
-                  .Include(x => x.Hotel)
-                  .ToList(); 
+                
+
+                  .ToList(); ;
         }
 
         public List<Sedes> PorId(Sedes? entidad)
         {
+            if (entidad == null || entidad.Id_Sede == 0)
+            {
+                return this.IConexion!.Sedes!.Take(20).ToList();
+            }
             return this.IConexion!.Sedes!
                 .Where(x => x.Id_Sede == entidad!.Id_Sede)
-                  .Include(x => x.Hotel)
-                     .ToList();
+                
+
+                  .ToList();
+
         }
 
         public Sedes? Modificar(Sedes? entidad)
@@ -94,7 +101,7 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
             if (entidad!.Id_Sede == 0)
-                throw new Exception("lbNoSeGuardo");
+                throw new Exception("lbNoSe ,KLGuardo");
 
             // Calculos
 

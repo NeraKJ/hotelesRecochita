@@ -1,4 +1,5 @@
-﻿using lib_aplicaciones.Interfaces;
+﻿
+using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_repositorios.Interfaces;
@@ -21,18 +22,16 @@ namespace lib_aplicaciones.Implementaciones
         {
             this.IConexion!.StringConexion = StringConexion;
         }
-
         public Facturas? Borrar(Facturas? entidad)
         {
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Factura == 0)
-                throw new Exception("lbNoSeGuardo");
+            var existente = this.IConexion!.Facturas!.FirstOrDefault(x => x.Id_Factura == entidad.Id_Factura);
+            if (existente == null)
+                throw new Exception("lbNoExisteRegistro");
 
-            // Calculos
-
-            this.IConexion!.Facturas!.Remove(entidad);
+            this.IConexion!.Facturas!.Remove(existente);
             this.IConexion.SaveChanges();
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
@@ -51,7 +50,8 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Factura != 0)
+            var existente = this.IConexion!.Facturas!.FirstOrDefault(x => x.Id_Factura == entidad.Id_Factura);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -63,8 +63,8 @@ namespace lib_aplicaciones.Implementaciones
             {
                 Usuario = "admin",
                 Entidad = "Facturas",
-                Operacion = "Borrar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Operacion = "Guardar",
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
             return entidad;
@@ -74,21 +74,34 @@ namespace lib_aplicaciones.Implementaciones
         {
             return this.IConexion!.Facturas!.Take(20)
 
-                .Include(x => x.ServiciosExtras)
+             .Include(x => x.ServiciosExtras)
+                .ThenInclude(s => s!.Sedes)
                 .Include(x => x.Estadias)
-              .ThenInclude(R => R.Reservas)
+              .ThenInclude(R => R!.Reservas)
                 .Include(x => x.Reserva)
+                 .ThenInclude(h => h!.Huespedes)
+                 .Include(x => x.Reserva)
+                 .ThenInclude(l => l!.Sedes)
+
                 .ToList();
         }
 
         public List<Facturas> PorId(Facturas? entidad)
         {
+            if (entidad == null || entidad.Id_Factura == 0)
+            {
+                return this.IConexion!.Facturas!.Take(20).ToList();
+            }
             return this.IConexion!.Facturas!
                 .Where(x => x.Id_Factura == entidad!.Id_Factura)
                 .Include(x => x.ServiciosExtras)
+                .ThenInclude(s => s!.Sedes)
                 .Include(x => x.Estadias)
-              .ThenInclude(R => R.Reservas)
+              .ThenInclude(R => R!.Reservas)
                 .Include(x => x.Reserva)
+                 .ThenInclude(h => h!.Huespedes)
+                 .Include(x => x.Reserva)
+                 .ThenInclude(l => l!.Sedes)
                 .ToList();
         }
 
@@ -110,7 +123,7 @@ namespace lib_aplicaciones.Implementaciones
             {
                 Usuario = "admin",
                 Entidad = "Facturas",
-                Operacion = "Borrar",
+                Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });

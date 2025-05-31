@@ -13,8 +13,6 @@ namespace lib_aplicaciones.Implementaciones
 
         public Sedes_ServiciosExtrasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-
-
             this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
@@ -29,12 +27,13 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Sedes_ServiciosExtras == 0)
+            var existente = this.IConexion!.Sedes_ServiciosExtras!.FirstOrDefault(x => x.Id_Sedes_ServiciosExtras == entidad.Id_Sedes_ServiciosExtras);
+            if (existente == null)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            this.IConexion!.Sedes_ServiciosExtras!.Remove(entidad);
+            this.IConexion!.Sedes_ServiciosExtras!.Remove(existente);
             this.IConexion.SaveChanges();
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
@@ -54,7 +53,8 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
 
-            if (entidad.Id_Sedes_ServiciosExtras != 0)
+            var existente = this.IConexion!.Sedes_ServiciosExtras!.FirstOrDefault(x => x.Id_Sedes_ServiciosExtras == entidad.Id_Sedes_ServiciosExtras);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -75,25 +75,29 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Sedes_ServiciosExtras> Listar()
         {
-            return this.IConexion!.Sedes_ServiciosExtras!
-                .Take(20)
-                  .Include(x => x.ServicioExtra)
+            return this.IConexion!.Sedes_ServiciosExtras!.Take(20)
+                .Include(x => x.ServicioExtra)
                   .ThenInclude(s => s!.Sedes)
                   .Include(x => x.Sedes)
-                  .ThenInclude(d=> d!.Hotel)
+                  .ThenInclude(d => d!.Hotel)
 
-                  .ToList();
+                  .ToList(); ;
         }
 
         public List<Sedes_ServiciosExtras> PorId(Sedes_ServiciosExtras? entidad)
         {
+            if (entidad == null || entidad.Id_Sedes_ServiciosExtras == 0)
+            {
+                return this.IConexion!.Sedes_ServiciosExtras!.Take(20).ToList();
+            }
             return this.IConexion!.Sedes_ServiciosExtras!
                 .Where(x => x.Id_Sedes_ServiciosExtras == entidad!.Id_Sedes_ServiciosExtras)
                   .Include(x => x.ServicioExtra)
                   .ThenInclude(s => s!.Sedes)
                   .Include(x => x.Sedes)
-                  .ThenInclude(d=> d!.Hotel)
+                  .ThenInclude(d => d!.Hotel)
                   .ToList();
+
         }
 
         public Sedes_ServiciosExtras? Modificar(Sedes_ServiciosExtras? entidad)
@@ -102,7 +106,7 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
             if (entidad!.Id_Sedes_ServiciosExtras == 0)
-                throw new Exception("lbNoSeGuardo");
+                throw new Exception("lbNoSe ,KLGuardo");
 
             // Calculos
 

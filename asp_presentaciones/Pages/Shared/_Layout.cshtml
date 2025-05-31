@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/asp_presentacion.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <style>
         body {
@@ -50,7 +51,7 @@
             box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
         }
 
-        /* Navegación responsive */
+       
         .navbar-nav {
             flex-wrap: wrap;
         }
@@ -60,7 +61,7 @@
             margin-right: 10px;
         }
 
-        /* Contenido principal con imagen a la derecha */
+   
         .content-container {
             display: flex;
             justify-content: space-between;
@@ -116,8 +117,8 @@
                      
                         
                         <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas_Habitaciones">Reservas_Habitaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados_ServiciosExtras">Empleados_ServiciosExtras</a></li>
+        
+                   
                         
                         <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
                         
@@ -140,10 +141,24 @@
     </div>
 
     <footer class="border-top footer text-muted mt-5">
-        <div class="container">
-            &copy; 2025 - asp_presentacion - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
+            <div>
+                &copy; 2025 - Sistema Hotelero - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+            <div>
+                <a href="https://www.facebook.com" target="_blank" class="me-3 social-icon">
+                    <i class="fab fa-facebook fa-lg"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="me-3 social-icon">
+                    <i class="fab fa-instagram fa-lg"></i>
+                </a>
+                <a href="https://www.twitter.com" target="_blank" class="social-icon">
+                    <i class="fab fa-twitter fa-lg"></i>
+                </a>
+            </div>
         </div>
     </footer>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

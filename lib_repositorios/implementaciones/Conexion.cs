@@ -16,22 +16,7 @@ namespace lib_repositorios.Implementaciones
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Estadias>()
-                .HasOne(e => e.Facturas)    // Una estadía tiene una factura
-                .WithOne(f => f.Estadias)   // Una factura pertenece a una estadía
-                .HasForeignKey<Facturas>(f => f.Id_Estadia) // Factura depende de Estadía
-                .OnDelete(DeleteBehavior.Cascade); // Elimina la factura si se borra la estadía
-
-            modelBuilder.Entity<Estadias>()
-                .HasOne(e => e.Reservas)
-                .WithOne(r => r.Estadias)
-                .HasForeignKey<Estadias>(e => e.Id_Reserva)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            base.OnModelCreating(modelBuilder);
-        }
+     
 
 
         public DbSet<Hoteles> Hoteles { get; set; } = null!;

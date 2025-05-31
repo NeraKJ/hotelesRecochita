@@ -14,8 +14,6 @@ namespace lib_aplicaciones.Implementaciones
 
         public HuespedesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-
-
             this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
@@ -23,7 +21,6 @@ namespace lib_aplicaciones.Implementaciones
         public void Configurar(string StringConexion)
         {
             this.IConexion!.StringConexion = StringConexion;
-            
         }
 
         public Huespedes? Borrar(Huespedes? entidad)
@@ -31,22 +28,23 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Huesped == 0)
-                throw new Exception("lbNoSeGuardo");
+            var existente = this.IConexion!.Huespedes!.FirstOrDefault(x => x.Id_H == entidad.Id_H);
+            if (existente == null)
+                throw new Exception("lbNoExisteRegistro");
 
-            // Calculos
-
-            this.IConexion!.Huespedes!.Remove(entidad);
+            this.IConexion!.Huespedes!.Remove(existente);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
                 Entidad = "Huespedes",
                 Operacion = "Borrar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
@@ -55,22 +53,23 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Huesped != 0)
+            var existente = this.IConexion!.Huespedes!.FirstOrDefault(x => x.Id_H == entidad.Id_H);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
-
-            // Calculos
 
             this.IConexion!.Huespedes!.Add(entidad);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
                 Entidad = "Huespedes",
                 Operacion = "Guardar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
@@ -81,8 +80,13 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Huespedes> PorId(Huespedes? entidad)
         {
+            if (entidad == null || entidad.Id_H == 0)
+            {
+                return this.IConexion!.Huespedes!.Take(20).ToList();
+            }
+
             return this.IConexion!.Huespedes!
-                .Where(x => x.Id_Huesped == entidad!.Id_Huesped)
+                .Where(x => x.Id_H == entidad.Id_H)
                 .ToList();
         }
 
@@ -91,7 +95,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Huesped == 0)
+            if (entidad!.Id_H == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -103,12 +107,14 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
-                Entidad = "Huespedes",
+                Entidad = "Hoteles",
                 Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
             return entidad;
         }
+
+
     }
 }

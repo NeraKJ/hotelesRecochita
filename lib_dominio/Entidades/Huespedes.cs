@@ -12,7 +12,7 @@ namespace lib_dominio.Entidades
     public class Huespedes
     {
         [Key]  // Define la clave primaria
-        
+        public int Id_H { get; set; }
         public int Id_Huesped { get; set; }
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }

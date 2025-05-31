@@ -41,7 +41,7 @@ namespace asp_servicios
             services.AddScoped<IHabitacionesAplicacion, HabitacionesAplicacion>();
             services.AddScoped<IReservas_HabitacionesAplicacion, Reservas_HabitacionesAplicacion>();
             services.AddScoped<IAuditoriasAplicacion, AuditoriasAplicacion>();
-           
+            services.AddScoped<IUsuariosAplicacion, UsuariosAplicacion>();
 
 
             // Controladores

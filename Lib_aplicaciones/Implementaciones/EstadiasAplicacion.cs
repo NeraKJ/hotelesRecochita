@@ -1,4 +1,5 @@
-﻿using lib_aplicaciones.Interfaces;
+﻿
+using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_repositorios.Interfaces;
@@ -16,10 +17,10 @@ namespace lib_aplicaciones.Implementaciones
             this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
+
         public void Configurar(string StringConexion)
         {
             this.IConexion!.StringConexion = StringConexion;
-           
         }
 
         public Estadias? Borrar(Estadias? entidad)
@@ -27,22 +28,23 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Estadia == 0)
-                throw new Exception("lbNoSeGuardo");
+            var existente = this.IConexion!.Estadias!.FirstOrDefault(x => x.Id_Estadia == entidad.Id_Estadia);
+            if (existente == null)
+                throw new Exception("lbNoExisteRegistro");
 
-            // Calculos
-
-            this.IConexion!.Estadias!.Remove(entidad);
+            this.IConexion!.Estadias!.Remove(existente);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
                 Entidad = "Estadias",
                 Operacion = "Borrar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
@@ -51,38 +53,51 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Estadia != 0)
+            var existente = this.IConexion!.Estadias!.FirstOrDefault(x => x.Id_Estadia == entidad.Id_Estadia);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
-
-            // Calculos
 
             this.IConexion!.Estadias!.Add(entidad);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
                 Entidad = "Estadias",
-                Operacion = "Borrar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Operacion = "Guardar",
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
         public List<Estadias> Listar()
         {
             return this.IConexion!.Estadias!.Take(20)
-
-                 .Include(x => x.Reservas)
-                .ToList();
+                
+              .Include(x => x.Reservas)
+              .ThenInclude(s => s!.Huespedes)
+              
+                  .ToList();
+            
         }
 
         public List<Estadias> PorId(Estadias? entidad)
         {
+            if (entidad == null || entidad.Id_Estadia == 0)
+            {
+                return this.IConexion!.Estadias!.Take(20).ToList();
+            }
+
             return this.IConexion!.Estadias!
-                .Where(x => x.Id_Estadia == entidad!.Id_Estadia)
-                .Include(x => x.Reservas)
+                .Where(x => x.Id_Estadia == entidad.Id_Estadia)
+                
+              .Include(x => x.Reservas)
+              .ThenInclude(s => s!.Huespedes)
+          
+                 
                 .ToList();
         }
 
@@ -104,7 +119,7 @@ namespace lib_aplicaciones.Implementaciones
             {
                 Usuario = "admin",
                 Entidad = "Estadias",
-                Operacion = "Borrar",
+                Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });

@@ -3,53 +3,45 @@ using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace asp_presentacion.Pages.Ventanas
 {
     public class HuespedesModel : PageModel
     {
-        private IHuespedesPresentacion? iPresentacion = null;
+        private readonly IHuespedesPresentacion? iPresentacion = null;
 
         public HuespedesModel(IHuespedesPresentacion iPresentacion)
         {
-            try
-            {
+            
                 this.iPresentacion = iPresentacion;
                 Filtro = new Huespedes();
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
+            
         }
 
-        public IFormFile? FormFile { get; set; }
+        
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
         [BindProperty] public Huespedes? Actual { get; set; }
         [BindProperty] public Huespedes? Filtro { get; set; }
         [BindProperty] public List<Huespedes>? Lista { get; set; }
 
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+
+        public virtual void OnGet() 
+        { OnPostBtRefrescar(); }
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                var variable_session = HttpContext.Session.GetString("Usuario");
-                if (String.IsNullOrEmpty(variable_session))
-                {
-                    HttpContext.Response.Redirect("/");
-                    return;
-                }
-
-                Filtro!.Nombre = Filtro!.Nombre ?? "";
-
+                Filtro!.Id_H = Filtro!.Id_H;
                 Accion = Enumerables.Ventanas.Listas;
 
-                var task = this.iPresentacion!.PorId(Filtro!);
+                var task = iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
+
+                
             }
             catch (Exception ex)
             {
@@ -63,6 +55,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Huespedes();
+                
             }
             catch (Exception ex)
             {
@@ -77,6 +70,7 @@ namespace asp_presentacion.Pages.Ventanas
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.Id_Huesped.ToString() == data);
+                
             }
             catch (Exception ex)
             {
@@ -84,19 +78,21 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtGuardar()
+        public void OnPostBtGuardar()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Huespedes>? task = null;
-                if (Actual!.Id_Huesped == 0)
-                    task = this.iPresentacion!.Guardar(Actual!)!;
+                Task<Huespedes> task;
+                if (Actual!.Id_H == 0)
+                    task = iPresentacion!.Guardar(Actual!)!;
                 else
-                    task = this.iPresentacion!.Modificar(Actual!)!;
+                    task = iPresentacion!.Modificar(Actual!)!;
+
                 task.Wait();
                 Actual = task.Result;
+
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostBtRefrescar();
             }
@@ -125,6 +121,7 @@ namespace asp_presentacion.Pages.Ventanas
             try
             {
                 var task = this.iPresentacion!.Borrar(Actual!);
+               
                 Actual = task.Result;
                 OnPostBtRefrescar();
             }
@@ -161,3 +158,4 @@ namespace asp_presentacion.Pages.Ventanas
         }
     }
 }
+

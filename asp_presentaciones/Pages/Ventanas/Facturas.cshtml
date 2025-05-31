@@ -1,10 +1,16 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.FacturasModel
 @{
-    ViewData["Titulo"] = "";
+    ViewData["Titulo"] = "Facturas";
 }
 <center>
-    <div>
+    <div class="container mt-4">
+        <div class="text-center mb-4">
+            <img src="/Imagenes/gerente.jpg"
+                 alt="Servicios extra"
+                 style="max-width: 500px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+            <p style="font-style: italic; font-size: small;">  Facturacion </p>
+        </div>
         <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
@@ -12,22 +18,19 @@
                 <h3>Facturas</h3>
             </div>
 
-            <div class="bt_panel_buttons" align="left">
-                <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar"
-                       class="btn btn-secondary"
+            <div class="mb-4">
+                <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo"
-                       class="btn btn-secondary"
+                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Guardar" asp-page-handler="BtGuardar"
-                       class="btn btn-secondary"
+                <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar"
-                       class="btn btn-secondary"
+                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
                        disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
             </div>
 
-            @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)
+            @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
+                Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
                 <input type="hidden" asp-for="Actual.Id_Factura" />
             }
@@ -45,39 +48,91 @@
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
             {
-                <div class="containers_vn panel panel-default">
-                    <h3>Editar Factura</h3>
-                    <div class="form-group">
-                        <label>Id_Factura</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Id_Factura" />
+                <div class="card p-4 mb-4 shadow-sm">
+                    <h4 class="mb-3">Generar Nueva Factura  </h4>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Servicios Disponibles</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Actual!.ServiciosExtras!.Piscina" />
+                            <label class="form-check-label" asp-for="Actual!.ServiciosExtras!.Piscina">Piscina</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Actual!.ServiciosExtras!.Restaurante" />
+                            <label class="form-check-label" asp-for="Actual!.ServiciosExtras!.Restaurante">Restaurante</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Actual!.ServiciosExtras!.Limpieza" />
+                            <label class="form-check-label" asp-for="Actual!.ServiciosExtras!.Limpieza">Limpieza</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Actual!.ServiciosExtras!.Mantenimiento" />
+                            <label class="form-check-label" asp-for="Actual!.ServiciosExtras!.Mantenimiento">Mantenimiento</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Actual!.ServiciosExtras!.Gimnasio" />
+                            <label class="form-check-label" asp-for="Actual!.ServiciosExtras!.Gimnasio">Gimnasio</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" asp-for="Actual!.ServiciosExtras!.Jacuzzi" />
+                            <label class="form-check-label" asp-for="Actual!.ServiciosExtras!.Jacuzzi">Jacuzzi</label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Id_ServicioExtra</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Id_ServicioExtra" />
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label"><div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Id_Reserva</label>
+                        <div class="col-sm-10">
+                                    <select asp-for="@Model.Actual!.Id_Reserva" class="form-select" asp-items="@(new SelectList(Model.Reservas, "Id_Reserva", "Fecha_Reserva"))">
+                                <option value="">-- Seleccione la fecha de su  Reserva --</option>
+                            </select>
+                        </div>
+                    </div></label>
+                        <div class="col-sm-10">
+                            <select asp-for="@Model.Actual!.Id_Estadia" class="form-select" asp-items="@(new SelectList(Model.Estadias, "Id_Estadia", "Fecha_Salida"))">
+                                <option value="">-- Seleccione su fecha de salida --</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Id_Estadia</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Id_Estadia" />
-                    </div>
-                    <div class="form-group">
-                        <label>Id_Reserva</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Id_Reserva" />
-                    </div>
+              
                     <div class="form-group">
                         <label>Total</label>
                         <input class="cts_forms form-control" asp-for="Actual.Total" />
                     </div>
-                    <div class="form-group">
-                        <label>Metodo_Pago</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Metodo_Pago" />
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Método de Pago</label>
+                        <div class="col-sm-10">
+                            <select id="nmMetodoPago" class="form-control" asp-for="Actual.Metodo_Pago">
+                                <option value="">-- Seleccione --</option>
+                                <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Cargos_Extra</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Cargos_Extra" />
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Cargos Extras</label>
+                        <div class="col-sm-10">
+                            <select id="nmMetodoPago" class="form-control" asp-for="Actual.Cargos_Extra">
+                                <option value="">-- Seleccione --</option>
+                                <option value="Ninguno">Ninguno </option>
+                                <option value="MiniBar">MiniBar</option>
+                                <option value="Servicio de lavanderia">Servicio de lavanderia</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Reseña</label>
-                        <input class="cts_forms form-control" asp-for="Actual.Reseña" />
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Reseña</label>
+                        <div class="col-sm-10">
+                            <select id="nmMetodoPago" class="form-control" asp-for="Actual.Reseña">
+                                <option value="">-- Seleccione --</option>
+                                <option value="Excelente">Excelente </option>
+                                <option value="Buena">Buena</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Mala">Mala</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             }

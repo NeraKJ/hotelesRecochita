@@ -155,3 +155,25 @@ body {
     background: #fffdf8;
     border: 1px solid #d9cbb3;
 }
+
+.footer {
+    background-color: #e5d7c0;
+    color: #4e3b2c;
+}
+
+    .footer a {
+        color: #8b5e3c;
+        text-decoration: none;
+    }
+
+        .footer a:hover {
+            color: #a47148;
+        }
+
+.social-icon {
+    color: #8b5e3c;
+}
+
+    .social-icon:hover {
+        color: #a47148;
+    }

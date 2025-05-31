@@ -12,7 +12,7 @@ namespace lib_dominio.Entidades
     public class Empleados
     {
         [Key]  // Define la clave primaria
-        
+        public int Id_E { get; set; }
         public int Id_Empleado { get; set; }
 
         public int Id_Hotel { get; set; }

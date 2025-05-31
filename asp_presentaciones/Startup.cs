@@ -29,7 +29,7 @@ namespace asp_presentacion
             services.AddScoped<IHabitacionesPresentacion, HabitacionesPresentacion>();
             services.AddScoped<IReservas_HabitacionesPresentacion, Reservas_HabitacionesPresentacion>();
             services.AddScoped<IAuditoriasPresentacion, AuditoriasPresentacion>();
-            
+            services.AddScoped<IUsuariosPresentacion, UsuariosPresentacion>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();

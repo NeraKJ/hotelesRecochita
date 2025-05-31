@@ -8,47 +8,37 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class EstadiasModel : PageModel
     {
-        private IEstadiasPresentacion? iPresentacion = null;
+        private readonly IEstadiasPresentacion? iPresentacion;
+        private readonly IReservasPresentacion? iReservasPresentacion;
 
-        public EstadiasModel(IEstadiasPresentacion iPresentacion)
+        public EstadiasModel(IEstadiasPresentacion iPresentacion, IReservasPresentacion iReservasPresentacion)
         {
-            try
-            {
-                this.iPresentacion = iPresentacion;
-                Filtro = new Estadias();
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
+            this.iPresentacion = iPresentacion;
+            this.iReservasPresentacion = iReservasPresentacion;
+            Filtro = new Estadias();
         }
 
-        public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
         [BindProperty] public Estadias? Actual { get; set; }
         [BindProperty] public Estadias? Filtro { get; set; }
         [BindProperty] public List<Estadias>? Lista { get; set; }
+        [BindProperty] public List<Reservas>? Reservas { get; set; }
 
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+        public async Task OnGetAsync()
+        {
+            await OnPostBtRefrescarAsync();
+        }
 
-        public void OnPostBtRefrescar()
+        public async Task OnPostBtRefrescarAsync()
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
-
-                Filtro!.Id_Estadia = Filtro!.Id_Estadia ;
-
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.PorId(Filtro!);
-                task.Wait();
-                Lista = task.Result;
+
+                Lista = await iPresentacion!.PorId(Filtro!);
                 Actual = null;
+
+                await CargarCombosAsync();
             }
             catch (Exception ex)
             {
@@ -56,12 +46,13 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtNuevo()
+        public async Task OnPostBtNuevoAsync()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Estadias();
+                await CargarCombosAsync();
             }
             catch (Exception ex)
             {
@@ -69,13 +60,14 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtModificar(string data)
+        public async Task OnPostBtModificarAsync(string id)
         {
             try
             {
-                OnPostBtRefrescar();
+                await OnPostBtRefrescarAsync();
                 Accion = Enumerables.Ventanas.Editar;
-                Actual = Lista!.FirstOrDefault(x => x.Id_Estadia.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id_Estadia.ToString() == id);
+                await CargarCombosAsync();
             }
             catch (Exception ex)
             {
@@ -83,21 +75,19 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtGuardar()
+        public async Task OnPostBtGuardarAsync()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Estadias>? task = null;
                 if (Actual!.Id_Estadia == 0)
-                    task = this.iPresentacion!.Guardar(Actual!)!;
+                    Actual = await iPresentacion!.Guardar(Actual!);
                 else
-                    task = this.iPresentacion!.Modificar(Actual!)!;
-                task.Wait();
-                Actual = task.Result;
+                    Actual = await iPresentacion!.Modificar(Actual!);
+
                 Accion = Enumerables.Ventanas.Listas;
-                OnPostBtRefrescar();
+                await OnPostBtRefrescarAsync();
             }
             catch (Exception ex)
             {
@@ -105,13 +95,13 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtBorrarVal(string data)
+        public async Task OnPostBtBorrarValAsync(string id)
         {
             try
             {
-                OnPostBtRefrescar();
+                await OnPostBtRefrescarAsync();
                 Accion = Enumerables.Ventanas.Borrar;
-                Actual = Lista!.FirstOrDefault(x => x.Id_Estadia.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id_Estadia.ToString() == id);
             }
             catch (Exception ex)
             {
@@ -119,13 +109,12 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public virtual void OnPostBtBorrar()
+        public async Task OnPostBtBorrarAsync()
         {
             try
             {
-                var task = this.iPresentacion!.Borrar(Actual!);
-                Actual = task.Result;
-                OnPostBtRefrescar();
+                Actual = await iPresentacion!.Borrar(Actual!);
+                await OnPostBtRefrescarAsync();
             }
             catch (Exception ex)
             {
@@ -133,12 +122,12 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtCancelar()
+        public async Task OnPostBtCancelarAsync()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Listas;
-                OnPostBtRefrescar();
+                await OnPostBtRefrescarAsync();
             }
             catch (Exception ex)
             {
@@ -146,12 +135,24 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtCerrar()
+        public async Task OnPostBtCerrarAsync()
         {
             try
             {
                 if (Accion == Enumerables.Ventanas.Listas)
-                    OnPostBtRefrescar();
+                    await OnPostBtRefrescarAsync();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        private async Task CargarCombosAsync()
+        {
+            try
+            {
+                Reservas = await iReservasPresentacion!.Listar();
             }
             catch (Exception ex)
             {

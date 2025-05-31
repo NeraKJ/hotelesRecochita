@@ -13,7 +13,7 @@ namespace lib_aplicaciones.Implementaciones
 
         public HotelesAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-            this.IConexion = iConexion ?? throw new ArgumentNullException(nameof(iConexion));
+            this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion ?? throw new ArgumentNullException(nameof(iAuditoriasAplicacion));
         }
 
@@ -28,11 +28,11 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
+            var existente = this.IConexion!.Hoteles!.FirstOrDefault(x => x.Id_Hotel == entidad.Id_Hotel);
             if (entidad!.Id_Hotel == 0)
                 throw new Exception("lbNoSeGuardo");
 
-            // Calculos
-
+          
             this.IConexion!.Hoteles!.Remove(entidad);
             this.IConexion.SaveChanges();
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
@@ -78,6 +78,11 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Hoteles> PorId(Hoteles? entidad)
         {
+            if (entidad == null || entidad.Id_Hotel == 0)
+            {
+                return this.IConexion!.Hoteles!.Take(20).ToList();
+            }
+
             return this.IConexion!.Hoteles!
                 .Where(x => x.Id_Hotel == entidad!.Id_Hotel)
                 .ToList();

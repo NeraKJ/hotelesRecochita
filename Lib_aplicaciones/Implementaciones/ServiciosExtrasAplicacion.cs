@@ -13,8 +13,6 @@ namespace lib_aplicaciones.Implementaciones
 
         public ServiciosExtrasAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
         {
-
-
             this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion;
         }
@@ -29,12 +27,13 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_ServicioExtra == 0)
+            var existente = this.IConexion!.ServiciosExtras!.FirstOrDefault(x => x.Id_ServicioExtra == entidad.Id_ServicioExtra);
+            if (existente == null)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
 
-            this.IConexion!.ServiciosExtras!.Remove(entidad);
+            this.IConexion!.ServiciosExtras!.Remove(existente);
             this.IConexion.SaveChanges();
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
@@ -54,7 +53,8 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
 
-            if (entidad.Id_ServicioExtra != 0)
+            var existente = this.IConexion!.ServiciosExtras!.FirstOrDefault(x => x.Id_ServicioExtra == entidad.Id_ServicioExtra);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
 
             // Calculos
@@ -76,16 +76,25 @@ namespace lib_aplicaciones.Implementaciones
         public List<ServiciosExtras> Listar()
         {
             return this.IConexion!.ServiciosExtras!.Take(20)
-                  .Include(x => x.Sedes)
+                 .Include(x => x.Sedes)
+              .ThenInclude(H => H!.Hotel)
+             
                   .ToList(); ;
         }
 
         public List<ServiciosExtras> PorId(ServiciosExtras? entidad)
         {
+            if (entidad == null || entidad.Id_ServicioExtra == 0)
+            {
+                return this.IConexion!.ServiciosExtras!.Take(20).ToList();
+            }
             return this.IConexion!.ServiciosExtras!
                 .Where(x => x.Id_ServicioExtra == entidad!.Id_ServicioExtra)
-                  .Include(x => x.Sedes)
-                    .ToList();
+                .Include(x => x.Sedes)
+              .ThenInclude(H => H!.Hotel)
+             
+                  .ToList();
+
         }
 
         public ServiciosExtras? Modificar(ServiciosExtras? entidad)
@@ -94,7 +103,7 @@ namespace lib_aplicaciones.Implementaciones
                 throw new Exception("lbFaltaInformacion");
 
             if (entidad!.Id_ServicioExtra == 0)
-                throw new Exception("lbNoSeGuardo");
+                throw new Exception("lbNoSe ,KLGuardo");
 
             // Calculos
 

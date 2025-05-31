@@ -1,5 +1,6 @@
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
+using lib_presentaciones.Implementaciones;
 using lib_presentaciones.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,19 +9,18 @@ namespace asp_presentacion.Pages.Ventanas
 {
     public class FacturasModel : PageModel
     {
-        private IFacturasPresentacion? iPresentacion = null;
+        private readonly IFacturasPresentacion? iPresentacion = null;
+        private readonly IServiciosExtrasPresentacion? iServiciosExtrasPresentacion = null;
+        private readonly IReservasPresentacion? iReservasPresentacion = null;
+        private readonly IEstadiasPresentacion? iEstadiasPresentacion = null;
 
-        public FacturasModel(IFacturasPresentacion iPresentacion)
+        public FacturasModel(IFacturasPresentacion iPresentacion, IEstadiasPresentacion iEstadiasPresentacion, IServiciosExtrasPresentacion iServiciosExtrasPresentacion, IReservasPresentacion iReservasPresentacion)
         {
-            try
-            {
-                this.iPresentacion = iPresentacion;
-                Filtro = new Facturas();
-            }
-            catch (Exception ex)
-            {
-                LogConversor.Log(ex, ViewData!);
-            }
+            this.iPresentacion = iPresentacion;
+            this.iEstadiasPresentacion = iEstadiasPresentacion;
+            this.iReservasPresentacion = iReservasPresentacion;
+            this.iServiciosExtrasPresentacion = iServiciosExtrasPresentacion;
+            Filtro = new Facturas();
         }
 
         public IFormFile? FormFile { get; set; }
@@ -28,27 +28,27 @@ namespace asp_presentacion.Pages.Ventanas
         [BindProperty] public Facturas? Actual { get; set; }
         [BindProperty] public Facturas? Filtro { get; set; }
         [BindProperty] public List<Facturas>? Lista { get; set; }
+        [BindProperty] public List<ServiciosExtras>? ServiciosExtras { get; set; }
+        [BindProperty] public List<Reservas>? Reservas { get; set; }
+        [BindProperty] public List<Estadias>? Estadias { get; set; }
 
-        public virtual void OnGet() { OnPostBtRefrescar(); }
+
+        public virtual void OnGet()
+        { OnPostBtRefrescar(); }
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                //var variable_session = HttpContext.Session.GetString("Usuario");
-                //if (String.IsNullOrEmpty(variable_session))
-                //{
-                //    HttpContext.Response.Redirect("/");
-                //    return;
-                //}
-
-                Filtro!.Id_Factura = Filtro!.Id_Factura ;
-
+                Filtro!.Id_Factura = Filtro!.Id_Factura;
                 Accion = Enumerables.Ventanas.Listas;
-                var task = this.iPresentacion!.PorId(Filtro!);
+
+                var task = iPresentacion!.PorId(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
+
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -62,6 +62,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = new Facturas();
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -76,6 +77,7 @@ namespace asp_presentacion.Pages.Ventanas
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
                 Actual = Lista!.FirstOrDefault(x => x.Id_Factura.ToString() == data);
+                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -89,7 +91,7 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-                Task<Facturas>? task = null;
+                Task<Facturas>? task;
                 if (Actual!.Id_Factura == 0)
                     task = this.iPresentacion!.Guardar(Actual!)!;
                 else
@@ -123,7 +125,7 @@ namespace asp_presentacion.Pages.Ventanas
         {
             try
             {
-                var task = this.iPresentacion!.Borrar(Actual!);
+                var task = iPresentacion!.Borrar(Actual!);
                 Actual = task.Result;
                 OnPostBtRefrescar();
             }
@@ -152,6 +154,28 @@ namespace asp_presentacion.Pages.Ventanas
             {
                 if (Accion == Enumerables.Ventanas.Listas)
                     OnPostBtRefrescar();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
+        }
+
+        private void CargarCombos()
+        {
+            try
+            {
+                var task = iServiciosExtrasPresentacion!.Listar();
+                task.Wait();
+                ServiciosExtras = task.Result;
+
+                var task2 = iReservasPresentacion!.Listar();
+                task2.Wait();
+                Reservas = task2.Result;
+
+                var task3 = iEstadiasPresentacion!.Listar();
+                task3.Wait();
+                Estadias = task3.Result;
             }
             catch (Exception ex)
             {

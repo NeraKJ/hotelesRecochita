@@ -47,7 +47,7 @@
                 <input type="hidden"
                        asp-for="@Model.Actual!.Id_Empleado_ServicioExtra" />
                 <input type="hidden"
-                   asp-for="@Model.Actual!.Id_empleado" />
+                   asp-for="@Model.Actual!.Id_E" />
                 <input type="hidden"
                    asp-for="@Model.Actual!.Id_ServicioExtra" />
                 <input type="hidden"
@@ -79,7 +79,7 @@
                             <div class="col-lg-6">
                                 <input id="nmMateria"
                                    class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Id_empleado" />
+                                       asp-for="@Model.Actual!.Id_E" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -137,7 +137,7 @@
                             </h4>
                             <h6 align="left">
                                 @Model.Actual!.Id_Empleado_ServicioExtra,
-                                @Model.Actual!.Id_empleado
+                                @Model.Actual!.Id_E
                                 @Model.Actual!.Id_ServicioExtra
                                 @Model.Actual!.Pago_Servicio
                                 @Model.Actual!.Precio_Servicio
@@ -194,7 +194,7 @@
                                 <tr>
                                     
                                     <td class="cl_hidden">
-                                        @elemento.Id_empleado
+                                        @elemento.Id_E
                                     </td>
                                     <td class="cl_hidden">
                                         @elemento.Id_ServicioExtra

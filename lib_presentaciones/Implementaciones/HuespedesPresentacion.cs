@@ -47,7 +47,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Huespedes?> Guardar(Huespedes? entidad)
         {
-            if (entidad!.Id_Huesped != 0)
+            if (entidad!.Id_H != 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -67,10 +67,11 @@ namespace lib_presentaciones.Implementaciones
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
+        
 
         public async Task<Huespedes?> Modificar(Huespedes? entidad)
         {
-            if (entidad!.Id_Huesped == 0)
+            if (entidad!.Id_H == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -93,7 +94,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Huespedes?> Borrar(Huespedes? entidad)
         {
-            if (entidad!.Id_Huesped == 0)
+            if (entidad!.Id_H == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }

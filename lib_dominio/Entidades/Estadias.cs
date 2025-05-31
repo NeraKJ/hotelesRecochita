@@ -21,6 +21,6 @@ namespace lib_dominio.Entidades
         [ForeignKey("Id_Reserva")]
         public Reservas? Reservas { get; set; }
 
-        public Facturas? Facturas { get; set; }
+        
     }
 }

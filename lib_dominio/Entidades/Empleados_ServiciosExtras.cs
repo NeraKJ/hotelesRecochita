@@ -14,13 +14,13 @@ namespace lib_dominio.Entidades
         [Key]  // Define la clave primaria
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Para que sea autoincrementa
         public int Id_Empleado_ServicioExtra { get; set; }
-        public int Id_empleado { get; set; }
+        public int Id_E{ get; set; }
         public int Id_ServicioExtra { get; set; }
 
         public decimal Pago_Servicio { get; set; }
         public decimal Precio_Servicio { get; set; }
 
-        [ForeignKey("Id_empleado")]
+        [ForeignKey("Id_E")]
         public Empleados? Empleados { get; set; }
 
         [ForeignKey("Id_ServicioExtra")]

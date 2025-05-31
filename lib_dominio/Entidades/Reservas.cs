@@ -25,10 +25,11 @@ namespace lib_dominio.Entidades
         public string? Estado_Actual { get; set; }
         public string? Numero_Huespedes { get; set; }
         public DateTime Fecha_Reserva { get; set; }
-        public Estadias? Estadias { get; set; }
+
+       
 
 
-        public Facturas? Factura { get; set; }
+        
         
     }
 }

@@ -1,4 +1,5 @@
-﻿using lib_aplicaciones.Interfaces;
+﻿
+using lib_aplicaciones.Interfaces;
 using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_repositorios.Interfaces;
@@ -12,7 +13,6 @@ namespace lib_aplicaciones.Implementaciones
         private IAuditoriasAplicacion? IAuditoriasAplicacion = null;
 
         public EmpleadosAplicacion(IConexion iConexion, IAuditoriasAplicacion iAuditoriasAplicacion)
-
         {
             this.IConexion = iConexion;
             this.IAuditoriasAplicacion = iAuditoriasAplicacion;
@@ -28,22 +28,23 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Empleado == 0)
-                throw new Exception("lbNoSeGuardo");
+            var existente = this.IConexion!.Empleados!.FirstOrDefault(x => x.Id_E == entidad.Id_E);
+            if (existente == null)
+                throw new Exception("lbNoExisteRegistro");
 
-            // Calculos
-
-            this.IConexion!.Empleados!.Remove(entidad);
+            this.IConexion!.Empleados!.Remove(existente);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
                 Entidad = "Empleados",
                 Operacion = "Borrar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
@@ -52,44 +53,41 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad.Id_Empleado != 0)
+            var existente = this.IConexion!.Empleados!.FirstOrDefault(x => x.Id_E == entidad.Id_E);
+            if (existente != null)
                 throw new Exception("lbYaSeGuardo");
-
-            // Calculos
 
             this.IConexion!.Empleados!.Add(entidad);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
                 Entidad = "Empleados",
-                Operacion = "Borrar",
-                Datos = JsonConversor.ConvertirAString(entidad!),
+                Operacion = "Guardar",
+                Datos = JsonConversor.ConvertirAString(entidad),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
         public List<Empleados> Listar()
         {
-            return this.IConexion!.Empleados!.Take(20)
-
-              .Include(x => x.Sedes)
-              .ThenInclude(H => H.Hotel)
-              .Include(x => x.Hoteles)
-              .ToList();
+            return this.IConexion!.Empleados!.Take(20).ToList();
         }
 
         public List<Empleados> PorId(Empleados? entidad)
         {
+            if (entidad == null || entidad.Id_E == 0)
+            {
+                return this.IConexion!.Empleados!.Take(20).ToList();
+            }
+
             return this.IConexion!.Empleados!
-                .Where(x => x.Id_Empleado == entidad!.Id_Empleado)
-                .Include(x => x.Sedes)
-              .ThenInclude(H => H.Hotel)
-              .Include(x => x.Hoteles)
-              .ToList();
-                
+                .Where(x => x.Id_E == entidad.Id_E)
+                .ToList();
         }
 
         public Empleados? Modificar(Empleados? entidad)
@@ -97,7 +95,7 @@ namespace lib_aplicaciones.Implementaciones
             if (entidad == null)
                 throw new Exception("lbFaltaInformacion");
 
-            if (entidad!.Id_Empleado == 0)
+            if (entidad!.Id_E == 0)
                 throw new Exception("lbNoSeGuardo");
 
             // Calculos
@@ -109,8 +107,8 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
                 Usuario = "admin",
-                Entidad = "Empleados",
-                Operacion = "Borrar",
+                Entidad = "Hoteles",
+                Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
@@ -118,4 +116,3 @@ namespace lib_aplicaciones.Implementaciones
         }
     }
 }
-

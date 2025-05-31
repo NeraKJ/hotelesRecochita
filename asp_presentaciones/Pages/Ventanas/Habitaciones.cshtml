@@ -1,163 +1,119 @@
 ﻿@page
 @model asp_presentacion.Pages.Ventanas.HabitacionesModel
 @{
-    ViewData["Titulo"] = "";
+    ViewData["Titulo"] = "Habitaciones disponibles";
 }
 <center>
-    <div>
-        <form method="POST"
-            enctype="multipart/form-data">
+    <div class="container mt-4">
+        <div class="text-center mb-4">
+            <img src="/Imagenes/habi.jpg"
+                 alt="Servicios extra"
+                 style="max-width: 500px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+            <p style="font-style: italic; font-size: small;">Servicios adicionales ofrecidos en la sede</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
-            <div align="left">
-                <h3>Habitaciones</h3>
+            <div class="mb-3">
+                <h3>Habitaciones disponibles</h3>
             </div>
-            <div align="left"
-                 class="bt_panel_buttons">
-                <input type="submit"
-                       value="Refrescar"
-                       asp-page-handler="BtRefrescar"
-                       class="btn btn-secondary"
+
+            <div class="mb-4">
+                <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit"
-                       value="Nuevo"
-                       asp-page-handler="BtNuevo"
-                       class="btn btn-secondary"
+                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit"
-                       value="Guardar"
-                       asp-page-handler="BtGuardar"
-                       class="btn btn-secondary"
+                <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit"
-                       value="Cancelar"
-                       asp-page-handler="BtCancelar"
-                       class="btn btn-secondary"
+                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
                        disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
             </div>
 
             @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input type="hidden"
-                    asp-for="@Model.Actual!.Id_Habitacion" />
+                <input type="hidden" asp-for="@Model.Actual!.Id_Habitacion" />
             }
+
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input type="hidden"
-                   asp-for="@Model.Actual!.Id_Habitacion" />
-                <input type="hidden"
-                   asp-for="@Model.Actual!.Id_Sede" />
-                <input type="hidden"
-                   asp-for="@Model.Actual!.Numero_Habitacion" />
-                <input type="hidden"
-                   asp-for="@Model.Actual!.Precio_Habitacion" />
-                <input type="hidden"
-                    asp-for="@Model.Actual!.Camas" />
-                <input type="hidden"
-                     asp-for="@Model.Actual!.Estado" />
-                <input type="hidden"
-                     asp-for="@Model.Actual!.Capacidad" />
-                <input type="hidden"
-                       asp-for="@Model.Actual!.Id_Hotel" />
+                <input type="hidden" asp-for="@Model.Actual!.Id_Hotel" />
+                <input type="hidden" asp-for="@Model.Actual!.Id_Sede" />
+
+                <input type="hidden" asp-for="@Model.Actual!.Numero_Habitacion" />
+                <input type="hidden" asp-for="@Model.Actual!.Precio_Habitacion" />
+                <input type="hidden" asp-for="@Model.Actual!.Camas" />
+                <input type="hidden" asp-for="@Model.Actual!.Estado" />
+                <input type="hidden" asp-for="@Model.Actual!.Capacidad" />
+
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
             {
-                <div class="containers_vn panel panel-default">
-                    <h3>Casa</h3>
+                <div class="card p-4 mb-4 shadow-sm">
+                    <h4 class="mb-3">Nueva Habitacion</h4>
 
-                    <div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Id_Habitacion
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmEstudiante"
-                                   class="cts_forms form-control"
-                                   asp-for="@Model.Actual!.Id_Habitacion" />
-                            </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Id_Hotel</label>
+                        <div class="col-sm-10">
+                            <select asp-for="@Model.Actual!.Id_Hotel" class="form-select" asp-items="@(new SelectList(Model.Hoteles, "Id_Hotel", "Nombre"))">
+                                <option value="">-- Seleccione un hotel --</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Id_Sede
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmMateria"
-                                   class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Id_Sede" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Numero_Habitacion
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmNota1"
-                                   class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Numero_Habitacion" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Precio_Habitacion
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmNota2"
-                                   class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Precio_Habitacion" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Camas
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmNota2"
-                                       class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Camas" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Dirreccion
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmNota2"
-                                       class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Estado" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Capacidad
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmNota2"
-                                       class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Capacidad" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-4 control-label">
-                                Id_Hotel
-                            </label>
-                            <div class="col-lg-6">
-                                <input id="nmNota2"
-                                       class="cts_forms form-control"
-                                       asp-for="@Model.Actual!.Id_Hotel" />
-                            </div>
-                        </div>
-                        
                     </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Id_Sede</label>
+                        <div class="col-sm-10">
+                            <select asp-for="@Model.Actual!.Id_Sede" class="form-select" asp-items="@(new SelectList(Model.Sedes, "Id_Sede", "Locacion"))">
+                                <option value="">-- Seleccione una Sede --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Numero_Habitacion</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Numero_Habitacion" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Precio_Habitacion</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Precio_Habitacion" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Camas</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Camas" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Estado</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" asp-for="Actual!.Estado">
+                                <option value="Disponible">Disponible</option>
+                                <option value="Ocupado">Ocupado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label">Capacidad</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" asp-for="@Model.Actual!.Capacidad" />
+                        </div>
+                    </div>
+
+
+
                 </div>
             }
 
             @if (ViewData.ContainsKey("Mensaje"))
             {
-                <input type="hidden"
-                   asp-for="@Model.Accion" />
-                    @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+                <input type="hidden" asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
@@ -165,34 +121,18 @@
                 <div class='popup'>
                     <div class='pp_del_inner'>
                         <div style='width:95%'>
-                            <h2 align="left">
-                                Mensaje
-                            </h2>
+                            <h2>Mensaje</h2>
+                            <h4>¿Desea borrar este servicio extra?</h4>
+                            <h6> @Model.Actual!.Capacidad</h6>
+                            <h6> @Model.Actual!.Id_Sede</h6>
+                            <h6> @Model.Actual!.Numero_Habitacion</h6>
+                            <h6> @Model.Actual!.Precio_Habitacion</h6>
+                            <h6> @Model.Actual!.Estado</h6>
+                            <h6> @Model.Actual!.Camas</h6>
 
-                            <h4 align="left">
-                                Desea borrar la entidad?
-                            </h4>
-                            <h6 align="left">
-                                @Model.Actual!.Id_Habitacion,
-                                @Model.Actual!.Id_Sede,
-                                @Model.Actual!.Numero_Habitacion,
-                                @Model.Actual!.Precio_Habitacion,
-                                @Model.Actual!.Camas,
-                                @Model.Actual!.Estado,
-                                @Model.Actual!.Capacidad,
-                                @Model.Actual!.Id_Hotel
-                             
-                            </h6>
                             <br />
-                            <br />
-                            <input type="submit"
-                               value="Borrar"
-                               asp-page-handler="BtBorrar"
-                               class="btn btn-secondary" />
-                            <input type="submit"
-                               value="Cerrar"
-                               asp-page-handler="BtCancelar"
-                               class="btn btn-secondary" />
+                            <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
+                            <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
                         </div>
                     </div>
                 </div>
@@ -201,87 +141,67 @@
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input id="flNombre"
-                   class="cts_forms form-control"
-                   asp-for="@Model.Filtro!.Id_Habitacion"
-                   placeholder="Nombre" />
-                <br />
+                <div class="mb-3">
+                    <input id="flId_Habitacion"
+                           class="form-control"
+                           asp-for="@Model.Filtro!.Id_Habitacion"
+                           placeholder="Id_Habitacion" />
+                </div>
 
-                <div class="containers_vn panel panel-default">
-                    <table class="tb_data table table-striped table-bordered table-hover">
-                        <tr>
-                            <th>
-                                Id_Habitacion
-                            </th>
-                            <th>
-                                Id_Sede
-                            </th>
-                            <th class="cl_hidden">
-                                Numero_Habitacion
-                            </th>
-                            <th class="cl_actions">
-                                Precio_Habitacion
-                            </th>
-                            <th class="cl_actions">
-                                Camas
-                            </th>
-                            <th class="cl_actions">
-                                Estado
-                            </th>
-                            <th class="cl_actions">
-                                Capacidad
-                            </th>
-                            <th class="cl_actions">
-                                Id_Hotel
-                            </th>
-                            <th class="cl_actions">
-                                Accion
-                            </th>
-                        </tr>
-                        @if (Model != null && Model.Lista != null)
-                        {
-                            @foreach (var elemento in Model.Lista)
+                <div class="card p-3 shadow-sm">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id_Habitacion</th>
+                                <th>Id_Hotel</th>
+                                <th>
+                                    Id_Sede  
+                                </th>
+
+                                <th>
+                                    Numero_Habitacion 
+                                </th>
+                                <th>
+                                    Precio_Habitacion 
+                                </th>
+                                <th>
+                                    Camas 
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Capacidad 
+                                </th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Lista != null)
                             {
-                                <tr>
-                                    <td>
-                                        @elemento.Id_Habitacion
-                                    </td>
-                                    <td>
-                                        @elemento.Id_Sede
-                                    </td>
-                                    <td class="cl_hidden">
-                                        @elemento.Numero_Habitacion
-                                    </td>
-                                    <td class="cl_hidden">
-                                        @elemento.Precio_Habitacion
-                                    </td>
-                                    <td>
-                                        @elemento.Camas
-                                    </td>
-                                    <td class="cl_hidden">
-                                        @elemento.Estado
-                                    </td>
-                                    <td class="cl_hidden">
-                                        @elemento.Capacidad
-                                    </td>
-                                    <td class="cl_hidden">
-                                        @elemento.Id_Hotel
-                                    </td>
-                                    <td>
-                                        <input type="submit"
-                                           value="Modicar"
-                                           asp-page-handler="BtModificar"
-                                           class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id_Habitacion" />
-                                        <input type="submit"
-                                           value="Borrar"
-                                           asp-page-handler="BtBorrarVal"
-                                           class="btn btn-secondary"
-                                           asp-route-data="@elemento.Id_Habitacion" />
-                                    </td>
-                                </tr>
+                                foreach (var elemento in Model.Lista)
+                                {
+                                    <tr>
+                                        <td>@elemento.Id_Habitacion</td>
+                                        <td>@elemento.Id_Hotel</td>
+                                        <td>@elemento.Id_Sede</td>
+                                        <td>@elemento.Numero_Habitacion</td>
+                                        <td>@elemento.Precio_Habitacion</td>
+                                        <td>@elemento.Camas</td>
+                                        <td>@elemento.Estado</td>
+                                        <td>@elemento.Capacidad</td>
+                                        <td>
+                                            <input type="submit" value="Modificar" asp-page-handler="BtModificar"
+                                                   class="btn btn-warning btn-sm me-1"
+                                                   asp-route-data="@elemento.Id_Habitacion" />
+                                            <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal"
+                                                   class="btn btn-danger btn-sm"
+                                                   asp-route-data="@elemento.Id_Habitacion" />
+                                        </td>
+                                    </tr>
+                                }
                             }
-                        }
+                        </tbody>
                     </table>
                 </div>
             }
