@@ -20,7 +20,9 @@ namespace lib_repositorios.Interfaces
         DbSet<Sedes_ServiciosExtras> Sedes_ServiciosExtras { get; set; }
         DbSet<ServiciosExtras> ServiciosExtras { get; set; }
         DbSet<Auditorias> Auditorias { get; set; }
-        
+        DbSet<Roles> Roles { get; set; }
+        DbSet<Usuarios> Usuarios { get; set; }
+
 
 
         EntityEntry<T> Entry<T>(T entity) where T : class;

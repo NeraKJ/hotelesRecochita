@@ -2,6 +2,8 @@
 @model asp_presentacion.Pages.Ventanas.EmpleadosModel
 @{
     ViewData["Titulo"] = "Empleados";
+   @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
+
 }
 <center>
     <div class="container mt-4">
@@ -180,8 +182,12 @@
                                 <th>Edad</th>
                                 <th>Sexo</th>
                                 <th>Fecha_Contratacion</th>
-                               
-                                <th>Acción</th>
+
+                              @*segundo tin de usuario*@ @if (rol != "Huesped")
+                                {
+                                    <th>Acción</th>
+                                }
+
                             </tr>
                         </thead>
                         <tbody>
@@ -200,7 +206,9 @@
                                         <td>@elemento.Edad</td>
                                         <td>@elemento.Sexo</td>
                                         <td>@elemento.Fecha_Contratacion</td>
-                                      
+                                        @*Tercer tin de usuario*@ @if (rol != "Huesped")
+                                        {
+
                                         <td>
                                             <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                    class="btn btn-warning btn-sm me-1"
@@ -209,6 +217,7 @@
                                                    class="btn btn-danger btn-sm"
                                                    asp-route-data="@elemento.Id_E" />
                                         </td>
+                                        }
                                     </tr>
                                 }
                             }

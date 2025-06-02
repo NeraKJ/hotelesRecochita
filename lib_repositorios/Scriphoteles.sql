@@ -346,11 +346,20 @@ CREATE TABLE [Auditorias] (
 	[Datos] NVARCHAR (250),
 	[Fecha] DATETIME 
 );
+
+CREATE TABLE Roles(
+Id_Rol INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
+Nombre VARCHAR(20),
+Descripcion VARCHAR(100)
+);
+
+
 CREATE TABLE Usuarios(
 
 Id_Usuario INT IDENTITY,
 Nombre VARCHAR(10) NOT NULL,
-Contraseña INT NOT NULL
+Contraseña INT NOT NULL,
+Id_Rol  INT NOT NULL
 );
 ALTER TABLE Usuarios
 ADD CONSTRAINT PK_Id_Usuario PRIMARY KEY (Id_Usuario)
@@ -358,6 +367,9 @@ ADD CONSTRAINT PK_Id_Usuario PRIMARY KEY (Id_Usuario)
 
 
 ---Las FK
+ALTER TABLE Usuarios
+ADD CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (Id_Rol) REFERENCES Roles(Id_Rol);
+
 ALTER TABLE Empleados
 ADD CONSTRAINT FK_Empleados_Hotel FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
 

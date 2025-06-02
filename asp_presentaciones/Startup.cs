@@ -30,6 +30,7 @@ namespace asp_presentacion
             services.AddScoped<IReservas_HabitacionesPresentacion, Reservas_HabitacionesPresentacion>();
             services.AddScoped<IAuditoriasPresentacion, AuditoriasPresentacion>();
             services.AddScoped<IUsuariosPresentacion, UsuariosPresentacion>();
+            services.AddScoped<IRolesPresentacion, RolesPresentacion>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();

@@ -32,7 +32,9 @@ namespace lib_repositorios.Implementaciones
         public DbSet<ServiciosExtras> ServiciosExtras { get; set; } = null!;
         public DbSet<Empleados_ServiciosExtras> Empleados_ServiciosExtras { get; set; } = null!;
         public DbSet<Auditorias> Auditorias { get; set;} = null!;
-       
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Usuarios> Usuarios { get; set; }
+
 
 
     }

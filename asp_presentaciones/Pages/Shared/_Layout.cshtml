@@ -11,79 +11,79 @@
 
     <style>
         body {
-            background-color: #f5f1e7;
-            color: #3e342d;
+        background-color: #f5f1e7;
+        color: #3e342d;
         }
 
         .navbar {
-            background-color: #fffdf8;
-            border-color: #d9cbb3 !important;
+        background-color: #fffdf8;
+        border-color: #d9cbb3 !important;
         }
 
         .navbar-brand,
         .nav-link {
-            color: #8b5e3c !important;
+        color: #8b5e3c !important;
         }
 
         .navbar-brand:hover,
         .nav-link:hover {
-            color: #a47148 !important;
+        color: #a47148 !important;
         }
 
         .footer {
-            background-color: #e5d7c0;
-            color: #4e3b2c;
+        background-color: #e5d7c0;
+        color: #4e3b2c;
         }
 
         .footer a {
-            color: #8b5e3c;
+        color: #8b5e3c;
         }
 
         .footer a:hover {
-            color: #a47148;
+        color: #a47148;
         }
 
         .border-top {
-            border-top: 1px solid #d9cbb3 !important;
+        border-top: 1px solid #d9cbb3 !important;
         }
 
         .box-shadow {
-            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
         }
 
-       
+
         .navbar-nav {
-            flex-wrap: wrap;
+        flex-wrap: wrap;
         }
 
         .nav-item {
-            white-space: nowrap;
-            margin-right: 10px;
+        white-space: nowrap;
+        margin-right: 10px;
         }
 
-   
+
         .content-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            gap: 20px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 20px;
         }
 
         .main-content {
-            flex: 1 1 60%;
+        flex: 1 1 60%;
         }
 
         .image-box {
-            flex: 1 1 35%;
-            max-width: 400px;
+        flex: 1 1 35%;
+        max-width: 400px;
         }
 
         .image-box img {
-            width: 100%;
-            height: auto;
-            border: 2px solid #ccc;
-            border-radius: 10px;
+        width: 100%;
+        height: auto;
+        border: 2px solid #ccc;
+        border-radius: 10px;
         }
     </style>
 </head>
@@ -93,27 +93,57 @@
             <div class="container">
                 <center><a class="navbar-brand" asp-area="" asp-page="/Index"></a></center>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @{
+                        var rol = Context.Session.GetString("Rol");
+                    }
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
                             <a class="nav-link" asp-page="/Index">
-                                 <img src="/Imagenes/casa-silueta-negra-sin-puerta.png"
-                                          alt="Sede representativa"
-                                          style="max-width: 50px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+                                <img src="/Imagenes/casa-silueta-negra-sin-puerta.png"
+                                alt="Sede representativa"
+                                style="max-width: 50px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
                             </a>
-                        </li>
+
+                          
+                           
+
+                                
+
+
+                            @if (rol == "Empleado")
+                            {
+
+                               
+                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados_ServiciosExtras">Empleados_ServiciosExtras</a></li>
+                                <li class ="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas_Habitaciones">Reservas_Habitaciones</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
+                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Ventanas/Usuarios">Usuarios</a></li>
+
+                            }
+                            @if (rol == "Huesped")
+                            {
                         <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
-                        <li class ="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
-                     
                         <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
                         <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+
+                        }
+                        
                      
                         
                         <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
