@@ -134,7 +134,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log2(ex, ViewData!);
             }
         }
 

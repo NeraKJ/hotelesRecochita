@@ -1,6 +1,7 @@
 ﻿using lib_dominio.Entidades;
 using lib_dominio.Nucleo;
 using lib_presentaciones.Interfaces;
+
 namespace lib_presentaciones.Implementaciones
 {
     public class UsuariosPresentacion : IUsuariosPresentacion
@@ -25,14 +26,14 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<Usuarios>> PorId(Usuarios? entidad)
+        public async Task<List<Usuarios>> PorEmail(Usuarios? entidad)
         {
             var lista = new List<Usuarios>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/PorId");
+            datos = comunicaciones.ConstruirUrl(datos, "Usuarios/PorEmail");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))
@@ -46,7 +47,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Usuarios?> Guardar(Usuarios? entidad)
         {
-            if (entidad!.Id_Usuario != 0)
+            if (entidad!.Id != 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -69,7 +70,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Usuarios?> Modificar(Usuarios? entidad)
         {
-            if (entidad!.Id_Usuario == 0)
+            if (entidad!.Id == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }
@@ -92,7 +93,7 @@ namespace lib_presentaciones.Implementaciones
 
         public async Task<Usuarios?> Borrar(Usuarios? entidad)
         {
-            if (entidad!.Id_Usuario == 0)
+            if (entidad!.Id == 0)
             {
                 throw new Exception("lbFaltaInformacion");
             }

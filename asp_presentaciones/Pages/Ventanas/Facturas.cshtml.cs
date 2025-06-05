@@ -14,6 +14,7 @@ namespace asp_presentacion.Pages.Ventanas
         private readonly IReservasPresentacion? iReservasPresentacion = null;
         private readonly IEstadiasPresentacion? iEstadiasPresentacion = null;
 
+
         public FacturasModel(IFacturasPresentacion iPresentacion, IEstadiasPresentacion iEstadiasPresentacion, IServiciosExtrasPresentacion iServiciosExtrasPresentacion, IReservasPresentacion iReservasPresentacion)
         {
             this.iPresentacion = iPresentacion;
@@ -34,7 +35,9 @@ namespace asp_presentacion.Pages.Ventanas
 
 
         public virtual void OnGet()
-        { OnPostBtRefrescar(); }
+        { 
+            OnPostBtRefrescar();
+        }
 
         public void OnPostBtRefrescar()
         {
@@ -131,7 +134,7 @@ namespace asp_presentacion.Pages.Ventanas
             }
             catch (Exception ex)
             {
-                LogConversor.Log(ex, ViewData!);
+                LogConversor.Log2(ex, ViewData!);
             }
         }
 

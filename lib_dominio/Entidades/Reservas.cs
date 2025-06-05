@@ -18,8 +18,8 @@ namespace lib_dominio.Entidades
         [ForeignKey("Id_Sede")]
         public Sedes? Sedes { get; set; }
 
-        public int Id_Huesped { get; set; }
-        [ForeignKey("Id_Huesped")]
+        public int Id_H { get; set; }
+        [ForeignKey("Id_H")]
         public Huespedes? Huespedes { get; set; }
 
         public string? Estado_Actual { get; set; }

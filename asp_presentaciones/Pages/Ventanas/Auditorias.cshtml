@@ -1,0 +1,223 @@
+﻿@page
+@model asp_presentacion.Pages.Ventanas.AuditoriasModel
+@{
+    ViewData["Titulo"] = "Auditorias";
+    ViewData["MostrarLogo"] = true;
+    var rol = HttpContext.Session.GetString("Rol");
+}
+<center>
+    <div>
+        <form method="POST"
+        enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div align="left">
+                <h3>Auditorias</h3>
+            </div>
+            <div align="left"
+            class="bt_panel_buttons">
+                <input type="submit"
+                value="Buscar"
+                asp-page-handler="BtRefrescar"
+                class="btn btn-secondary"
+                disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+            </div>
+
+            @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
+                Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input type="hidden"
+                asp-for="@Model.Actual!.Id" />
+            }
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <input type="hidden"
+                asp-for="@Model.Actual!.Id" />
+                <input type="hidden"
+                asp-for="@Model.Actual!.Usuario" />       
+                <input type="hidden"
+                asp-for="@Model.Actual!.Entidad" />
+                <input type="hidden"
+                asp-for="@Model.Actual!.Operacion" />  
+                <input type="hidden"
+                asp-for="@Model.Actual!.Fecha" />
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Editar)
+            {
+                <div class="containers_vn panel panel-default">
+                    <h3>Auditoria</h3>
+
+                    <div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Id
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmId"
+                                class="cts_forms form-control"
+                                asp-for="@Model.Actual!.Id" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Usuario
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmUsuario"
+                                class="cts_forms form-control"
+                                asp-for="@Model.Actual!.Usuario" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Entidad
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmEntidad"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Entidad" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Operacion
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmOperacion"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Operacion" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">
+                                Fecha
+                            </label>
+                            <div class="col-lg-6">
+                                <input id="nmFecha"
+                                       class="cts_forms form-control"
+                                       asp-for="@Model.Actual!.Fecha" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+            @if (ViewData.ContainsKey("Mensaje"))
+            {
+                <input type="hidden"
+                asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+            }
+
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                ;
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <div class='popup'>
+                    <div class='pp_del_inner'>
+                        <div style='width:95%'>
+                            <h2 align="left">
+                                Mensaje
+                            </h2>
+
+                            <h4 align="left">
+								Desea borrar al Auditoria: @Model.Actual!.Id que hace la operacion: @Model.Actual!.Operacion
+							</h4>
+                            <br />
+                            <br />
+                            <input type="submit"
+                            value="Borrar"
+                            asp-page-handler="BtBorrar"
+                            class="btn btn-secondary" />
+                            <input type="submit"
+                            value="Cerrar"
+                            asp-page-handler="BtCancelar"
+                            class="btn btn-secondary" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
+                Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
+            {
+                <br />
+                <input id="flNombre"
+                class="cts_forms form-control"
+                asp-for="@Model.Filtro!.Operacion"
+                placeholder="Buscar por Operacion" />
+                <br />
+
+                <div class="containers_vn panel panel-default">
+                    <table class="tb_data table table-striped table-bordered table-hover">
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Usuario
+                            </th>
+                            <th>
+                                Entidad
+                            </th>
+                            <th>
+                                Operacion
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Accion
+                            </th>
+                        </tr>
+                        @if (Model != null && Model.Lista != null)
+                        {
+                            @foreach (var elemento in Model.Lista)
+                            {
+                                <tr>
+                                    <td>
+                                        @elemento.Id
+                                    </td>
+                                    <td>
+                                        @elemento.Usuario
+                                    </td>
+                                    <td>
+                                        @elemento.Entidad
+                                    </td>
+                                    <td>
+                                        @elemento.Operacion
+                                    </td>
+                                    <td>
+                                        @elemento.Fecha
+                                    </td>
+
+                                        <td>
+                                            <input type="submit"
+                                            value="Borrar"
+                                            asp-page-handler="BtBorrarVal"
+                                            class="btn btn-danger"
+                                            asp-route-data="@elemento.Id" />
+                                        </td>
+                                    
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            }
+        </form>
+    </div>
+</center>

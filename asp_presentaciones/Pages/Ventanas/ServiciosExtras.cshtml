@@ -2,6 +2,8 @@
 @model asp_presentacion.Pages.Ventanas.ServiciosExtrasModel
 @{
     ViewData["Titulo"] = "Servicios Extras";
+    @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
+
 }
 <center>
     <div class="container mt-4">
@@ -22,12 +24,16 @@
             <div class="mb-4">
                 <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
-                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                {
+                    <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
+                           disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                    <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
+                           disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                    <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
+                           disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                }
             </div>
 
             @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
@@ -111,6 +117,13 @@
                 <input type="hidden" asp-for="@Model.Accion" />
                 @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                
+            }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
@@ -119,12 +132,8 @@
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
                             <h4>¿Desea borrar este servicio extra?</h4>
-                            <h6> @Model.Actual!.Jacuzzi</h6>
-                            <h6> @Model.Actual!.Piscina</h6>
-                            <h6> @Model.Actual!.Restaurante</h6>
-                            <h6> @Model.Actual!.Limpieza</h6>
-                            <h6> @Model.Actual!.Gimnasio</h6>
-                            <h6> @Model.Actual!.Mantenimiento</h6>
+                            <h6> @Model.Actual!.Id_ServicioExtra</h6>
+                           
                             
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
@@ -181,7 +190,10 @@
                                                  alt="Servicios extra"
                                                  style="max-width: 90px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
                                 </th>
-                                <th>Acción</th>
+                                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                                {
+                                    <th>Acción</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -198,6 +210,8 @@
                                         <td>@elemento.Mantenimiento</td>
                                         <td>@elemento.Gimnasio</td>
                                         <td>@elemento.Jacuzzi</td>
+                                        @*Tercer tin de usuario*@ @if (rol != "Huesped")
+                                        {
                                         <td>
                                             <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                    class="btn btn-warning btn-sm me-1"
@@ -206,6 +220,7 @@
                                                    class="btn btn-danger btn-sm"
                                                    asp-route-data="@elemento.Id_ServicioExtra" />
                                         </td>
+                                        }
                                     </tr>
                                 }
                             }

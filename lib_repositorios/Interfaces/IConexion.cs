@@ -25,6 +25,7 @@ namespace lib_repositorios.Interfaces
 
 
 
+
         EntityEntry<T> Entry<T>(T entity) where T : class;
         int SaveChanges();
     }

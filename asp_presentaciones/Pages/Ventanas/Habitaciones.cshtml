@@ -2,14 +2,15 @@
 @model asp_presentacion.Pages.Ventanas.HabitacionesModel
 @{
     ViewData["Titulo"] = "Habitaciones disponibles";
+    @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
 }
 <center>
     <div class="container mt-4">
         <div class="text-center mb-4">
             <img src="/Imagenes/habi.jpg"
-                 alt="Servicios extra"
-                 style="max-width: 500px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
-            <p style="font-style: italic; font-size: small;">Servicios adicionales ofrecidos en la sede</p>
+            alt="Servicios extra"
+            style="max-width: 500px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
+            <p style="font-style: italic; font-size: small;">Habitaciones </p>
         </div>
 
         <form method="POST" enctype="multipart/form-data">
@@ -21,13 +22,16 @@
 
             <div class="mb-4">
                 <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
-                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                {
+                    <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
+                    disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                    <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
+                    disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                    <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
+                    disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />}
             </div>
 
             @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
@@ -115,6 +119,13 @@
                 <input type="hidden" asp-for="@Model.Accion" />
                 @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                ;
+            }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
@@ -122,11 +133,9 @@
                     <div class='pp_del_inner'>
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
-                            <h4>¿Desea borrar este servicio extra?</h4>
-                            <h6> @Model.Actual!.Capacidad</h6>
-                            <h6> @Model.Actual!.Id_Sede</h6>
+                            <h4>¿Desea borrar esta Habitacion?</h4>
+                            
                             <h6> @Model.Actual!.Numero_Habitacion</h6>
-                            <h6> @Model.Actual!.Precio_Habitacion</h6>
                             <h6> @Model.Actual!.Estado</h6>
                             <h6> @Model.Actual!.Camas</h6>
 
@@ -143,9 +152,9 @@
             {
                 <div class="mb-3">
                     <input id="flId_Habitacion"
-                           class="form-control"
-                           asp-for="@Model.Filtro!.Id_Habitacion"
-                           placeholder="Id_Habitacion" />
+                    class="form-control"
+                    asp-for="@Model.Filtro!.Id_Habitacion"
+                    placeholder="Id_Habitacion" />
                 </div>
 
                 <div class="card p-3 shadow-sm">
@@ -173,7 +182,10 @@
                                 <th>
                                     Capacidad 
                                 </th>
-                                <th>Acción</th>
+                                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                                {
+                                    <th>Acción</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -190,14 +202,17 @@
                                         <td>@elemento.Camas</td>
                                         <td>@elemento.Estado</td>
                                         <td>@elemento.Capacidad</td>
-                                        <td>
-                                            <input type="submit" value="Modificar" asp-page-handler="BtModificar"
+                                        @*Tercer tin de usuario*@ @if (rol != "Huesped")
+                                        {
+                                            <td>
+                                                <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                    class="btn btn-warning btn-sm me-1"
                                                    asp-route-data="@elemento.Id_Habitacion" />
                                             <input type="submit" value="Borrar" asp-page-handler="BtBorrarVal"
                                                    class="btn btn-danger btn-sm"
                                                    asp-route-data="@elemento.Id_Habitacion" />
                                         </td>
+                                        }
                                     </tr>
                                 }
                             }

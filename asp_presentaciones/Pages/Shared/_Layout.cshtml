@@ -8,162 +8,171 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/asp_presentacion.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         body {
-        background-color: #f5f1e7;
-        color: #3e342d;
+            font-family: 'Playfair Display', serif;
+            background-color: #f5f1e7;
+            color: #3e342d;
         }
 
         .navbar {
-        background-color: #fffdf8;
-        border-color: #d9cbb3 !important;
+            background-color: #fffdf8;
+            border-color: #d9cbb3 !important;
         }
 
         .navbar-brand,
         .nav-link {
-        color: #8b5e3c !important;
+            color: #8b5e3c !important;
         }
 
         .navbar-brand:hover,
         .nav-link:hover {
-        color: #a47148 !important;
+            color: #a47148 !important;
         }
 
         .footer {
-        background-color: #e5d7c0;
-        color: #4e3b2c;
+            background-color: #e5d7c0;
+            color: #4e3b2c;
         }
 
         .footer a {
-        color: #8b5e3c;
+            color: #8b5e3c;
         }
 
         .footer a:hover {
-        color: #a47148;
+            color: #a47148;
         }
 
         .border-top {
-        border-top: 1px solid #d9cbb3 !important;
+            border-top: 1px solid #d9cbb3 !important;
         }
 
         .box-shadow {
-        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+            box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
         }
 
-
         .navbar-nav {
-        flex-wrap: wrap;
+            flex-wrap: wrap;
         }
 
         .nav-item {
-        white-space: nowrap;
-        margin-right: 10px;
+            white-space: nowrap;
+            margin-right: 10px;
         }
 
-
         .content-container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        gap: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 20px;
         }
 
         .main-content {
-        flex: 1 1 60%;
+            flex: 1 1 60%;
         }
 
         .image-box {
-        flex: 1 1 35%;
-        max-width: 400px;
+            flex: 1 1 35%;
+            max-width: 400px;
         }
 
         .image-box img {
-        width: 100%;
-        height: auto;
-        border: 2px solid #ccc;
-        border-radius: 10px;
+            width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
         }
+
+        .btn-login {
+    background-color: #8b5e3c;
+    color: white;
+    border: 2px solid #6d4c41;
+    border-radius: 12px;
+    padding: 6px 16px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-left: 15px;
+}
+
+.btn-login:hover {
+    background-color: #a47148;
+    color: white;
+    transform: translateY(-1px);
+
+}
+
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
-            <div class="container">
-                <center><a class="navbar-brand" asp-area="" asp-page="/Index"></a></center>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @{
-                        var rol = Context.Session.GetString("Rol");
-                    }
-                    <ul class="navbar-nav flex-grow-1">
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Index">
-                                <img src="/Imagenes/casa-silueta-negra-sin-puerta.png"
-                                alt="Sede representativa"
-                                style="max-width: 50px; height: auto; border: 10px solid #ccc; border-radius: 10px;" />
-                            </a>
-
-                          
-                           
-
-                                
-
-
-                            @if (rol == "Empleado")
-                            {
-
-                               
-                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados_ServiciosExtras">Empleados_ServiciosExtras</a></li>
-                                <li class ="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas_Habitaciones">Reservas_Habitaciones</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
-                                <li class="nav-item"><a class="nav-link text-dark" asp-page="/Ventanas/Usuarios">Usuarios</a></li>
-
+        <div id="barra">
+            @if (ViewData["MostrarNav"] as bool? != false)
+            {
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" asp-area="" asp-page="/Index">
+                            <img src="/Imagenes/casa-silueta-negra-sin-puerta.png"
+                                 alt="Inicio"
+                                 style="max-width: 50px; height: auto; border: 5px solid #ccc; border-radius: 10px;" />
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            @{
+                                var rol = Context.Session.GetString("Rol");
                             }
-                            @if (rol == "Huesped")
-                            {
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+                           <ul class="navbar-nav flex-grow-1">
+    <li class="nav-item"><a class="nav-link" asp-page="/Index"></a></li>
 
-                        }
-                        
-                     
-                        
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
-        
-                   
-                        
-                        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
-                        
-                       
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    @if (rol == "Empleado")
+    {
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
+    }
+    @if (rol == "Huesped")
+    {
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
+        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+    }
+</ul>
+
+@if (string.IsNullOrEmpty(rol))
+{
+    <div class="d-flex align-items-center">
+        <a class="btn btn-login" asp-page="/Login">Iniciar sesión</a>
+    </div>
+}
+
+                        </div>
+                    </div>
+                </nav>
+            }
+        </div>
     </header>
 
     <div class="container content-container">
         <div class="main-content">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+            @RenderBody()
         </div>
         <div class="image-box">
             <img src="/Imagenes/hotel2.jpeg" alt="Hotel representativo" />
@@ -188,7 +197,6 @@
             </div>
         </div>
     </footer>
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

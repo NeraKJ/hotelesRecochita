@@ -38,7 +38,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Sedes",
                 Operacion = "Borrar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
@@ -64,7 +64,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Sedes",
                 Operacion = "Guardar",
                 Datos = JsonConversor.ConvertirAString(entidad!),
@@ -111,7 +111,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Sedes",
                 Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),

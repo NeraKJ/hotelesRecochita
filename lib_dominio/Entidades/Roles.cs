@@ -8,6 +8,6 @@ namespace lib_dominio.Entidades
     {
         [Key] public int Id_Rol { get; set; }
         public string? Nombre { get; set; }
-        public string? Descripcion { get; set; }
+
     }
 }

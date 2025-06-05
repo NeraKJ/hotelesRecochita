@@ -4,14 +4,14 @@
     ViewData["Title"] = "";
 }
 
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
     body {
         font-family: 'Playfair Display', serif;
-        background-color: #f7f3f0;
+        background-color: #f3efe8;
         color: #4e342e;
+       
     }
 
     h3, h4 {
@@ -20,7 +20,7 @@
     }
 
     label {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     input.form-control {
@@ -28,53 +28,90 @@
         border: 1px solid #6d4c41;
         border-radius: 6px;
         margin-bottom: 10px;
+    
     }
 
     .btn {
         background-color: #5d4037;
         color: white;
-        margin-top: 10px;
-        font-size: 1rem;
-        border-radius: 5px;
-        padding: 6px 12px;
+        margin-top: 12px;
+        font-size: 1.05rem;
+        border-radius: 6px;
+        padding: 8px 20px;
     }
 
         .btn:hover {
-            background-color: #4e342e;
+            background-color: #3e2723;
         }
 
-    .login-container {
-        max-width: 500px;
-        margin: 40px auto;
+    login-container {
+        max-width: 400px;
+        margin: 50px auto;
         padding: 30px;
-        background-color: #fff8f1;
+        background-color: #fffaf5;
         border: 1px solid #d7ccc8;
-        border-radius: 12px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+        text-align: center;
     }
 
-    .text-center {
-        font-family: 'Playfair Display', serif;
+    .logo {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #6d4c41;
+    }
+
+    .error-message {
+        color: #b71c1c;
+        background-color: #ffebee;
+        border: 1px solid #ef9a9a;
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
     }
 </style>
 
 @if (!Model.EstaLogueado)
 {
-    <div class="login-container">
-        <CENTER><h3>Login</h3></CENTER>
+    ViewData["MostrarCerrarSesion"] = false;
+    ViewData["MostrarNav"] = false;
+
+    <div class="container">
+        <div class="logo">Hoteles Recochita</div>
+        div class="login-container">
+    <div class="login-box">
+        <h3>Iniciar Sesión</h3>
+
+        @if (!string.IsNullOrEmpty(Model.MensajeError))
+        {
+            <div class="error-message">
+                @Model.MensajeError
+            </div>
+        }
 
         <form method="POST">
             <div class="form-group">
-                <label>Usuario:</label>
-                <input onchange="keyUp(this)" asp-for="@Model.Email" class="form-control" />
+                <label>Email:</label>
+                <input asp-for="Email" class="form-control" />
             </div>
             <div class="form-group">
                 <label>Contraseña:</label>
-                <input type="password" onchange="keyUp(this)" asp-for="@Model.Contrasena" class="form-control" />
+                <input type="password" asp-for="Contrasena" class="form-control" />
             </div>
 
-            <input type="submit" value="Limpiar" asp-page-handler="BtClean" class="btn" />
-            <input type="submit" value="Entrar" asp-page-handler="BtEnter" class="btn" />
+           
+            <div class="form-group">
+                <label>Verificacion de Humanidad responda: ¿Cuánto es 12 + 1?</label>
+                <input asp-for="RespuestaHumana" class="form-control" />
+            </div>
+
+            <input type="submit" value="Limpiar" asp-page-handler="BtClean" class="btn btn-secondary" />
+            <input type="submit" value="Entrar" asp-page-handler="BtEnter" class="btn btn-primary" />
         </form>
     </div>
 }

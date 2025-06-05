@@ -2,6 +2,7 @@
 @model asp_presentacion.Pages.Ventanas.HotelesModel
 @{
     ViewData["Titulo"] = "Hoteles";
+    @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
 }
 <center>
 <div class="container mt-4">
@@ -23,12 +24,16 @@
         <div class="mb-4">
             <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
                    disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-            <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
-                   disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-            <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
-                   disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-            <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
-                   disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                {
+                    <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
+                           disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                    <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
+                           disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                    <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
+                           disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                }
         </div>
 
         @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
@@ -83,6 +88,13 @@
             <input type="hidden" asp-for="@Model.Accion" />
             @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
         }
+          @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                
+            }
 
         @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
         {
@@ -91,7 +103,7 @@
                     <div style='width:95%'>
                         <h2>Mensaje</h2>
                         <h4>¿Desea borrar la entidad?</h4>
-                        <h6>@Model.Actual!.Nombre @Model.Actual!.Dueños</h6>
+                        <h6>@Model.Actual!.Nombre <\h6>
                         <br />
                         <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
                         <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
@@ -122,7 +134,10 @@
                                                  style="max-width: 120px; height: auto; border: 2px solid #ccc; border-radius: 8px;" />
                                    
                                 </th>
-                            <th>Acción</th>
+                                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                                {
+                                    <th>Acción</th>
+                                }
                         </tr>
                     </thead>
                     <tbody>
@@ -134,6 +149,8 @@
                                     <td>@elemento.Id_Hotel</td>
                                     <td>@elemento.Nombre</td>
                                     <td>@elemento.Dueños</td>
+                                        @*Tercer tin de usuario*@ @if (rol != "Huesped")
+                                        {
                                     <td>
                                         <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                class="btn btn-warning btn-sm me-1"
@@ -142,6 +159,7 @@
                                                class="btn btn-danger btn-sm"
                                                asp-route-data="@elemento.Id_Hotel" />
                                     </td>
+                                        }
                                 </tr>
                             }
                         }

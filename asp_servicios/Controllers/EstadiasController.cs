@@ -29,9 +29,10 @@ namespace asp_servicios.Controllers
         }
 
         [HttpPost]
-       
-        
-        public string Listar()
+
+
+        [HttpPost]
+        public IActionResult Listar()
         {
             var respuesta = new Dictionary<string, object>();
             try
@@ -40,25 +41,24 @@ namespace asp_servicios.Controllers
                 if (!tokenController!.Validate(datos))
                 {
                     respuesta["Error"] = "lbNoAutenticacion";
-                    return JsonConversor.ConvertirAString(respuesta);
+                    return Unauthorized(respuesta);
                 }
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
                 var lista = this.iAplicacion!.Listar();
 
-                // Aquí el cambio: si lista es List<Estadias> ya puedes enviarlo así
                 respuesta["Entidades"] = lista;
-
                 respuesta["Respuesta"] = "OK";
                 respuesta["Fecha"] = DateTime.Now.ToString();
-                return JsonConversor.ConvertirAString(respuesta);
+                return Ok(respuesta);
             }
             catch (Exception ex)
             {
                 respuesta["Error"] = ex.Message.ToString();
-                return JsonConversor.ConvertirAString(respuesta);
+                return BadRequest(respuesta);
             }
         }
+
 
         [HttpPost]
         public string PorId()

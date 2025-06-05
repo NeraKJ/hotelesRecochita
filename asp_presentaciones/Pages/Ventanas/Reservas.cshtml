@@ -2,6 +2,7 @@
 @model asp_presentacion.Pages.Ventanas.ReservasModel
 @{
     ViewData["Titulo"] = "Reservas";
+    @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
 }
 <center>
     <div class="container mt-4">
@@ -22,12 +23,15 @@
             <div class="mb-4">
                 <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
-                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
-                       disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                
+                    <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
+                           disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+
+                    <input type="submit" value="Guardar" asp-page-handler="BtGuardar" class="btn btn-secondary me-2"
+                           disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                    <input type="submit" value="Cancelar" asp-page-handler="BtCancelar" class="btn btn-secondary"
+                           disabled="@(Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
+                
             </div>
 
             @if (Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
@@ -38,7 +42,7 @@
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
-                <input type="hidden" asp-for="@Model.Actual!.Id_Huesped" />
+                <input type="hidden" asp-for="@Model.Actual!.Id_H" />
 
                 <input type="hidden" asp-for="@Model.Actual!.Id_Sede" />
 
@@ -53,11 +57,11 @@
                     <h4 class="mb-3">Nueva Reserva</h4>
 
                     <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label">Id_Huesped</label>
+                        <label class="col-sm-2 col-form-label">Id_H</label>
                         <div class="col-sm-10">
-                            <select asp-for="@Model.Actual!.Id_Huesped"
+                            <select asp-for="@Model.Actual!.Id_H"
                                     class="form-select"
-                                    asp-items="@(Model.Huespedes != null ? new SelectList(Model.Huespedes, "Id_Huesped", "Nombre") : new SelectList(Enumerable.Empty<SelectListItem>()))">
+                                    asp-items="@(Model.Huespedes != null ? new SelectList(Model.Huespedes, "Id_H", "Nombre") : new SelectList(Enumerable.Empty<SelectListItem>()))">
                                 <option value="">-- Seleccione un Huesped --</option>
                             </select>
                         </div>
@@ -102,6 +106,13 @@
                 <input type="hidden" asp-for="@Model.Accion" />
                 @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                ;
+            }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
@@ -114,7 +125,7 @@
                                 @Model.Actual!.Id_Sede
                                 @Model.Actual!.Estado_Actual
                                 @Model.Actual!.Fecha_Reserva
-                                @Model.Actual!.Numero_Huespedes
+                                
                             </h6>
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
@@ -144,7 +155,10 @@
                                 <th>Estado_Actual</th>
                                 <th>Fecha_Reserva</th>
                                 <th>Numero_Huespedes</th>
-                                <th>Acción</th>
+                                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                                {
+                                    <th>Acción</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -154,12 +168,14 @@
                                 {
                                     <tr>
                                         <td>@elemento.Id_Reserva</td>
-                                        <td>@elemento.Id_Huesped</td>
+                                        <td>@elemento.Id_H</td>
                                         <td>@elemento.Id_Sede</td>
                                         <td>@elemento.Estado_Actual</td>
                                         <td>@elemento.Fecha_Reserva</td>
                                         <td>@elemento.Numero_Huespedes</td>
-                                        <td>
+                                       
+                                          
+                                            <td>
                                             <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                    class="btn btn-warning btn-sm me-1"
                                                    asp-route-data="@elemento.Id_Reserva" />
@@ -167,6 +183,8 @@
                                                    class="btn btn-danger btn-sm"
                                                    asp-route-data="@elemento.Id_Reserva" />
                                         </td>
+
+                                            
                                     </tr>
                                 }
                             }

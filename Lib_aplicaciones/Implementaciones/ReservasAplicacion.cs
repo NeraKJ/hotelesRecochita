@@ -38,7 +38,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Reservas",
                 Operacion = "Borrar",
                 Datos = JsonConversor.ConvertirAString(entidad),
@@ -63,7 +63,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Reservas",
                 Operacion = "Guardar",
                 Datos = JsonConversor.ConvertirAString(entidad),
@@ -92,7 +92,7 @@ namespace lib_aplicaciones.Implementaciones
 
             return this.IConexion!.Reservas!
                 .Where(x => x.Id_Reserva == entidad.Id_Reserva)
-                . Include(x => x.Sedes)
+                .Include(x => x.Sedes)
                 .ThenInclude(d => d!.Hotel)
                 .Include(x => x.Huespedes)
                 .ToList();
@@ -114,7 +114,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Reservas",
                 Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),

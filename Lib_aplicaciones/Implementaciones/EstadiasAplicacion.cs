@@ -38,7 +38,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Estadias",
                 Operacion = "Borrar",
                 Datos = JsonConversor.ConvertirAString(entidad),
@@ -63,7 +63,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Estadias",
                 Operacion = "Guardar",
                 Datos = JsonConversor.ConvertirAString(entidad),
@@ -75,12 +75,10 @@ namespace lib_aplicaciones.Implementaciones
 
         public List<Estadias> Listar()
         {
-            return this.IConexion!.Estadias!.Take(20)
-                
+            return this.IConexion!.Estadias!.Take(20)                
               .Include(x => x.Reservas)
               .ThenInclude(s => s!.Huespedes)
-              
-                  .ToList();
+              .ToList();
             
         }
 
@@ -93,11 +91,8 @@ namespace lib_aplicaciones.Implementaciones
 
             return this.IConexion!.Estadias!
                 .Where(x => x.Id_Estadia == entidad.Id_Estadia)
-                
-              .Include(x => x.Reservas)
-              .ThenInclude(s => s!.Huespedes)
-          
-                 
+                .Include(x => x.Reservas)
+                .ThenInclude(s => s!.Huespedes)
                 .ToList();
         }
 
@@ -117,7 +112,7 @@ namespace lib_aplicaciones.Implementaciones
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
-                Usuario = "admin",
+                Usuario = "Empleado",
                 Entidad = "Estadias",
                 Operacion = "Modificar",
                 Datos = JsonConversor.ConvertirAString(entidad!),

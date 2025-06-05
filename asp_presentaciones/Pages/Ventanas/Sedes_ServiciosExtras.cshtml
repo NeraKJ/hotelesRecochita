@@ -100,6 +100,13 @@
                 <input type="hidden" asp-for="Accion" />
                 @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                ;
+            }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
@@ -108,7 +115,7 @@
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
                             <h4>¿Desea borrar esta  sede - servicio extra?</h4>
-                            <h6>@Model.Actual!.Descuento_Sede</h6>
+                            <h6>@Model.Actual!.Id_Sedes_ServiciosExtras</h6>
                              
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />

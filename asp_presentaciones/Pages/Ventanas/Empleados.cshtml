@@ -2,6 +2,9 @@
 @model asp_presentacion.Pages.Ventanas.EmpleadosModel
 @{
     ViewData["Titulo"] = "Empleados";
+
+   
+
    @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
 
 }
@@ -141,6 +144,12 @@
                 <input type="hidden" asp-for="@Model.Accion" />
                 @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden" asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+            }
+
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
@@ -149,7 +158,14 @@
                         <div style='width:95%'>
                             <h2>Mensaje</h2>
                             <h4>¿Desea eliminar el empleado?</h4>
-                            <h6>@Model.Actual!.Nombre @Model.Actual!.Apellido</h6>
+                            @if (Model.Actual != null)
+                            {
+                                <h6>@Model.Actual.Nombre @Model.Actual.Apellido</h6>
+                            }
+                            else
+                            {
+                                <h6>Empleado no disponible</h6>
+                            }
                             <br />
                             <input type="submit" value="Borrar" asp-page-handler="BtBorrar" class="btn btn-danger me-2" />
                             <input type="submit" value="Cerrar" asp-page-handler="BtCancelar" class="btn btn-secondary" />
@@ -157,6 +173,7 @@
                     </div>
                 </div>
             }
+
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Listas ||
             Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
@@ -183,8 +200,11 @@
                                 <th>Sexo</th>
                                 <th>Fecha_Contratacion</th>
 
+                             
+
                               @*segundo tin de usuario*@ @if (rol != "Huesped")
                                 {
+
                                     <th>Acción</th>
                                 }
 
@@ -206,7 +226,11 @@
                                         <td>@elemento.Edad</td>
                                         <td>@elemento.Sexo</td>
                                         <td>@elemento.Fecha_Contratacion</td>
+
+                                        
+
                                         @*Tercer tin de usuario*@ @if (rol != "Huesped")
+
                                         {
 
                                         <td>

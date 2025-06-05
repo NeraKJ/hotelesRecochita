@@ -6,44 +6,51 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace asp_presentacion.Pages.Ventanas
 {
-    public class EstadiasModel : PageModel
+    public class AuditoriasModel : PageModel
     {
-        private readonly IEstadiasPresentacion? iPresentacion;
-        private readonly IReservasPresentacion? IReservasPresentacion;
+        private IAuditoriasPresentacion? iPresentacion = null;
+        public bool EstaLogueado = false;
 
-        public EstadiasModel(
-            IEstadiasPresentacion iPresentacion,
-            IReservasPresentacion IReservasPresentacion)
+        public AuditoriasModel(IAuditoriasPresentacion iPresentacion)
         {
-            this.iPresentacion = iPresentacion;
-            this.IReservasPresentacion = IReservasPresentacion;
-
-            Filtro = new Estadias();
+            try
+            {
+                this.iPresentacion = iPresentacion;
+                Filtro = new Auditorias();
+            }
+            catch (Exception ex)
+            {
+                LogConversor.Log(ex, ViewData!);
+            }
         }
 
+        public IFormFile? FormFile { get; set; }
         [BindProperty] public Enumerables.Ventanas Accion { get; set; }
-        [BindProperty] public Estadias? Actual { get; set; }
-        [BindProperty] public Estadias? Filtro { get; set; }
-        [BindProperty] public List<Estadias>? Lista { get; set; }
-        [BindProperty] public List<Reservas>? Reservas { get; set; }
+        [BindProperty] public Auditorias? Actual { get; set; }
+        [BindProperty] public Auditorias? Filtro { get; set; }
+        [BindProperty] public List<Auditorias>? Lista { get; set; }
 
-        public void OnGet()
-        {
-           OnPostBtRefrescar();
-        }
+        public virtual void OnGet() { OnPostBtRefrescar(); }
 
         public void OnPostBtRefrescar()
         {
             try
             {
-                Accion = Enumerables.Ventanas.Listas;
+                var variable_session = HttpContext.Session.GetString("Usuario");
+                if (String.IsNullOrEmpty(variable_session))
+                {
+                    HttpContext.Response.Redirect("/");
+                    return;
+                }
 
-                var task = iPresentacion!.PorId(Filtro!);
+                Filtro!.Operacion = Filtro!.Operacion ?? "";
+
+                Accion = Enumerables.Ventanas.Listas;
+                
+                var task = this.iPresentacion!.PorOperacion(Filtro!);
                 task.Wait();
                 Lista = task.Result;
                 Actual = null;
-
-                CargarCombos();
             }
             catch (Exception ex)
             {
@@ -51,36 +58,26 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtNuevo()
+        public virtual void OnPostBtNuevo()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
-
-                Actual = new Estadias();
-                CargarCombos();
+                Actual = new Auditorias();
             }
-
-
-
             catch (Exception ex)
             {
                 LogConversor.Log(ex, ViewData!);
             }
         }
 
-        public void OnPostBtModificar(string data)
+        public virtual void OnPostBtModificar(string data)
         {
             try
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Editar;
-
-                Actual = Lista!.FirstOrDefault(x => x.Id_Estadia.ToString() == data);
-
-
-
-                CargarCombos();
+                Actual = Lista!.FirstOrDefault(x => x.Id.ToString() == data);
             }
             catch (Exception ex)
             {
@@ -88,24 +85,19 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtGuardar()
+        public virtual void OnPostBtGuardar()
         {
             try
             {
                 Accion = Enumerables.Ventanas.Editar;
 
-
-
-
-                Task<Estadias> task;
-                if (Actual!.Id_Estadia == 0)
-                    task = iPresentacion!.Guardar(Actual!)!;
+                Task<Auditorias>? task = null;
+                if (Actual!.Id == 0)
+                    task = this.iPresentacion!.Guardar(Actual!)!;
                 else
-                    task = iPresentacion!.Modificar(Actual!)!;
-
+                    task = this.iPresentacion!.Modificar(Actual!)!;
                 task.Wait();
                 Actual = task.Result;
-
                 Accion = Enumerables.Ventanas.Listas;
                 OnPostBtRefrescar();
             }
@@ -115,13 +107,15 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtBorrarVal(string data)
+        public virtual void OnPostBtBorrarVal(string data)
         {
             try
             {
                 OnPostBtRefrescar();
                 Accion = Enumerables.Ventanas.Borrar;
-                Actual = Lista!.FirstOrDefault(x => x.Id_Estadia.ToString() == data);
+                Actual = Lista!.FirstOrDefault(x => x.Id.ToString() == data);
+
+
             }
             catch (Exception ex)
             {
@@ -129,12 +123,11 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        public void OnPostBtBorrar()
+        public virtual void OnPostBtBorrar()
         {
             try
             {
-                var task = iPresentacion!.Borrar(Actual!);
-                task.Wait();
+                var task = this.iPresentacion!.Borrar(Actual!);
                 Actual = task.Result;
                 OnPostBtRefrescar();
             }
@@ -170,13 +163,13 @@ namespace asp_presentacion.Pages.Ventanas
             }
         }
 
-        private void CargarCombos()
+        public void OnPostBtClose()
         {
             try
             {
-                var task = IReservasPresentacion!.Listar();
-                task.Wait();
-                Reservas = task.Result;
+                HttpContext.Session.Clear();
+                HttpContext.Response.Redirect("/");
+                EstaLogueado = false;
             }
             catch (Exception ex)
             {

@@ -26,6 +26,7 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
+
         public async Task<List<Estadias>> PorId(Estadias? entidad)
         {
             var lista = new List<Estadias>();
@@ -63,10 +64,15 @@ namespace lib_presentaciones.Implementaciones
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
+
+            Console.WriteLine("JSON recibido:");
+            Console.WriteLine(JsonConversor.ConvertirAString(respuesta["Entidad"]));
+
             entidad = JsonConversor.ConvertirAObjeto<Estadias>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
         }
+
 
         public async Task<Estadias?> Modificar(Estadias? entidad)
         {
@@ -86,6 +92,10 @@ namespace lib_presentaciones.Implementaciones
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
+
+            Console.WriteLine("JSON recibido:");
+            Console.WriteLine(JsonConversor.ConvertirAString(respuesta["Entidad"]));
+
             entidad = JsonConversor.ConvertirAObjeto<Estadias>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;
@@ -109,6 +119,10 @@ namespace lib_presentaciones.Implementaciones
             {
                 throw new Exception(respuesta["Error"].ToString()!);
             }
+
+            Console.WriteLine("JSON recibido:");
+            Console.WriteLine(JsonConversor.ConvertirAString(respuesta["Entidad"]));
+
             entidad = JsonConversor.ConvertirAObjeto<Estadias>(
                 JsonConversor.ConvertirAString(respuesta["Entidad"]));
             return entidad;

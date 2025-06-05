@@ -18,6 +18,7 @@ namespace lib_dominio.Entidades
 
         public DateTime Fecha_Salida { get; set; }
         public int Id_Reserva { get; set; }
+
         [ForeignKey("Id_Reserva")]
         public Reservas? Reservas { get; set; }
 

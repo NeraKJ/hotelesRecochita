@@ -2,6 +2,7 @@
 @model asp_presentacion.Pages.Ventanas.HuespedesModel
 @{
     ViewData["Titulo"] = "Huespedes";
+    @*primer rol pal usuario*@ var rol = HttpContext.Session.GetString("Rol");
 }
 <center>
     <div class="container mt-4">
@@ -129,6 +130,13 @@
                 <input type="hidden" asp-for="@Model.Accion" />
                 @await Html.PartialAsync("../Emergentes/Mensajes.cshtml")
             }
+            @if (ViewData.ContainsKey("Mensaje2"))
+            {
+                <input type="hidden"
+                       asp-for="@Model.Accion" />
+                @await Html.PartialAsync("../Emergentes/Mensajes2.cshtml")
+                
+            }
 
             @if (Model.Accion == lib_dominio.Nucleo.Enumerables.Ventanas.Borrar)
             {
@@ -174,7 +182,10 @@
                                 <th>Telefono</th>
                                 <th>Correo</th>
 
-                                <th>Acción</th>
+                                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                                {
+                                    <th>Acción</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -193,6 +204,8 @@
                                         <td>@elemento.Sexo</td>
                                         <td>@elemento.Telefono</td>
                                         <td>@elemento.Correo</td>
+                                        @*Tercer tin de usuario*@ @if (rol != "Huesped")
+                                        {
                                         <td>
                                             <input type="submit" value="Modificar" asp-page-handler="BtModificar"
                                                    class="btn btn-warning btn-sm me-1"
@@ -201,6 +214,7 @@
                                                    class="btn btn-danger btn-sm"
                                                    asp-route-data="@elemento.Id_H" />
                                         </td>
+                                        }
                                     </tr>
                                 }
                             }

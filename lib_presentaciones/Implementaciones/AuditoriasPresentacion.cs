@@ -26,14 +26,14 @@ namespace lib_presentaciones.Implementaciones
             return lista;
         }
 
-        public async Task<List<Auditorias>> PorUsuario(Auditorias? entidad)
+        public async Task<List<Auditorias>> PorOperacion(Auditorias? entidad)
         {
             var lista = new List<Auditorias>();
             var datos = new Dictionary<string, object>();
             datos["Entidad"] = entidad!;
 
             comunicaciones = new Comunicaciones();
-            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/PorUsuario");
+            datos = comunicaciones.ConstruirUrl(datos, "Auditorias/PorOperacion");
             var respuesta = await comunicaciones!.Ejecutar(datos);
 
             if (respuesta.ContainsKey("Error"))

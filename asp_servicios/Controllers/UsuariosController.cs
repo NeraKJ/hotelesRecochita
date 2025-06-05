@@ -56,7 +56,7 @@ namespace asp_servicios.Controllers
         }
 
         [HttpPost]
-        public string PorId()
+        public string PorEmail()
         {
             var respuesta = new Dictionary<string, object>();
             try
@@ -72,7 +72,7 @@ namespace asp_servicios.Controllers
                     JsonConversor.ConvertirAString(datos["Entidad"]));
 
                 this.iAplicacion!.Configurar(Configuracion.ObtenerValor("StringConexion")!);
-                respuesta["Entidades"] = this.iAplicacion!.PorId(entidad);
+                respuesta["Entidades"] = this.iAplicacion!.PorEmail(entidad);
 
                 respuesta["Respuesta"] = "OK";
                 respuesta["Fecha"] = DateTime.Now.ToString();

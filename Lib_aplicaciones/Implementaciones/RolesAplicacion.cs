@@ -34,6 +34,7 @@ namespace lib_aplicaciones.Implementaciones
 
             this.IConexion!.Roles!.Remove(entidad);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
@@ -43,6 +44,7 @@ namespace lib_aplicaciones.Implementaciones
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
@@ -58,6 +60,7 @@ namespace lib_aplicaciones.Implementaciones
 
             this.IConexion!.Roles!.Add(entidad);
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
@@ -67,6 +70,7 @@ namespace lib_aplicaciones.Implementaciones
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
 
@@ -95,6 +99,7 @@ namespace lib_aplicaciones.Implementaciones
             var entry = this.IConexion!.Entry<Roles>(entidad);
             entry.State = EntityState.Modified;
             this.IConexion.SaveChanges();
+
             this.IAuditoriasAplicacion!.Configurar(this.IConexion.StringConexion!);
             this.IAuditoriasAplicacion!.Guardar(new Auditorias
             {
@@ -104,6 +109,7 @@ namespace lib_aplicaciones.Implementaciones
                 Datos = JsonConversor.ConvertirAString(entidad!),
                 Fecha = DateTime.Now
             });
+
             return entidad;
         }
     }
