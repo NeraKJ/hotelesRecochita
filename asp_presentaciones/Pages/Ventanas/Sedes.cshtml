@@ -21,11 +21,11 @@
             </div>
 
             <div class="mb-4">
-                @*segundo tin de usuario*@ @if (rol != "Huesped")
-                {
+              
                 <input type="submit" value="Refrescar" asp-page-handler="BtRefrescar" class="btn btn-secondary me-2"
                        disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
-                
+                @*segundo tin de usuario*@ @if (rol != "Huesped")
+                {
                     <input type="submit" value="Nuevo" asp-page-handler="BtNuevo" class="btn btn-secondary me-2"
                            disabled="@(Model.Accion != lib_dominio.Nucleo.Enumerables.Ventanas.Listas)" />
 
