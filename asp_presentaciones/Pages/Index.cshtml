@@ -11,7 +11,6 @@
         font-family: 'Playfair Display', serif;
         background-color: #f3efe8;
         color: #4e342e;
-       
     }
 
     h3, h4 {
@@ -28,7 +27,6 @@
         border: 1px solid #6d4c41;
         border-radius: 6px;
         margin-bottom: 10px;
-    
     }
 
     .btn {
@@ -44,8 +42,8 @@
             background-color: #3e2723;
         }
 
-    login-container {
-        max-width: 400px;
+    .login-container {
+        max-width: 420px;
         margin: 50px auto;
         padding: 30px;
         background-color: #fffaf5;
@@ -59,6 +57,7 @@
         font-size: 2.5rem;
         margin-bottom: 20px;
         color: #6d4c41;
+        text-align: center;
     }
 
     .error-message {
@@ -73,6 +72,11 @@
 
     .form-group {
         margin-bottom: 16px;
+        text-align: left;
+    }
+
+    .text-center {
+        text-align: center;
     }
 </style>
 
@@ -83,36 +87,35 @@
 
     <div class="container">
         <div class="logo">Hoteles Recochita</div>
-        div class="login-container">
-    <div class="login-box">
-        <h3>Iniciar Sesión</h3>
+        <div class="login-container">
+            <h3>Iniciar Sesión</h3>
 
-        @if (!string.IsNullOrEmpty(Model.MensajeError))
-        {
-            <div class="error-message">
-                @Model.MensajeError
-            </div>
-        }
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="error-message">
+                    @Model.MensajeError
+                </div>
+            }
 
-        <form method="POST">
-            <div class="form-group">
-                <label>Email:</label>
-                <input asp-for="Email" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label>Contraseña:</label>
-                <input type="password" asp-for="Contrasena" class="form-control" />
-            </div>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" asp-for="Contrasena" class="form-control" />
+                </div>
 
-           
-            <div class="form-group">
-                <label>Verificacion de Humanidad responda: ¿Cuánto es 12 + 1?</label>
-                <input asp-for="RespuestaHumana" class="form-control" />
-            </div>
+                <div class="form-group">
+                    <label>Verificación de Humanidad: ¿Cuánto es 12+1?</label>
+                    <input asp-for="RespuestaHumana" class="form-control" />
+                </div>
 
-            <input type="submit" value="Limpiar" asp-page-handler="BtClean" class="btn btn-secondary" />
-            <input type="submit" value="Entrar" asp-page-handler="BtEnter" class="btn btn-primary" />
-        </form>
+                <input type="submit" value="Limpiar" asp-page-handler="BtClean" class="btn btn-secondary" />
+                <input type="submit" value="Entrar" asp-page-handler="BtEnter" class="btn btn-primary" />
+            </form>
+        </div>
     </div>
 }
 else
@@ -128,3 +131,4 @@ else
         </form>
     </div>
 }
+

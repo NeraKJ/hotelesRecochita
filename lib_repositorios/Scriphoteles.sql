@@ -1,9 +1,8 @@
-﻿---Samuel Zea🤡y Karen Jimenez🤡
-CREATE DATABASE Hotelardos
+﻿---Samuel Zea🤡y Karen Jimenez🤡 y la F
+CREATE DATABASE dbo_Hotel
 go
-USE Hotelardos
+USE dbo_Hotel
 GO
-
 
 ---Las tablas:
 CREATE TABLE Hoteles(
@@ -21,12 +20,12 @@ VALUES ( 'Recochita', 'Samuel y Karen')
 
 
 CREATE TABLE Huespedes(
-
+Id_H INT IDENTITY NOT NULL,
 Id_Huesped INT NOT NULL,
 Nombre VARCHAR(20)NOT NULL,
 Apellido VARCHAR(20)NOT NULL,
 Fecha_Naci DATE NOT NULL,
-Edad INT NOT NULL,
+Edad INT ,
 Sexo CHAR(1) not null,
 Telefono VARCHAR(15)NOT NULL,
 Correo VARCHAR(30)NOT NULL,
@@ -34,7 +33,7 @@ Historial_Reserva VARCHAR(30)DEFAULT 'No hay historial'
 );
 
 ALTER TABLE Huespedes
-ADD CONSTRAINT PK_Id_Huesped PRIMARY KEY (Id_Huesped)
+ADD CONSTRAINT PK_Id_Huesped PRIMARY KEY (Id_H)
 
 GO
 
@@ -84,21 +83,21 @@ VALUES ( 1,'Calle 44', 'Anori'), (1, 'Calle 42', 'Bello'),(1, 'Calle 556', 'Mede
 
 
 CREATE TABLE Empleados(
-
+Id_E int identity not null,
 Id_Empleado INT NOT NULL,
 Id_Hotel INT DEFAULT '1',
 Id_Sede INT NOT NULL,
 Nombre VARCHAR(20)NOT NULL,
 Apellido VARCHAR(20)NOT NULL,
 Fecha_Naci DATE NOT NULL,
-Edad INT NOT NULL,
+Edad INT ,
 Sexo CHAR(1) NOT NULL,
 Fecha_Contratacion DATE NOT NULL,
 Rol VARCHAR(20) NOT NULL,
 );
 
 ALTER TABLE Empleados
-ADD CONSTRAINT PK_Id_Empleado PRIMARY KEY (Id_Empleado)
+ADD CONSTRAINT PK_Id_Empleado PRIMARY KEY (Id_E)
 
 INSERT INTO Empleados (Id_Empleado, Id_Sede, Nombre, Apellido, Fecha_Naci, Edad, Sexo, Fecha_Contratacion, Rol)  
 VALUES  
@@ -159,7 +158,7 @@ VALUES
 CREATE TABLE Reservas(
 
 Id_Reserva INT IDENTITY,
-Id_Huesped INT NOT NULL,
+Id_H  INT NOT NULL,
 Id_Sede INT NOT NULL,
 Estado_Actual VARCHAR(15) NOT NULL,
 Fecha_Reserva DATE NOT NULL,
@@ -169,21 +168,21 @@ Numero_Huespedes VARCHAR(15)NOT NULL
 ALTER TABLE Reservas
 ADD CONSTRAINT PK_Id_Reserva PRIMARY KEY (Id_Reserva)
 
-INSERT INTO Reservas( Id_Huesped, Id_Sede, Estado_Actual, Fecha_Reserva, Numero_Huespedes)
+INSERT INTO Reservas(Id_H, Id_Sede, Estado_Actual, Fecha_Reserva, Numero_Huespedes)
 VALUES 
-(1023888288, 1, 'Confirmado', GETDATE(), 2),
-(1023888288, 1, 'Pendiente', GETDATE(), 3),
-(1023888299, 2, 'Confirmado', GETDATE(), 1),
-(1023888300, 3, 'Confirmado', GETDATE(), 2),
-(1023888311, 1, 'Pendiente', GETDATE(), 4),
-(1023888322, 2, 'Confirmado', GETDATE(), 3),
-(1023888333, 3, 'Pendiente', GETDATE(), 2),
-(1023888344, 1, 'Confirmado', GETDATE(), 5),
-(1023888355, 2, 'Pendiente', GETDATE(), 3),
-(1023888366, 3, 'Confirmado', GETDATE(), 6),
-(1023888377, 1, 'Confirmado', GETDATE(), 1),
-(1023888388, 2, 'Pendiente', GETDATE(), 4),
-(1023558880, 3, 'Confirmado', GETDATE(), 2);
+(1, 1, 'Confirmado', GETDATE(), 2),
+(2, 1, 'Pendiente', GETDATE(), 3),
+(3, 2, 'Confirmado', GETDATE(), 1),
+(4, 3, 'Confirmado', GETDATE(), 2),
+(5, 1, 'Pendiente', GETDATE(), 4),
+(6, 2, 'Confirmado', GETDATE(), 3),
+(7, 3, 'Pendiente', GETDATE(), 2),
+(8, 1, 'Confirmado', GETDATE(), 5),
+(9, 2, 'Pendiente', GETDATE(), 3),
+(10, 3, 'Confirmado', GETDATE(), 6),
+(11, 1, 'Confirmado', GETDATE(), 1),
+(12, 2, 'Pendiente', GETDATE(), 4),
+(11, 3, 'Confirmado', GETDATE(), 2);
 
 
 CREATE TABLE Reservas_Habitaciones(
@@ -217,13 +216,13 @@ VALUES
 CREATE TABLE ServiciosExtras(
 
 Id_ServicioExtra INT IDENTITY,
-Id_Sede INT CHECK(Id_Sede = 1 or Id_Sede = 2 or Id_Sede = 3) NOT NULL,
-Piscina VARCHAR(5) CHECK (Piscina = 'Si' or Piscina = 'No') NOT NULL,
-Restaurante VARCHAR(5) CHECK (Restaurante = 'Si' or Restaurante = 'No') NOT NULL,
-Limpieza VARCHAR(5) CHECK (Limpieza = 'Si' or Limpieza = 'No') NOT NULL,
-Mantenimiento VARCHAR(5) CHECK (Mantenimiento = 'Si' or Mantenimiento = 'No') NOT NULL,
-Gimnasio VARCHAR(5) CHECK (Gimnasio = 'Si' or Gimnasio = 'No') NOT NULL,
-Jacuzzi VARCHAR(5) CHECK (Jacuzzi = 'Si' or Jacuzzi = 'No') NOT NULL
+Id_Sede INT NOT NULL,
+Piscina VARCHAR(5)  NOT NULL,
+Restaurante VARCHAR(5) NOT NULL,
+Limpieza VARCHAR(5)  NOT NULL,
+Mantenimiento VARCHAR(5) NOT NULL,
+Gimnasio VARCHAR(5) NOT NULL,
+Jacuzzi VARCHAR(5)  NOT NULL
 );
 
 ALTER TABLE ServiciosExtras
@@ -237,7 +236,7 @@ VALUES ( 1, 'Si', 'No', 'No', 'No', 'Si', 'Si'), ( 2, 'No', 'Si', 'No', 'No', 'N
 CREATE TABLE Empleados_ServiciosExtras(
 
 Id_Empleado_ServicioExtra INT IDENTITY,
-Id_empleado INT NOT NULL,
+Id_E INT NOT NULL,
 Id_ServicioExtra INT NOT NULL,
 Precio_Servicio DECIMAL(10,3)NOT NULL,
 Pago_Servicio DECIMAL(10,3)NOT NULL
@@ -246,22 +245,22 @@ Pago_Servicio DECIMAL(10,3)NOT NULL
 ALTER TABLE Empleados_ServiciosExtras
 ADD CONSTRAINT PK_Id_Empleado_ServicioExtra PRIMARY KEY (Id_Empleado_ServicioExtra)
 
-INSERT INTO Empleados_ServiciosExtras( Id_empleado, Id_ServicioExtra, Precio_Servicio, Pago_Servicio)
+INSERT INTO Empleados_ServiciosExtras( Id_E, Id_ServicioExtra, Precio_Servicio, Pago_Servicio)
 VALUES 
-(4001, 1, 55.000, 22.000),
-(4003, 3, 55.000, 22.000),
-(5002, 2, 60.000, 25.000),
-(5003, 3, 60.000, 25.000),
-(5002, 4, 60.000, 25.000),
-(6003, 3, 70.000, 30.000),
-(6002, 5, 70.000, 28.000),
-(7001, 4, 70.000, 30.000);
+(1, 1, 55.000, 22.000),
+(2, 3, 55.000, 22.000),
+(3, 2, 60.000, 25.000),
+(4, 3, 60.000, 25.000),
+(5, 4, 60.000, 25.000),
+(6, 3, 70.000, 30.000),
+(7, 5, 70.000, 28.000),
+(8, 4, 70.000, 30.000);
 
 
 CREATE TABLE Sedes_ServiciosExtras(
 
 Id_Sedes_ServiciosExtras INT IDENTITY,
-Id_Sede INT CHECK(Id_Sede = 1 or Id_Sede = 2 or Id_Sede = 3) NOT NULL,
+Id_Sede INT NOT NULL,
 Id_ServicioExtra INT NOT NULL,
 Descuento_Sede DECIMAL(10,2)NOT NULL
 );
@@ -314,9 +313,9 @@ Id_ServicioExtra INT NOT NULL,
 Id_reserva INT NOT NULL,
 Id_Estadia INT NOT NULL,
 Total DECIMAL(10,3) DEFAULT 50.000 NOT NULL,
-Metodo_Pago VARCHAR(30) CHECK(Metodo_Pago = 'Tarjeta de credito' or Metodo_Pago = 'Efectivo' or Metodo_Pago = 'Transferencia') NOT NULL,
-Cargos_Extra VARCHAR(30) CHECK(Cargos_Extra = 'Ninguno' or Cargos_Extra = 'Minibar' or Cargos_Extra = 'Servicio de lavanderia' )  DEFAULT 'Ninguno',
-Reseña VARCHAR(15) CHECK(Reseña = 'Excelente' or Reseña = 'Buena' or Reseña = 'Regular' or Reseña = 'Mala') DEFAULT 'Excelente'
+Metodo_Pago VARCHAR(30)  NOT NULL,
+Cargos_Extra VARCHAR(30)   DEFAULT 'Ninguno',
+Reseña VARCHAR(15) DEFAULT 'Excelente'
 );
 
 ALTER TABLE Facturas
@@ -343,32 +342,37 @@ CREATE TABLE [Auditorias] (
 	[Usuario] NVARCHAR (50),
 	[Entidad] NVARCHAR (50),
 	[Operacion] NVARCHAR (50),
-	[Datos] NVARCHAR (250),
+	[Datos] NVARCHAR (max),
 	[Fecha] DATETIME 
 );
 
-CREATE TABLE Roles(
-Id_Rol INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
-Nombre VARCHAR(20),
-Descripcion VARCHAR(100)
-);
+CREATE TABLE [Roles] (
+	[Id_Rol] INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
+	[Nombre] NVARCHAR (50),
+	);
 
-
-CREATE TABLE Usuarios(
-
-Id_Usuario INT IDENTITY,
-Nombre VARCHAR(10) NOT NULL,
-Contraseña INT NOT NULL,
-Id_Rol  INT NOT NULL
-);
-ALTER TABLE Usuarios
-ADD CONSTRAINT PK_Id_Usuario PRIMARY KEY (Id_Usuario)
+CREATE TABLE [Usuarios] (
+	[Id] INT NOT NULL IDENTITY (1,1) PRIMARY KEY,
+	[Email] NVARCHAR (50) UNIQUE NOT NULL,
+	[Contraseña] NVARCHAR (100),
+	[Rol] INT NOT NULL,
+	FOREIGN KEY ([Rol]) REFERENCES [Roles]([Id_Rol]));
 
 
 
----Las FK
-ALTER TABLE Usuarios
-ADD CONSTRAINT FK_Usuarios_Roles FOREIGN KEY (Id_Rol) REFERENCES Roles(Id_Rol);
+INSERT INTO [Roles] ([Nombre]) VALUES 
+	('Empleado'),
+	('Huesped');
+
+INSERT INTO [Usuarios]([Email],[Contraseña],[Rol])
+VALUES 
+	('Empleado@gmail.com','0000',1),
+	('Huesped@gmail.com','1111',2);
+	
+
+
+---Las FK-- Foránea para Sedes -> Hoteles
+
 
 ALTER TABLE Empleados
 ADD CONSTRAINT FK_Empleados_Hotel FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
@@ -386,43 +390,67 @@ ALTER TABLE Reservas
 ADD CONSTRAINT FK_Reservas_Sede FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
 
 ALTER TABLE Reservas
-ADD CONSTRAINT FK_Reservas_Huesped FOREIGN KEY (Id_Huesped) REFERENCES Huespedes(Id_Huesped);
+ADD CONSTRAINT FK_Reservas_Huesped FOREIGN KEY (Id_H) REFERENCES Huespedes(Id_H);
 
 ALTER TABLE Estadias
 ADD CONSTRAINT FK_Estadias_Reserva FOREIGN KEY (Id_Reserva) REFERENCES Reservas(Id_Reserva);
 
+
 ALTER TABLE Sedes
-ADD CONSTRAINT FK_Sedes_Hotel FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
+ADD CONSTRAINT FK_Sedes_Hoteles FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
 
+-- Foránea para Empleados -> Hoteles
+ALTER TABLE Empleados
+ADD CONSTRAINT FK_Empleados_Hoteles FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
+
+-- Foránea para Empleados -> Sedes
+ALTER TABLE Empleados
+ADD CONSTRAINT FK_Empleados_Sedes FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
+
+-- Foránea para Habitaciones -> Hoteles
+ALTER TABLE Habitaciones
+ADD CONSTRAINT FK_Habitaciones_Hoteles FOREIGN KEY (Id_Hotel) REFERENCES Hoteles(Id_Hotel);
+
+-- Foránea para Habitaciones -> Sedes
+ALTER TABLE Habitaciones
+ADD CONSTRAINT FK_Habitaciones_Sedes FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
+
+-- Foránea para Reservas -> Huespedes
+ALTER TABLE Reservas
+ADD CONSTRAINT FK_Reservas_Huespedes FOREIGN KEY (Id_H) REFERENCES Huespedes(Id_H);
+
+-- Foránea para Reservas -> Sedes
+ALTER TABLE Reservas
+ADD CONSTRAINT FK_Reservas_Sedes FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
+
+-- Foránea para Reservas_Habitaciones -> Reservas
+ALTER TABLE Reservas_Habitaciones
+ADD CONSTRAINT FK_ReservasHabitaciones_Reservas FOREIGN KEY (Id_Reserva) REFERENCES Reservas(Id_Reserva);
+
+-- Foránea para Reservas_Habitaciones -> Habitaciones
+ALTER TABLE Reservas_Habitaciones
+ADD CONSTRAINT FK_ReservasHabitaciones_Habitaciones FOREIGN KEY (Id_Habitacion) REFERENCES Habitaciones(Id_Habitacion);
+
+-- Foránea para ServiciosExtras -> Sedes
 ALTER TABLE ServiciosExtras
-ADD CONSTRAINT FK_ServiciosExtras_Sede FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
+ADD CONSTRAINT FK_ServiciosExtras_Sedes FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
 
-ALTER TABLE Facturas
-ADD CONSTRAINT FK_Facturas_Estadia FOREIGN KEY (Id_Estadia) REFERENCES Estadias(Id_Estadia);
-
-ALTER TABLE Facturas
-ADD CONSTRAINT FK_Facturas_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras(Id_ServicioExtra);
-
-ALTER TABLE Facturas
-ADD CONSTRAINT FK_Facturas_Reserva FOREIGN KEY (Id_Reserva) REFERENCES Reservas(Id_Reserva);
-
-ALTER TABLE Reservas_Habitaciones
-ADD CONSTRAINT FK_Reservas_Habitaciones_Reserva FOREIGN KEY (Id_Reserva) REFERENCES Reservas (Id_Reserva);
-
-ALTER TABLE Reservas_Habitaciones
-ADD CONSTRAINT FK_Reservas_Habitaciones_Habitacion FOREIGN KEY (Id_Habitacion) REFERENCES Habitaciones (Id_Habitacion);
-
+-- Foránea para Empleados_ServiciosExtras -> Empleados
 ALTER TABLE Empleados_ServiciosExtras
-ADD CONSTRAINT FK_Auditoria_Empleado FOREIGN KEY (Id_Empleado) REFERENCES Empleados (Id_Empleado);
+ADD CONSTRAINT FK_EmpleadosServiciosExtras_Empleados FOREIGN KEY (Id_E) REFERENCES Empleados(Id_E);
 
+-- Foránea para Empleados_ServiciosExtras -> ServiciosExtras
 ALTER TABLE Empleados_ServiciosExtras
-ADD CONSTRAINT FK_Auditoria_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras (Id_ServicioExtra);
+ADD CONSTRAINT FK_EmpleadosServiciosExtras_ServiciosExtras FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras(Id_ServicioExtra);
 
+-- Foránea para Sedes_ServiciosExtras -> Sedes
 ALTER TABLE Sedes_ServiciosExtras
-ADD CONSTRAINT FK_Sedes_ServiciosExtras_ServicioExtra FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras (Id_ServicioExtra);
+ADD CONSTRAINT FK_SedesServiciosExtras_Sedes FOREIGN KEY (Id_Sede) REFERENCES Sedes(Id_Sede);
 
+-- Foránea para Sedes_ServiciosExtras -> ServiciosExtras
 ALTER TABLE Sedes_ServiciosExtras
-ADD CONSTRAINT FK_Sedes_ServiciosExtras_Sede FOREIGN KEY (Id_Sede) REFERENCES Sedes (Id_Sede);
+ADD CONSTRAINT FK_SedesServiciosExtras_ServiciosExtras FOREIGN KEY (Id_ServicioExtra) REFERENCES ServiciosExtras(Id_ServicioExtra);
+
 
 ---Los select:
 SELECT * FROM Hoteles
@@ -438,3 +466,4 @@ SELECT * FROM Sedes_ServiciosExtras
 SELECT * FROM Estadias
 SELEct * from facturas
 select*from Usuarios
+select * from roles

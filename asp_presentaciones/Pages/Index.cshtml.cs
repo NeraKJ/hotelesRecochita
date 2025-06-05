@@ -66,10 +66,10 @@ namespace asp_presentacion.Pages
         {
             try
             {
-                
+
                 if (RespuestaHumana?.Trim() != "13")
                 {
-                    MensajeError = "Verificación fallida. Responde correctamente la pregunta: ¿Cuánto es 3 + 2?";
+                    MensajeError = "Verificación fallida. Responde correctamente la pregunta:¿Cuánto es 12 + 1?";
                     return;
                 }
 
@@ -121,3 +121,4 @@ namespace asp_presentacion.Pages
         }
     }
 }
+

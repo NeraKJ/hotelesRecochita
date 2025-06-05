@@ -27,23 +27,23 @@
             color: #8b5e3c !important;
         }
 
-        .navbar-brand:hover,
-        .nav-link:hover {
-            color: #a47148 !important;
-        }
+            .navbar-brand:hover,
+            .nav-link:hover {
+                color: #a47148 !important;
+            }
 
         .footer {
             background-color: #e5d7c0;
             color: #4e3b2c;
         }
 
-        .footer a {
-            color: #8b5e3c;
-        }
+            .footer a {
+                color: #8b5e3c;
+            }
 
-        .footer a:hover {
-            color: #a47148;
-        }
+                .footer a:hover {
+                    color: #a47148;
+                }
 
         .border-top {
             border-top: 1px solid #d9cbb3 !important;
@@ -79,32 +79,31 @@
             max-width: 400px;
         }
 
-        .image-box img {
-            width: 100%;
-            height: auto;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-        }
+            .image-box img {
+                width: 100%;
+                height: auto;
+                border: 2px solid #ccc;
+                border-radius: 10px;
+            }
 
         .btn-login {
-    background-color: #8b5e3c;
-    color: white;
-    border: 2px solid #6d4c41;
-    border-radius: 12px;
-    padding: 6px 16px;
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    margin-left: 15px;
-}
+            background-color: #8b5e3c;
+            color: white;
+            border: 2px solid #6d4c41;
+            border-radius: 12px;
+            padding: 6px 16px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
 
-.btn-login:hover {
-    background-color: #a47148;
-    color: white;
-    transform: translateY(-1px);
-
-}
+            .btn-login:hover {
+                background-color: #a47148;
+                color: white;
+                transform: translateY(-1px);
+            }
 
     </style>
 </head>
@@ -128,40 +127,40 @@
                             @{
                                 var rol = Context.Session.GetString("Rol");
                             }
-                           <ul class="navbar-nav flex-grow-1">
-    <li class="nav-item"><a class="nav-link" asp-page="/Index"></a></li>
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item"><a class="nav-link" asp-page="/Index"></a></li>
 
-    @if (rol == "Empleado")
-    {
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
-    }
-    @if (rol == "Huesped")
-    {
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
-        <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
-    }
-</ul>
+                                @if (rol == "Empleado")
+                                {
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Empleados">Empleados</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Huespedes">Huespedes</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes_ServiciosExtras">Sedes_ServiciosExtras</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
+                                }
+                                @if (rol == "Huesped")
+                                {
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Hoteles">Hoteles</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Sedes">Sedes</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Habitaciones">Habitaciones</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Estadias">Estadias</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/ServiciosExtras">ServiciosExtras</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Reservas">Reservas</a></li>
+                                    <li class="nav-item"><a class="nav-link" asp-page="/Ventanas/Facturas">Facturas</a></li>
+                                }
+                            </ul>
 
-@if (string.IsNullOrEmpty(rol))
-{
-    <div class="d-flex align-items-center">
-        <a class="btn btn-login" asp-page="/Login">Iniciar sesión</a>
-    </div>
-}
+                            @if (string.IsNullOrEmpty(rol))
+                            {
+                                <div class="d-flex align-items-center">
+                                    <a class="btn btn-login" asp-page="/Login">Iniciar sesión</a>
+                                </div>
+                            }
 
                         </div>
                     </div>
@@ -205,3 +204,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
